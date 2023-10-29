@@ -5,6 +5,8 @@ USER root
 RUN apt-get update
 RUN apt-get install -y curl wget nano rsync mlocate
 RUN updatedb
+RUN apt-get install -y pip
+RUN pip install pyexcel pyexcel-ods
 
 #RUN sed -i '/jessie-updates/d' /etc/apt/sources.list
 
@@ -14,7 +16,7 @@ RUN updatedb
 #RUN mkdir -p /docker-build/
 #RUN chown solr:solr -R /docker-build/
 
-ENV LOCAL_VOLUMN_PATH=/var/solr/data/collection/conf
+ENV LOCAL_VOLUMN_PATH=/var/solr/data/collection/conf/
 #ENV SHARED_PATH=/opt/solr-9.4.0/
 ENV LOCAL_PORT=8983
 
@@ -29,8 +31,11 @@ CMD ["bash", "/startup.sh"]
 
 #USER solr
 
-RUN mkdir -p /docker-build/
-COPY ./docker-build/conf /docker-build/
+RUN mkdir -p /var/solr/data/collection/conf
+RUN echo "name=collection" > /var/solr/data/collection/core.properties
+RUN mkdir -p /docker-build/conf
+COPY ./docker-build/conf /docker-build/conf
+RUN chmod -R 777 "/docker-build/conf/"
 COPY ./docker-build/console.sh /console.sh
 COPY ./docker-build/startup.sh /startup.sh
 

@@ -2,16 +2,25 @@
 
 # ----------------------------------------------------------------
 
+#echo "GOGOGO 1"
 if [ -z "$(ls -A $LOCAL_VOLUMN_PATH)" ]; then
+  # solr-precreate books
+  # mv /var/solr/data/books/data /var/solr/data/collection/
+  # mv /var/solr/data/books/core.properties /var/solr/data/collection/
+  
+
+  #echo "GOGOGO 2"
+  # rm -rf "${LOCAL_VOLUMN_PATH}/*"
   rsync --ignore-existing -r /docker-build/conf/ "${LOCAL_VOLUMN_PATH}"
-  chmod -R 777 "${LOCAL_VOLUMN_PATH}/*"
-
-  solr create -c collection
-
-  post -c collection "${LOCAL_VOLUMN_PATH}/*"
-else
-  post -c collection "${LOCAL_VOLUMN_PATH}/*"
+  # cp -rf /docker-build/conf/* "${LOCAL_VOLUMN_PATH}"
 fi
+  #echo "GOGOGO 3"
+  # chmod -R 777 "${LOCAL_VOLUMN_PATH}/"
+docker-entrypoint.sh solr-foreground -force &
+sleep 10
+
+python3 "${LOCAL_VOLUMN_PATH}python/ods_to_csv_converter.py"
+post -c collection "/tmp/data.csv"
 
 # ----------------------------------------------------------------
 
@@ -49,12 +58,13 @@ getCloudflarePublicURL() {
   # Extracting the URL using grep and awk
   url=$(grep -o 'https://[^ ]*\.trycloudflare\.com' "$file_path" | awk '/https:\/\/[^ ]*\.trycloudflare\.com/{print; exit}')
 
-  echo "$url"
+  echo "$url/solr/collection/browse"
 }
 
-getCloudflarePublicURL "${LOCAL_PORT}" > "${LOCAL_VOLUMN_PATH}/.cloudflare.url"
+#getCloudflarePublicURL "${LOCAL_PORT}" > "${LOCAL_VOLUMN_PATH}/.cloudflare.url"
 
 # ----------------------------------------------------------------
 
-# solr-create -c gettingstarted
-docker-entrypoint.sh solr-foreground -force
+while true; do
+  sleep 10
+done

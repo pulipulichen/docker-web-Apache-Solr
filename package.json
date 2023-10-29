@@ -1,17 +1,16 @@
 {
-  "name": "docker-ZIP-to-PDF",
+  "name": "docker-web-Apache-Solr",
   "version": "1.0.1",
-  "description": "Package images to a ZIP file and convert it to PDF.",
+  "description": "",
   "main": "index.js",
   "scripts": {
     "start": "docker-compose up --build",
     "d0.build": "docker-compose up --build",
-    "d1.bash": "docker-compose run --service-ports app bash /console.sh",
-    "update": "node update.js"
+    "d1.bash": "docker-compose run --service-ports app bash /console.sh"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://pulipuli.chen@gmail.com@github.com/pulipulichen/docker-ZIP-to-PDF.git"
+    "url": "git+https://pulipuli.chen@gmail.com@github.com/pulipulichen/docker-web-Apache-Solr.git"
   },
   "keywords": [
     "PWA"
@@ -19,11 +18,7 @@
   "author": "Pulipuli Chen",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/pulipulichen/docker-ZIP-to-PDF/issues"
+    "url": "https://github.com/pulipulichen/docker-web-Apache-Solr/issues"
   },
-  "homepage": "https://github.com/pulipulichen/docker-ZIP-to-PDF#readme",
-  "dependencies": {
-    "extract-zip": "2.0.1",
-    "fast-glob": "3.2.12"
-  }
+  "homepage": "https://github.com/pulipulichen/docker-web-Apache-Solr#readme"
 }

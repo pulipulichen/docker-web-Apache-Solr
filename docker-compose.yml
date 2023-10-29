@@ -7,5 +7,4 @@ services:
     ports:
       - "8983:8983"
     volumes: 
-      #- "./docker-web-Apache-Solr:/opt/solr-8.7.0/"
       - "./docker-web-Apache-Solr:/var/solr/data/collection/conf"
