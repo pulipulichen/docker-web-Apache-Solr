@@ -11,3 +11,5 @@ https://docs.google.com/presentation/d/1LjvQ0cvj0E9YZN-lW34tghgr2rlA2JNLU87LAdtA
 
 22.04.3 LTS (Jammy Jellyfish)
 Ubuntu
+
+COLAB: https://colab.research.google.com/drive/1_aTP6n4rQty6P0Ez4q-OtiaJJIwP3fU5?usp=sharing

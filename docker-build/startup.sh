@@ -19,8 +19,7 @@ fi
 docker-entrypoint.sh solr-foreground -force &
 sleep 10
 
-python3 "${LOCAL_VOLUMN_PATH}python/ods_to_csv_converter.py"
-post -c collection "/tmp/data.csv"
+post -c collection "${LOCAL_VOLUMN_PATH}data/data.csv"
 
 # ----------------------------------------------------------------
 
