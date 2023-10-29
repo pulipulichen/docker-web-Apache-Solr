@@ -60,7 +60,7 @@ getCloudflarePublicURL() {
   echo "$url/solr/collection/browse"
 }
 
-#getCloudflarePublicURL "${LOCAL_PORT}" > "${LOCAL_VOLUMN_PATH}/.cloudflare.url"
+getCloudflarePublicURL "${LOCAL_PORT}" > "${LOCAL_VOLUMN_PATH}/.cloudflare.url"
 
 # ----------------------------------------------------------------
 
