@@ -6,7 +6,7 @@
   "scripts": {
     "start": "docker-compose up --build",
     "d0.build": "docker-compose up --build",
-    "d1.bash": "docker-compose run --service-ports app bash",
+    "d1.bash": "docker-compose run --service-ports app bash /console.sh",
     "update": "node update.js"
   },
   "repository": {

@@ -3,7 +3,9 @@ services:
   app:
     build: .
     tty: true
+    #user: solr
     ports:
-      - "8000:8983"
-    #volumes: 
-      #- "./docker-web-Apache-Solr:/opt/solr-9.4.0/"
+      - "8983:8983"
+    volumes: 
+      #- "./docker-web-Apache-Solr:/opt/solr-8.7.0/"
+      - "./data:/var/solr/"

@@ -2,3 +2,7 @@
 # /output/*.rss
 # /output/*.html
 # /cache
+
+/solr-data
+/docker-web-Apache-Solr
+/data

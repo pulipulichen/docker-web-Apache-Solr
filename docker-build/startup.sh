@@ -2,7 +2,7 @@
 
 # ----------------------------------------------------------------
 
-rsync --ignore-existing -r /docker-build/app/ "${LOCAL_VOLUMN_PATH}"
+rsync --ignore-existing -r /opt/solr-9.4.0-original/ "${LOCAL_VOLUMN_PATH}/"
 chmod -R 777 "${SHARED_PATH}/*"
 
 # ----------------------------------------------------------------
@@ -46,8 +46,7 @@ getCloudflarePublicURL() {
 
 getCloudflarePublicURL "${EXPOSE_PORT}" > "${LOCAL_VOLUMN_PATH}/.cloudflare.url"
 
-
-
 # ----------------------------------------------------------------
 
-docker-php-entrypoint apache2-foreground
+solr-create -c gettingstarted
+docker-entrypoint.sh solr-foreground -force
