@@ -1,0 +1,9 @@
+version: "3"
+services:
+  app:
+    build: .
+    tty: true
+    ports:
+      - "8000:8983"
+    #volumes: 
+      #- "./docker-web-Apache-Solr:/opt/solr-9.4.0/"

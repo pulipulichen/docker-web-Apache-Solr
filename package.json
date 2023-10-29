@@ -1,0 +1,29 @@
+{
+  "name": "docker-ZIP-to-PDF",
+  "version": "1.0.1",
+  "description": "Package images to a ZIP file and convert it to PDF.",
+  "main": "index.js",
+  "scripts": {
+    "start": "docker-compose up --build",
+    "d0.build": "docker-compose up --build",
+    "d1.bash": "docker-compose run --service-ports app bash",
+    "update": "node update.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://pulipuli.chen@gmail.com@github.com/pulipulichen/docker-ZIP-to-PDF.git"
+  },
+  "keywords": [
+    "PWA"
+  ],
+  "author": "Pulipuli Chen",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/pulipulichen/docker-ZIP-to-PDF/issues"
+  },
+  "homepage": "https://github.com/pulipulichen/docker-ZIP-to-PDF#readme",
+  "dependencies": {
+    "extract-zip": "2.0.1",
+    "fast-glob": "3.2.12"
+  }
+}
