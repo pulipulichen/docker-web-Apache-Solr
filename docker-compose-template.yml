@@ -1,9 +1,9 @@
 version: "3"
 services:
   app:
-    image: pudding/docker-web:pwiki-20231029-0339
+    image: pudding/docker-web:docker-web-apache-solr-app-20231030-0146
     tty: true
     ports:
-      - "8000:80"
+      - "8983:8983"
     volumes: 
-      - "[SOURCE]/docker-web-wiki:/var/www/html/"
+      - "[SOURCE]/docker-web-Apache-Solr:/var/solr/data/collection/conf"
