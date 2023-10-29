@@ -1,0 +1,29 @@
+    <div class="td-adv-cond two wide column">
+        <select class="adv_boolean ui search dropdown fluid ">
+            <option value="and">AND</option>
+            <option value="or">OR</option>
+        </select>
+    </div>
+    <div class="td-adv-field four wide column">
+        <select class="adv_field ui dropdown fluid " style="visibility:visible">
+          #foreach ($field in $advance_search_fields)
+            #set($name = $field['name'])
+            #set($label = $field['label'])
+            <option value="$name">$label</option>
+          #end
+        </select>
+    </div>
+
+
+    <div class="td-adv-input eight wide column">
+        <div class="ui input fluid">
+            <input type="text" class="adv_value" />
+        </div>
+    </div>
+
+    <div class="td-adv-add-field two wide column">
+        <button type="button" class="add-field ui button fluid ">
+            <!-- Add Field -->
+            <i class="plus icon"></i>
+        </button>
+    </div>

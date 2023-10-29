@@ -1,0 +1,102 @@
+#if($mltOn != true)
+<div class="extra ui right floated basic segment">
+            <a class="ui primary button" href="#lensNoQ&q=id:$docId&mlt=true">
+              Read More
+              <i class="right chevron icon"></i>
+            </a>
+          </div>
+#end
+
+#set($fields = $detail_fields)
+#if ($mltOn != true)
+    #set($fields = $result_fields)
+#end
+
+<table class="ui table">
+#foreach ($field in $fields)
+
+    #set($name = $field['name'])
+    #set($label = $field['label'])
+    #set($access_point = $field['access_point'])
+
+
+    #set($ori_array = $doc.getFieldValue($name))
+    #if (!$hitField[$name] && !$doc.getFieldValue($name))
+        #set($value_array = "")
+    #elseif (!$hitField[$name])
+        #set($value_array = $doc.getFieldValue($name))
+    #else
+        #set($value_array = $hitField[$name])
+    #end
+
+    #if ($value_array != "")
+    <tr>
+        #if($label != false)
+            <th class="right aligned"><strong>$label</strong>:</th>
+        #end
+        
+        #if (!$value_array.size())
+            #set ($value_array = [$value_array])
+        #end
+        #if (!$ori_array.size())
+            #set ($ori_array = [$ori_array])
+        #end
+
+        #set( $comma = "" )
+        #set($i = 0)
+
+        #if ($label == false)
+            <td colspan="2">
+        #else
+            <td>
+        #end
+        
+        #if($name == 'title')
+            #if($access_point==false)
+                <h2 class="ui dividing header">
+            #else
+                #set($access_point = '?q=id:%22'+$docId+'%22&mlt=true')
+                <h3 class="ui dividing header">
+                <a href="$access_point">
+            #end
+        #end
+
+        #foreach ($value in $value_array)
+            #set($ori_value = $ori_array[$i])
+                #set($display_value = $value)
+                #if ($label == false)
+                    #set($display_value = "<strong>"+$value+"</strong>")
+                #end
+
+                $comma
+
+                #if($access_point==false)
+                    $display_value
+                #else
+                    #if($name == 'title')
+                        $display_value
+                    #else
+                        #set($access_point = '?q='+$name+':%22'+$ori_value+'%22')
+                        <a href="$access_point">
+                            $display_value
+                        </a>
+                    #end
+                #end
+            
+            #set( $comma = ";" )
+            #set($i = $i+1)
+        #end
+
+        #if($name == 'title')
+            #if($access_point==false)
+                </h2>
+            #else
+                </a>
+                </h3>
+            #end
+        #end
+        </td>
+    </tr>
+    #end
+#end
+</table>

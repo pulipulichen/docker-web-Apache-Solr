@@ -11,10 +11,10 @@ RUN updatedb
 # RUN apt-get update
 # RUN apt-get install -y wget nano curl wget rsync
 
-RUN mkdir -p /docker-build/
-RUN chown solr:solr -R /docker-build/
+#RUN mkdir -p /docker-build/
+#RUN chown solr:solr -R /docker-build/
 
-#ENV LOCAL_VOLUMN_PATH=/opt/solr-9.4.0/
+ENV LOCAL_VOLUMN_PATH=/var/solr/data/collection/conf
 #ENV SHARED_PATH=/opt/solr-9.4.0/
 ENV LOCAL_PORT=8983
 
@@ -24,14 +24,14 @@ ENV LOCAL_PORT=8983
 #RUN mkdir -p /opt/solr-9.4.0
 #RUN chown solr:solr -R /opt/solr-9.4.0
 
-#ENTRYPOINT []
-#CMD ["bash", "/startup.sh"]
+ENTRYPOINT []
+CMD ["bash", "/startup.sh"]
 
 #USER solr
 
-# RUN mkdir -p /app/
-# COPY ./docker-build/app /docker-build/app
+RUN mkdir -p /docker-build/
+COPY ./docker-build/conf /docker-build/
 COPY ./docker-build/console.sh /console.sh
 COPY ./docker-build/startup.sh /startup.sh
 
-CMD ["solr-foreground", "-force"]
+# CMD ["solr-foreground", "-force"]

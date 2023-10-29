@@ -1,0 +1,78 @@
+
+## Display Similar Documents / MLT = More Like This
+#if($mltOn == true)
+<div class="mlt">
+  #set($mlt = $mltResults.get($docId))
+  #set($mltOn = $params.getBool('mlt'))
+  #if($mltOn == true)
+    <div class="ui segment">
+    <div class="field-name ui ribbon large label">
+      Similar Items
+    </div>
+  #end
+  ## If has MLT enabled An Entries to show
+  #if ($mltOn && $mlt && $mlt.size() > 0)
+    <ul>
+      #foreach($mltHit in $mlt)
+        #set($mltId = $mltHit.getFieldValue('id'))
+        <li>
+
+###################
+#foreach ($field in $similar_fields)
+    <div>
+    #set($name = $field['name'])
+    #set($label = $field['label'])
+    #set($access_point = $field['access_point'])
+
+    #set($value_array = $mltHit.getFieldValue($name))
+        #if($label != false)
+            <strong>$label</strong>:
+        #end
+        
+        #if (!$value_array.size())
+            #set ($value_array = [$value_array])
+        #end
+
+        #set( $comma = "" )
+
+        #foreach ($value in $value_array)
+          <span>
+                #set($display_value = $value)
+                #if ($label == false)
+                    #set($display_value = "<strong>"+$value+"</strong>")
+                #end
+
+
+                $comma
+
+                #if($access_point==false)
+                    $display_value
+                #else
+                    #if($name == 'title')
+                        #set($access_point = '?q=id:%22'+$mltId+'%22&mlt=true')
+                    #else
+                        #set($access_point = '?q='+$name+':%22'+$value+'%22')
+                    #end
+                    <a href="$access_point">
+                        $display_value
+                    </a>
+                #end
+            #set( $comma = "," )
+            </span>
+        #end
+
+    </div>
+#end
+
+          ############################################
+
+        </li>
+      #end    ## end for each mltHit in $mlt
+    </ul>
+  ## Else MLT Enabled but no mlt results for this query
+  #elseif($mltOn && $mlt.size() == 0)
+    
+    <div>No Similar Items Found</div>
+  #end
+</div>  ## div class=mlt
+#end

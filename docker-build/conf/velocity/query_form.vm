@@ -1,0 +1,159 @@
+#**
+ *  Renders the main query form
+ *#
+#set($queryOpts = $request.params.get("queryOpts"))
+#parse("display_fields.vm")
+
+<div class="query-box ui segment basic center aligned">
+  <form id="query-form" action="#{url_for_home}" method="GET">
+
+    <div class="">
+      <span #annTitle("Add the query using the &q= parameter")>
+        <!-- Find: -->
+        
+        
+        #if($queryOpts == 'advance')
+
+          <!------------------------------>
+       
+        <div class="adv_search_form ui basic segment">
+                <div class="ui grid row template" style="display:none;">
+                        #parse('adv_fields.vm')
+                </div>
+                <div class="ui grid row">
+                    #parse('adv_fields.vm')
+                </div>
+        </div>
+
+          <script>
+          $(".add-field").click(function () {
+
+            var _form = $(".adv_search_form");
+
+            // 複製表格
+            var _temp = $(".row.template").clone();
+            _temp.removeClass("template")
+              .css("display", "block")
+              .appendTo(_form);
+            
+            _temp.find("select").css("visibility", "visible");
+
+            var _btn = $(this);
+            _temp.find(".td-adv-add-field").empty().append(_btn);
+            //_temp.append(_btn);
+
+          });
+          $("#query-form").submit(function () {
+
+            var _rows = $(".adv_search_form .row");
+            
+            var _query = "";
+            var _first = true;
+            _rows.each(function (_key, _elem) {
+              var _row = $(_elem);
+
+              var _field = _row.find(".adv_field").val();
+              var _value = _row.find(".adv_value").val().trim();
+
+
+              if (_value === "") {
+                return;
+              }
+
+              var _boolean = null;
+              if (_row.find(".adv_boolean").length > 0) {
+                _boolean = _row.find(".adv_boolean").val();
+              }
+              
+              if (_boolean !== null && _first !== true) {
+                _query = _query + _boolean + " ";
+              }
+
+              _query = _query + _field + ":" + _value + " ";
+
+              _first = false;
+            });
+
+            $(".adv_q").val(_query)
+            //return false;
+          });
+          </script>
+
+          <input type="text" class="adv_q" id="q" name="q" style="display:none;" value="$!esc.html($params.get('q'))"/>
+
+          <!------------------------------>
+
+        #else
+            <div class="ui icon input">
+                <i class="search small icon"></i>
+                <input type="text" id="q" name="q" value="$!esc.html($params.get('q'))"/>
+            </div>
+        #end
+
+        <div class="ui buttons">
+            <input type="submit" id="querySubmit" class="ui primary button" value="Search" />
+            <!--
+            <div class="or"></div>
+            <input type="reset" class="ui button" value="Reset" /> 
+            -->
+        </div>
+
+        #if($queryOpts == 'advance')
+          #if($params.get('q') && $params.get('q') != "")
+            <div>Your search query: $params.get('q')</div>
+          #end
+        #end          
+
+      </span>
+      <!--
+      <div class="query-boost">
+        <span #annTitle("Add the boost function &bf=price to the query")>
+          <input type="checkbox" name="bf" value="price"
+            #if($request.params.get('bf') == 'price')checked="true"#end
+          >
+            Boost by Price
+          </input>
+        </span>
+      #parse("query_spatial.vm")
+      #parse("query_group.vm")
+      </div>
+      -->
+  </div>
+
+    #if($request.params.get('debugQuery'))
+      <input type="hidden" name="debugQuery" value="true"/>
+    #end
+    #if($annotate == true)
+      <input type="hidden" name="annotateBrowse" value="true"/>
+    #end
+    #foreach($fq in $request.params.getParams('fq'))
+      #if ($fq != "{!bbox}")
+        <input type="hidden" name="fq" id="allFQs" value="$esc.html($fq)"/>
+      #end
+    #end
+
+    <div class="constraints" #annTitle("Lists out the &fq filters.  Click to remove.")>
+      #foreach($fq in $params.getParams('fq'))
+        #set($previous_fq_count=$velocityCount - 1)
+        #if($fq != '')
+          &gt;
+          <a style="{text-decoration: line-through;}"
+            href="#url_for_filters($request.params.getParams('fq').subList(0,$previous_fq_count))"
+          >$fq</a>
+        #end
+      #end
+    </div>
+
+    <div class="parsed_query_header">
+      #if($request.params.get('debugQuery'))
+        <a href="#" onclick='jQuery(this).siblings("div").toggle(); return false;'>toggle parsed query</a>
+        <div class="parsed_query" style="display:none">$response.response.debug.parsedquery</div>
+      #end
+      
+      #if($queryOpts && $queryOpts != "")
+        <input type="hidden" name="queryOpts" value="$queryOpts"/>
+      #end
+    </div>
+
+  </form>
+</div>

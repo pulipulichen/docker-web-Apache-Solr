@@ -1,0 +1,14 @@
+#**
+ *  Render the top section of the page visible to users
+ *#
+<h1 class="ui header center aligned" style="margin-top: 50px;">
+    <a href="#url_for_home#if($request.params.get('debugQuery'))?debugQuery=true#end">
+  <img src="#{url_for_solr}/admin/file?file=/velocity/img/library-logo-medium.png"/>
+  <div class="content">
+    #param('title')
+    <div class="sub header">
+        #param('sub.title')
+    </div>
+  </div>
+    </a>
+</h1>

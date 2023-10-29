@@ -1,0 +1,32 @@
+
+## 簡易顯示欄位
+#set($result_fields = [
+    {'name': 'title', 'label': false, 'access_point': "#lensNoQ&q=id:%22$docId%22&mlt=true"},
+    {'name': 'author', 'label': 'Author', 'access_point': true},
+    {'name': 'item_type', 'label': 'Item type', 'access_point': true},
+    {'name': 'language', 'label': 'Language', 'access_point': false}
+])
+
+## 詳細顯示欄位
+#set($detail_fields = [
+    {'name': 'title', 'label': false, 'access_point': false},
+    {'name': 'author', 'label': 'Author', 'access_point': true},
+    {'name': 'item_type', 'label': 'Item type', 'access_point': true},
+    {'name': 'language', 'label': 'Language', 'access_point': false},
+    {'name': 'publisher', 'label': 'Publisher', 'access_point': false},
+    {'name': 'added_date', 'label': 'Added Date', 'access_point': false}
+])
+
+## 類似資料顯示欄位
+#set($similar_fields = [
+    {'name': 'title', 'label': false, 'access_point': true},
+    {'name': 'author', 'label': 'Author', 'access_point': false},
+    {'name': 'item_type', 'label': 'Item Type', 'access_point': true}
+])
+
+## 詳細檢索可使用的欄位
+#set($advance_search_fields = [
+    {'name': 'title', 'label': 'Title'},
+    {'name': 'author', 'label': 'Author'},
+    {'name': 'publisher', 'label': 'Publisher'}
+])

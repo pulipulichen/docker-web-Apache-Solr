@@ -1,0 +1,16 @@
+#**
+ *  Overall Facet display block
+ *  Invokes the 4 facet and 1 cluster template
+ *#
+
+<div class="ui raised segment" style="margin-left: 20px;">
+#parse('facet_fields.vm')
+
+#**
+#parse('facet_queries.vm')
+#parse('facet_ranges.vm')
+#parse('facet_pivot.vm')
+#parse('cluster.vm')
+*#
+
+</div>

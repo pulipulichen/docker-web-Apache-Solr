@@ -2,8 +2,16 @@
 
 # ----------------------------------------------------------------
 
-rsync --ignore-existing -r /opt/solr-9.4.0-original/ "${LOCAL_VOLUMN_PATH}/"
-chmod -R 777 "${SHARED_PATH}/*"
+if [ -z "$(ls -A $LOCAL_VOLUMN_PATH)" ]; then
+  rsync --ignore-existing -r /docker-build/conf/ "${LOCAL_VOLUMN_PATH}"
+  chmod -R 777 "${LOCAL_VOLUMN_PATH}/*"
+
+  solr create -c collection
+
+  post -c collection "${LOCAL_VOLUMN_PATH}/*"
+else
+  post -c collection "${LOCAL_VOLUMN_PATH}/*"
+fi
 
 # ----------------------------------------------------------------
 
@@ -44,9 +52,9 @@ getCloudflarePublicURL() {
   echo "$url"
 }
 
-getCloudflarePublicURL "${EXPOSE_PORT}" > "${LOCAL_VOLUMN_PATH}/.cloudflare.url"
+getCloudflarePublicURL "${LOCAL_PORT}" > "${LOCAL_VOLUMN_PATH}/.cloudflare.url"
 
 # ----------------------------------------------------------------
 
-solr-create -c gettingstarted
+# solr-create -c gettingstarted
 docker-entrypoint.sh solr-foreground -force

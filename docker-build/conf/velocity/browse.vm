@@ -1,0 +1,80 @@
+#**
+ *  Main entry point into the /browse templates
+ *#
+
+#set($searcher = $request.searcher)
+#set($params = $request.params)
+#set($clusters = $response.response.clusters)
+#set($mltResults = $response.response.get("moreLikeThis"))
+#set($annotate = $params.get("annotateBrowse"))
+#if($params.get('mlt') != true) 
+    #parse('query_form.vm')
+#end
+#parse('did_you_mean.vm')
+
+#set($mltOn = $params.getBool('mlt'))
+
+#if( $response.response.error.code  || $params.get('q') && $params.get('q') == "")
+<div class="ui basic segment center aligned">
+## Show Error Message, if any
+#if( $response.response.error.code )
+<div class="ui error message">
+  #parse("error.vm")
+</div>
+#end
+#if($params.get('q') && !$params.get('fq') && $params.get('q') == "")
+<div class="ui warning message">
+    
+    <div class="header"><i class="icon help"></i>No search query</div>
+    Display all results.
+</div>
+#end
+</div>
+#end
+
+<div class="ui grid" style="margin:0">
+
+
+#if (!$mltOn)
+    <div class="four wide column">
+        <div class="navigators">
+          #parse("facets.vm")
+        </div>
+    </div>
+
+    <div class="twelve wide column">
+<div class="pagination ui tertiary top attached segment center aligned">
+  #parse("pagination_top.vm")
+</div>
+
+
+#if ($page.results_found > 0)
+## Render Results, actual matching docs
+<div class="results ui attached items">
+  #parse("results_list.vm")
+</div>
+
+<div class="pagination ui tertiary bottom attached segment segment center aligned">
+  #parse("pagination_bottom.vm")
+</div>
+#end
+
+    </div>
+#else
+    <div class="sixteen wide column full">
+
+    ## Show Error Message, if any
+    #if( $response.response.error.code )
+    <div class="error ui top attached segment">
+      #parse("error.vm")
+    </div>
+    #end
+    ## Render Results, actual matching docs
+    <div class="results ui bottom attached segment">
+      #parse("results_list.vm")
+    </div>
+
+    </div>
+#end
+
+</div>

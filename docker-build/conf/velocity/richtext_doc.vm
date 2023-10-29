@@ -1,0 +1,106 @@
+#**
+ *  Render a complex document in the results list
+ *#
+
+## Load Mime-Type List and Mapping
+#parse('mime_type_lists.vm')
+## Sets:
+## * supportedMimeTypes, AKA supportedtypes
+## * mimeExtensionsMap, AKA extMap
+
+
+
+  #foreach ($hl_ary in $response.highlighting)
+    #if ($hl_ary['id'][0] == $docId) 
+        #set($hitField = $hl_ary)
+    #end
+  #end
+
+  #set($mlt = $mltResults.get($docId))
+  #set($mltOn = $params.getBool('mlt'))
+
+#############################
+
+#parse("display_fields.vm")
+
+#############################
+
+#parse("richtext_fields.vm")
+
+#############################
+
+
+## Title
+#if($doc.getFieldValue('title'))
+  #set($title = $esc.html($doc.getFirstValue('title')))
+#else
+  #set($title = "["+$doc.getFieldValue('id')+"]")
+#end
+
+## URL
+#if($doc.getFieldValue('url'))
+  #set($url = $doc.getFieldValue('url'))
+#elseif($doc.getFieldValue('resourcename'))
+  #set($url = "file:///$doc.getFieldValue('resourcename')")
+#else
+  #set($url = "$doc.getFieldValue('id')")
+#end
+
+## Sort out Mime-Type
+#set($ct = $list.get($doc.getFirstValue('content_type').split(";"),0))
+#set($filename = $doc.getFieldValue('resourcename'))
+#set($filetype = false)
+#set($filetype = $mimeExtensionsMap.get($ct))
+
+## TODO: falling back to file extension is convenient,
+## except when you don't have an icon for that extension
+## example "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+## document with a .docx extension.
+## It'd be nice to fall back to an "unknown" or the existing "file" type
+## We sort of do this below, but only if the filename has no extension
+## (anything after the last dot).
+
+#if(!$filetype)
+  #set($filetype = $filename.substring($filename.lastIndexOf(".")).substring(1))
+#end
+
+## #if(!$filetype)
+##   #set($filetype = "file")
+## #end
+## #if(!$supportedMimeTypes.contains($filetype))
+##   #set($filetype = "file")
+## #end
+
+## Row 1: Icon and Title and mlt link  
+#if($filetype)
+<div class="result-title">
+  ## Icon
+  ## Small file type icons from http://www.splitbrain.org/projects/file_icons (public domain)
+    <img src="#{url_root}/img/filetypes/${filetype}.png" align="center">
+</div>
+#end
+
+#parse("richtext_similar.vm")
+
+#if($mltOn == true)
+    </div>
+    
+    <div class="ui basic segment center aligned">
+        <button type="button" onclick="history.back()" class="ui button icon">
+            <i class="reply icon"></i>
+            Back to search results
+        </button>
+    </div>
+#end
+
+
+## Last_Modified Date
+#if($doc.getFieldValue('last_modified'))
+  <div>
+    last-modified:
+    #field('last_modified')
+  </div>
+#end
+
+
+#parse('debug.vm')
