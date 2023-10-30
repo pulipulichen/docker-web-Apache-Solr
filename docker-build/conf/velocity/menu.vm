@@ -22,7 +22,7 @@ width: 100%;">
   </a>
 
 
-    <a class="item" href="#url_root/#/#core_name/core-overview">
+    <a class="item" href="#url_root/#/#core_name/core-overview" target="solr_admin">
         <i class="setting icon"></i>
         Solr Admin
     </a>

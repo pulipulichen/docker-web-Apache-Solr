@@ -286,6 +286,19 @@
       <filter class="solr.LowerCaseFilterFactory"/>
     </analyzer>
   </fieldType>
+  <fieldType name="text_general_keyword" class="solr.TextField" positionIncrementGap="100" multiValued="true">
+    <analyzer type="index">
+      <tokenizer class="solr.KeywordTokenizerFactory"/>
+      <filter class="solr.StopFilterFactory" words="stopwords.txt" ignoreCase="true"/>
+      <filter class="solr.LowerCaseFilterFactory"/>
+    </analyzer>
+    <analyzer type="query">
+      <tokenizer class="solr.KeywordTokenizerFactory"/>
+      <filter class="solr.StopFilterFactory" words="stopwords.txt" ignoreCase="true"/>
+      <filter class="solr.SynonymGraphFilterFactory" expand="true" ignoreCase="true" synonyms="synonyms.txt"/>
+      <filter class="solr.LowerCaseFilterFactory"/>
+    </analyzer>
+  </fieldType>
   <fieldType name="text_general_rev" class="solr.TextField" positionIncrementGap="100">
     <analyzer type="index">
       <tokenizer class="solr.StandardTokenizerFactory"/>
@@ -454,24 +467,27 @@
   <field name="added_date" type="pdates"/>
   <field name="author" type="text_general"/>
   <field name="cat" type="text_general"/>
+  <field name="database" type="text_general"/>
+  <field name="description" type="text_general"/>
+  <field name="features" type="text_general" multiValued="true"/>
   <field name="id" type="string" multiValued="false" indexed="true" required="true" stored="true"/>
   <field name="inStock" type="booleans"/>
-  <field name="item_type" type="text_general"/>
-  <field name="language" type="text_general"/>
+  <field name="includes" type="text_general" termPositions="true" termVectors="true" indexed="true" termOffsets="true" stored="true"/>
+  <field name="item_type" type="text_general_keyword"/>
+  <field name="keywords" type="text_general_keyword" multiValued="true"/>
+  <field name="language" type="text_general_keyword"/>
+  <field name="manu" type="text_general"/>
   <field name="name" type="text_general"/>
-  <field name="text" type="text_general"/>
+  <field name="notes" type="text_general"/>
+  <field name="popularity" type="pint" indexed="true" stored="true"/>
   <field name="price" type="pdoubles"/>
+  <field name="publication" type="text_general"/>
   <field name="publisher" type="text_general"/>
-  <field name="features" type="text_general" multiValued="true" />
-  <field name="title" type="text_general"/>
-  <field name="description" type="text_general"/>
   <field name="resourcename" type="text_general"/>
   <field name="sku" type="text_general"/>
-  <field name="manu" type="text_general"/>
-  <field name="toc" type="text_general" indexed="true" stored="true" multiValued="true"/>
-  <field name="includes" type="text_general" indexed="true" stored="true" termVectors="true" termPositions="true" termOffsets="true" />
-  <field name="keywords" type="text_general" multiValued="true" />
-  <field name="popularity" type="pint" indexed="true" stored="true"/>
+  <field name="text" type="text_general"/>
+  <field name="title" type="text_general"/>
+  <field name="toc" type="text_general" multiValued="true" indexed="true" stored="true"/>
   <dynamicField name="*_txt_en_split_tight" type="text_en_splitting_tight" indexed="true" stored="true"/>
   <dynamicField name="*_descendent_path" type="descendent_path" indexed="true" stored="true"/>
   <dynamicField name="*_ancestor_path" type="ancestor_path" indexed="true" stored="true"/>
@@ -548,4 +564,7 @@
   <copyField source="publisher" dest="publisher_str" maxChars="256"/>
   <copyField source="language" dest="language_str" maxChars="256"/>
   <copyField source="title" dest="title_str" maxChars="256"/>
+  <copyField source="database" dest="database_str" maxChars="256"/>
+  <copyField source="publication" dest="publication_str" maxChars="256"/>
+  <copyField source="notes" dest="notes_str" maxChars="256"/>
 </schema>
