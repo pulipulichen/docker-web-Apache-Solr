@@ -3,7 +3,7 @@ FROM solr:8.7.0
 USER root
 
 RUN apt-get update
-RUN apt-get install -y curl wget nano rsync mlocate
+RUN apt-get install -y curl wget nano rsync mlocate vim
 RUN updatedb
 RUN apt-get install -y pip
 RUN pip install pyexcel pyexcel-ods

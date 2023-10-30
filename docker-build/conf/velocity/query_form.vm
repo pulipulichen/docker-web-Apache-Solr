@@ -84,13 +84,13 @@
           <!------------------------------>
 
         #else
-            <div class="ui icon input">
+            <div class="ui icon huge input">
                 <i class="search small icon"></i>
-                <input type="text" id="q" name="q" value="$!esc.html($params.get('q'))"/>
+                <input type="text" id="q" name="q" value="$!esc.html($params.get('q'))" style="width: min(50vw, 30rem);" />
             </div>
         #end
 
-        <div class="ui buttons">
+        <div class="ui huge buttons" style="margin-top: -5px;">
             <input type="submit" id="querySubmit" class="ui primary button" value="Search" />
             <!--
             <div class="or"></div>

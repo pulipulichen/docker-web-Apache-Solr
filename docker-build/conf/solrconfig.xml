@@ -867,7 +867,7 @@
        <searchComponent name="debug"     class="solr.DebugComponent" />
 
        Default configuration in a requestHandler would look like:
-
+/
        <arr name="components">
          <str>query</str>
          <str>facet</str>
@@ -1278,9 +1278,9 @@
 	   -->
        <str name="mlt.qf">
          text^0.5 features^1.0 name^1.2 sku^1.5 id^10.0 manu^1.1 cat^1.4
-         title^10.0 description^5.0 keywords^5.0 author^2.0 resourcename^1.0
+         title^10.0 description^5.0 keywords^5.0 author^2.0 resourcename^1.0 publisher^2.0 language^1.0
        </str>
-       <str name="mlt.fl">text,features,name,sku,id,manu,cat,title,description,keywords,author,resourcename</str>
+       <str name="mlt.fl">text,features,name,sku,id,manu,cat,title,description,keywords,publisher,author,resourcename</str>
        <int name="mlt.count">3</int>
 
        <!-- Faceting defaults -->
@@ -1291,8 +1291,9 @@
          修改此處以設定層面檢索功能
          <str name="facet.field">要開啟層面檢索的欄位</str>
          -->
-       <str name="facet.field">item_type</str>
-       <str name="facet.field">language</str>
+       <str name="facet.field">item_type_str</str>
+       <str name="facet.field">language_str</str>
+       <str name="facet.field">author_str</str>
 	   <!-- <str name="facet.field">cat</str>
        <str name="facet.field">manu_exact</str>
        <str name="facet.field">content_type</str>

@@ -21,6 +21,7 @@ sleep 10
 
 post -c collection "${LOCAL_VOLUMN_PATH}data/data.csv"
 
+
 # ----------------------------------------------------------------
 
 setupCloudflare() {
@@ -61,6 +62,10 @@ getCloudflarePublicURL() {
 }
 
 getCloudflarePublicURL "${LOCAL_PORT}" > "${LOCAL_VOLUMN_PATH}/.cloudflare.url"
+
+echo "================================================================"
+echo "Apache Solr is ready to serve."
+echo "================================================================"
 
 # ----------------------------------------------------------------
 
