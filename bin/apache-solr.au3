@@ -77,8 +77,8 @@ FileCopy($sProjectFolder & "\package.json", $sProjectFolderCache & "\package.jso
 
 Local $INPUT_FILE = 0
 
-If FileExists($sProjectFolder & "\docker-compose-template.yml") Then
-  Local $fileContent = FileRead($sProjectFolder & "\docker-compose-template.yml")
+If FileExists($sProjectFolder & "\docker-build\docker-compose-template.yml") Then
+  Local $fileContent = FileRead($sProjectFolder & "\docker-build\docker-compose-template.yml")
   If StringInStr($fileContent, "[INPUT]") Then
     $INPUT_FILE = 1
   EndIf
@@ -90,7 +90,7 @@ Local $PUBLIC_PORT = 0
 
 Local $DOCKER_COMPOSE_FILE = $sProjectFolder &  "\docker-compose.yml"
 If Not FileExists($DOCKER_COMPOSE_FILE) Then
-  $DOCKER_COMPOSE_FILE = $sProjectFolder & "\docker-compose-template.yml"
+  $DOCKER_COMPOSE_FILE = $sProjectFolder & "\docker-build\docker-compose-template.yml"
 EndIf
 
 If FileExists($DOCKER_COMPOSE_FILE) Then
@@ -165,7 +165,7 @@ Func setDockerComposeYML($file)
 	
     Local $filename = StringMid($file, StringInStr($file, "\", 0, -1) + 1)
 
-    Local $template = FileRead($sProjectFolder & "\docker-compose-template.yml")
+    Local $template = FileRead($sProjectFolder & "\docker-build\docker-compose-template.yml")
 	;ConsoleWrite($template)
 	
     $template = StringReplace($template, "[SOURCE]", $dirname)
