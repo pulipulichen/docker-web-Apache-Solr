@@ -17,3 +17,4 @@ COLAB: https://colab.research.google.com/drive/1_aTP6n4rQty6P0Ez4q-OtiaJJIwP3fU5
 web
 
 https://pulipulichen.github.io/docker-web-Apache-Solr/bin/apache-solr.exe
+https://pulipulichen.github.io/docker-web-Apache-Solr/bin/apache-solr.sh
