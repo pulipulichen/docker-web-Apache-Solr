@@ -9,7 +9,8 @@ if [ -z "$(ls -A $LOCAL_VOLUMN_PATH)" ]; then
 fi
 
 if [ ! -e "${LOCAL_VOLUMN_PATH}/solrconfig.xml.txt" ]; then
-  ln -s "${LOCAL_VOLUMN_PATH}"/solrconfig.xml "${LOCAL_VOLUMN_PATH}"/solrconfig.xml.txt
+  mv "${LOCAL_VOLUMN_PATH}"/solrconfig.xml "${LOCAL_VOLUMN_PATH}"/solrconfig.xml.txt
+  ln -s "${LOCAL_VOLUMN_PATH}"/solrconfig.xml.txt "${LOCAL_VOLUMN_PATH}"/solrconfig.xml
 fi
 
 docker-entrypoint.sh solr-foreground -force &
