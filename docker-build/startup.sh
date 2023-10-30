@@ -4,13 +4,10 @@
 
 if [ -z "$(ls -A $LOCAL_VOLUMN_PATH)" ]; then
   rsync --ignore-existing -r /docker-build/conf/ "${LOCAL_VOLUMN_PATH}"
-  ln -s "${LOCAL_VOLUMN_PATH}"/solrconfig.xml "${LOCAL_VOLUMN_PATH}"/solrconfig.xml.txt
-  # cp -rf /docker-build/conf/* "${LOCAL_VOLUMN_PATH}"
 fi
 
-if [ ! -e "${LOCAL_VOLUMN_PATH}/solrconfig.xml.txt" ]; then
-  mv "${LOCAL_VOLUMN_PATH}"/solrconfig.xml "${LOCAL_VOLUMN_PATH}"/solrconfig.xml.txt
-  ln -s "${LOCAL_VOLUMN_PATH}"/solrconfig.xml.txt "${LOCAL_VOLUMN_PATH}"/solrconfig.xml
+if [ ! -e "${LOCAL_VOLUMN_PATH}/solrconfig.xml" ]; then
+  ln -s "${LOCAL_VOLUMN_PATH}"solrconfig.xml.txt "${LOCAL_VOLUMN_PATH}"solrconfig.xml
 fi
 
 docker-entrypoint.sh solr-foreground -force &

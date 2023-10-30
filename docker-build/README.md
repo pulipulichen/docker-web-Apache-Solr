@@ -3,13 +3,13 @@
 - https://docs.docker.com/get-started/04_sharing_app/
 - `docker image ls | head` 找出合適的名稱，例如「html-webpage-dashboard_app」
 - 建立合適的repo https://hub.docker.com/
-- `docker tag docker-web-apache-solr-app pudding/docker-web:docker-web-apache-solr-app-20231031-0349`
-- `docker push pudding/docker-web:docker-web-apache-solr-app-20231031-0349`
+- `docker tag docker-web-apache-solr-app pudding/docker-web:docker-web-apache-solr-app-20231031-0350`
+- `docker push pudding/docker-web:docker-web-apache-solr-app-20231031-0350`
 
 - 修改docker-compose-template.yaml
-image: pudding/docker-web:docker-web-apache-solr-app-20231031-0349
+image: pudding/docker-web:docker-web-apache-solr-app-20231031-0350
 
 - 修改udocker.sh
-IMAGE_NAME=pudding/docker-web:docker-web-apache-solr-app-20231031-0349
+IMAGE_NAME=pudding/docker-web:docker-web-apache-solr-app-20231031-0350
 
 - 加入到監控清單 https://github.com/democwise2016/dockerhub-image-refresher/edit/main/docker-image-list.txt
