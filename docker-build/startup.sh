@@ -2,20 +2,16 @@
 
 # ----------------------------------------------------------------
 
-#echo "GOGOGO 1"
 if [ -z "$(ls -A $LOCAL_VOLUMN_PATH)" ]; then
-  # solr-precreate books
-  # mv /var/solr/data/books/data /var/solr/data/collection/
-  # mv /var/solr/data/books/core.properties /var/solr/data/collection/
-  
-
-  #echo "GOGOGO 2"
-  # rm -rf "${LOCAL_VOLUMN_PATH}/*"
   rsync --ignore-existing -r /docker-build/conf/ "${LOCAL_VOLUMN_PATH}"
+  ln -s "${LOCAL_VOLUMN_PATH}"/solrconfig.xml "${LOCAL_VOLUMN_PATH}"/solrconfig.xml.txt
   # cp -rf /docker-build/conf/* "${LOCAL_VOLUMN_PATH}"
 fi
-  #echo "GOGOGO 3"
-  # chmod -R 777 "${LOCAL_VOLUMN_PATH}/"
+
+if [ ! -e "${LOCAL_VOLUMN_PATH}/solrconfig.xml.txt" ]; then
+  ln -s "${LOCAL_VOLUMN_PATH}"/solrconfig.xml "${LOCAL_VOLUMN_PATH}"/solrconfig.xml.txt
+fi
+
 docker-entrypoint.sh solr-foreground -force &
 sleep 10
 
