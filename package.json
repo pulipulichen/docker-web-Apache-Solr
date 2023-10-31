@@ -6,7 +6,7 @@
   "scripts": {
     "start": "docker-compose up --build",
     "reset-start": "rm -rf ./docker-web-Apache-Solr; docker-compose up --build",
-    "d0.build": "docker-compose up --build",
+    "d0.build": "docker-compose build",
     "d1.bash": "docker-compose run --service-ports app bash /console.sh",
     "save-conf": "cp -rf ./docker-web-Apache-Solr/* ./docker-build/conf/; rm -f ./docker-build/conf/.cloudflare.url"
   },

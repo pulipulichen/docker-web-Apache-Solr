@@ -41,4 +41,4 @@ COPY ./docker-build/console.sh /console.sh
 COPY ./docker-build/startup.sh /startup.sh
 
 # CMD ["solr-foreground", "-force"]
-# RUN echo "20231031-2109"
+RUN echo "20231101-0056"
