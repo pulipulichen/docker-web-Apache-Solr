@@ -28,3 +28,25 @@ else:
         print("IDs generated and saved to the CSV file.")
     else:
         print("The 'id' column already exists in the file.")
+
+def calculate_md5(row):
+    id_value = row['id']
+    if pd.isnull(id_value):
+        other_values = [str(val) for col, val in row.items() if col != 'id']
+        id_value = ''.join(other_values)
+    md5 = hashlib.md5(id_value.encode()).hexdigest()
+    return md5
+
+def process_csv(file_path):
+    df = pd.read_csv(file_path)
+
+    for index, row in df.iterrows():
+        md5_id = calculate_md5(row)
+        df.at[index, 'id'] = md5_id  # Update the 'id' column in the DataFrame
+        print(f"Row {index}: Original ID: {row['id']}, Calculated MD5 ID: {md5_id}")
+
+    # Write back to a new CSV file if needed
+    df.to_csv(file_path, index=False)
+
+# Replace 'your_file.csv' with the path to your CSV file
+process_csv(file_path)
