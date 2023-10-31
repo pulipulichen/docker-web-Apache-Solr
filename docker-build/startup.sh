@@ -2,8 +2,10 @@
 
 # ----------------------------------------------------------------
 
+INITED="true"
 if [ -z "$(ls -A $LOCAL_VOLUMN_PATH)" ]; then
   rsync --ignore-existing -r /docker-build/conf/ "${LOCAL_VOLUMN_PATH}"
+  INITED="false"
 fi
 
 # if [ ! -e "${LOCAL_VOLUMN_PATH}/solrconfig.xml" ]; then
@@ -11,10 +13,14 @@ fi
 # fi
 
 docker-entrypoint.sh solr-foreground -force &
+
 sleep 10
 
 post -c collection "${LOCAL_VOLUMN_PATH}data/data.csv"
 
+if [ "$INITED" != "true" ]; then
+  sleep 30
+fi
 
 # ----------------------------------------------------------------
 
