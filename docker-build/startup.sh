@@ -8,6 +8,10 @@ if [ -z "$(ls -A $LOCAL_VOLUMN_PATH)" ]; then
   INITED="false"
 fi
 
+if [ -f "${LOCAL_VOLUMN_PATH}solrconfig.xml.txt" ]; then
+  cp -f "${LOCAL_VOLUMN_PATH}solrconfig.xml.txt" "${LOCAL_VOLUMN_PATH}solrconfig.xml"
+fi
+
 # if [ ! -e "${LOCAL_VOLUMN_PATH}/solrconfig.xml" ]; then
 #   ln -s "${LOCAL_VOLUMN_PATH}"solrconfig.xml.txt "${LOCAL_VOLUMN_PATH}"solrconfig.xml
 # fi
@@ -16,7 +20,14 @@ docker-entrypoint.sh solr-foreground -force &
 
 sleep 10
 
-post -c collection "${LOCAL_VOLUMN_PATH}data/data.csv"
+if [ ! -f "$file" ]; then
+  post -c collection "${LOCAL_VOLUMN_PATH}data/data.csv"
+  cp -f "${LOCAL_VOLUMN_PATH}data/data.csv" /tmp/data.csv
+elif ! cmp -s "${LOCAL_VOLUMN_PATH}data/data.csv" /tmp/data.csv; then
+  post -c collection "${LOCAL_VOLUMN_PATH}data/data.csv"
+  cp -f "${LOCAL_VOLUMN_PATH}data/data.csv" /tmp/data.csv
+  python3 "${LOCAL_VOLUMN_PATH}python/remove_not_in_id.py"
+fi
 
 if [ "$INITED" != "true" ]; then
   sleep 30

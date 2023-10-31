@@ -6,7 +6,7 @@ RUN apt-get update
 RUN apt-get install -y curl wget nano rsync mlocate vim
 RUN updatedb
 RUN apt-get install -y pip
-RUN pip install pyexcel pyexcel-ods
+RUN pip install pyexcel==0.7.0 pyexcel-ods==0.6.0 pandas==2.1.2 requests==2.31.0
 
 #RUN sed -i '/jessie-updates/d' /etc/apt/sources.list
 
