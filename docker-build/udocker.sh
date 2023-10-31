@@ -9,7 +9,7 @@ PROJECT_NAME=docker-web-Apache-Solr
 IMAGE_NAME=pudding/docker-web:docker-web-apache-solr-app-20231031-0351
 LOCAL_VOLUMN_PATH=/var/solr/data/collection/conf
 LOCAL_PORT=8983
-RUN_IN_BACKGROUND=true
+RUN_IN_BACKGROUND=false
 
 echo "Image: ${IMAGE_NAME}"
 
