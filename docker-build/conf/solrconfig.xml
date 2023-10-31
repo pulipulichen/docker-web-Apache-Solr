@@ -1291,9 +1291,9 @@
          修改此處以設定層面檢索功能
          <str name="facet.field">要開啟層面檢索的欄位</str>
          -->
-       <str name="facet.field">item_type_str</str>
-       <str name="facet.field">language_str</str>
-       <str name="facet.field">author_str</str>
+       <str name="facet.field">item_type_facet</str>
+       <str name="facet.field">language_facet</str>
+       <str name="facet.field">author_facet</str>
 	   <!-- <str name="facet.field">cat</str>
        <str name="facet.field">manu_exact</str>
        <str name="facet.field">content_type</str>

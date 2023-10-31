@@ -585,14 +585,14 @@
   <copyField source="author" dest="author_str" maxChars="256"/>
   <copyField source="cat" dest="cat_str" maxChars="256"/>
   <copyField source="name" dest="name_str" maxChars="256"/>
-  <copyField source="item_type" dest="item_type_str" maxChars="256"/>
+  <copyField source="item_type" dest="item_type_facet" maxChars="256"/>
   <copyField source="publisher" dest="publisher_str" maxChars="256"/>
-  <copyField source="language" dest="language_str" maxChars="256"/>
+  <copyField source="language" dest="language_facet" maxChars="256"/>
   <copyField source="title" dest="title_str" maxChars="256"/>
   <copyField source="database" dest="database_str" maxChars="256"/>
   <copyField source="publication" dest="publication_str" maxChars="256"/>
   <copyField source="notes" dest="notes_str" maxChars="256"/>
-  <copyField source="author" dest="author_str" maxChars="256"/>
+  <copyField source="author" dest="author_facet" maxChars="256"/>
 
   <copyField source="title" dest="text"/>
    <copyField source="author" dest="text"/>
@@ -604,6 +604,8 @@
    <copyField source="description" dest="text"/>
    <copyField source="keywords" dest="text"/>
    <copyField source="content" dest="text"/>
+   <copyField source="language" dest="text"/>
+   <copyField source="item_type" dest="text"/>
    <copyField source="content_type" dest="text"/>
    <copyField source="resourcename" dest="text"/>
    <copyField source="url" dest="text"/>
