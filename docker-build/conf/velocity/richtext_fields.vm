@@ -51,7 +51,7 @@
             <td>
         #end
         
-        #if($name == 'title')
+        #if($name == 'dc.title')
             #if($access_point==false)
                 <h2 class="ui dividing header">
             #else

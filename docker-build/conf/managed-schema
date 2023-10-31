@@ -501,6 +501,7 @@
    <field name="page" type="pint" indexed="true" stored="true" />
    <field name="width" type="pint" indexed="true" stored="true" />
    <field name="weight" type="pfloat" indexed="true" stored="true" />
+   <field name="number" type="pint" indexed="true" stored="true" />
 
    <field name="store" type="location" indexed="true" stored="true"/>
 
@@ -510,7 +511,39 @@
     <field name="lcc" type="text_general_keyword" indexed="true" stored="true" multiValued="true"/>
     <field name="e_book_isbn" type="text_general_keyword" indexed="true" stored="true" multiValued="true"/>
     <field name="volume" type="text_general" indexed="true" stored="true" multiValued="true"/>
-    
+
+  <!-- ========================================== -->
+  <!-- For Google Scholar 20231031-2057 -->
+
+  <field name="Authors" type="text_general" multiValued="true"/>
+  <field name="Title" type="text_general"/>
+  <field name="Publication" type="text_general"/>
+  <field name="Volume" type="text_general"/>
+  <field name="Number" type="text_general"/>
+  <field name="Pages" type="text_general"/>
+  <field name="Year" type="pint"/>
+  <field name="Publisher" type="text_general"/>
+
+  <!-- ========================================== -->
+  <!-- For Dublin Core 20231031-2057 -->
+
+  <field name="dc.title" type="text_general"/>
+  <field name="dc.creator" type="text_general" multiValued="true"/>
+  <field name="dc.subject" type="text_general" multiValued="true"/>
+  <field name="dc.description" type="text_general"/>
+  <field name="dc.publisher" type="text_general"/>
+  <field name="dc.contributor" type="text_general" multiValued="true"/>
+  <field name="dc.date" type="text_general" multiValued="true"/>
+  <field name="dc.type" type="text_general" multiValued="true"/>
+  <field name="dc.format" type="text_general" multiValued="true"/>
+  <field name="dc.identifier" type="text_general" multiValued="true"/>
+  <field name="dc.source" type="text_general" multiValued="true"/>
+  <field name="dc.language" type="text_general" multiValued="true"/>
+  <field name="dc.relation" type="text_general" multiValued="true"/>
+  <field name="dc.coverage" type="text_general"/>
+  <field name="dc.rights" type="text_general"/>
+
+  <!-- ========================================== -->
 
   <dynamicField name="*_txt_en_split_tight" type="text_en_splitting_tight" indexed="true" stored="true"/>
   <dynamicField name="*_descendent_path" type="descendent_path" indexed="true" stored="true"/>
@@ -582,6 +615,36 @@
   <dynamicField name="*_f" type="pfloat" indexed="true" stored="true"/>
   <dynamicField name="*_d" type="pdouble" indexed="true" stored="true"/>
   <dynamicField name="*_p" type="location" indexed="true" stored="true"/>
+
+
+  <!-- ========================================== -->
+  <!-- For Dublin Core 20231031-2057 -->
+
+  <copyField source="Authors" dest="dc.creator" />
+  <copyField source="Title" dest="dc.title" />
+  <copyField source="Publication" dest="dc.source" />
+  <copyField source="Volume" dest="dc.source" />
+  <copyField source="Number" dest="dc.source" />
+  <copyField source="Pages" dest="dc.source" />
+  <copyField source="Year" dest="dc.date" maxChars="4" />
+  <copyField source="Publisher" dest="dc.publisher" />
+
+  <copyField source="Authors" dest="text" />
+  <copyField source="Title" dest="text" />
+  <copyField source="Publication" dest="text" />
+  <copyField source="Volume" dest="text" />
+  <copyField source="Number" dest="text" />
+  <copyField source="Pages" dest="text" />
+  <copyField source="Year" dest="text" />
+  <copyField source="Publisher" dest="text" />
+
+  <copyField source="Authors" dest="dc.creator_facet"/>
+  <copyField source="Year" dest="dc.date_facet"/>
+  <copyField source="dc.language" dest="dc.language_facet"/>
+  <copyField source="Publisher" dest="dc.publisher_facet"/>
+
+  <!-- ========================================== -->
+
   <copyField source="author" dest="author_str" maxChars="256"/>
   <copyField source="cat" dest="cat_str" maxChars="256"/>
   <copyField source="name" dest="name_str" maxChars="256"/>
@@ -609,4 +672,31 @@
    <copyField source="content_type" dest="text"/>
    <copyField source="resourcename" dest="text"/>
    <copyField source="url" dest="text"/>
+
+  <!-- ========================================== -->
+  <!-- For Dublin Core 20231031-2057 -->
+
+  <copyField source="dc.creator" dest="dc.creator_facet"/>
+  <copyField source="dc.date" dest="dc.date_facet"/>
+  <copyField source="dc.language" dest="dc.language_facet"/>
+  <copyField source="dc.type" dest="dc.type_facet"/>
+
+  <copyField source="dc.title" dest="text"/>
+  <copyField source="dc.creator" dest="text"/>
+  <copyField source="dc.subject" dest="text"/>
+  <copyField source="dc.description" dest="text"/>
+  <copyField source="dc.publisher" dest="text"/>
+  <copyField source="dc.contributor" dest="text"/>
+  <copyField source="dc.date" dest="text"/>
+  <copyField source="dc.type" dest="text"/>
+  <copyField source="dc.format" dest="text"/>
+  <copyField source="dc.identifier" dest="text"/>
+  <copyField source="dc.source" dest="text"/>
+  <copyField source="dc.language" dest="text"/>
+  <copyField source="dc.relation" dest="text"/>
+  <copyField source="dc.coverage" dest="text"/>
+  <copyField source="dc.rights" dest="text"/>
+
+  <!-- ========================================== -->
+
 </schema>

@@ -25,42 +25,52 @@
     #set($access_point = $field['access_point'])
 
     #set($value_array = $mltHit.getFieldValue($name))
-        #if($label != false)
-            <strong>$label</strong>:
-        #end
-        
         #if (!$value_array.size())
             #set ($value_array = [$value_array])
         #end
-
-        #set( $comma = "" )
-
-        #foreach ($value in $value_array)
-          <span>
-                #set($display_value = $value)
-                #if ($label == false)
-                    #set($display_value = "<strong>"+$value+"</strong>")
-                #end
-
-
-                $comma
-
-                #if($access_point==false)
-                    $display_value
-                #else
-                    #if($name == 'title')
-                        #set($access_point = '?q=id:%22'+$mltId+'%22&mlt=true')
-                    #else
-                        #set($access_point = '?q='+$name+':%22'+$value+'%22')
-                    #end
-                    <a href="$access_point">
-                        $display_value
-                    </a>
-                #end
-            #set( $comma = "," )
-            </span>
+        
+        #set($hasValue = true)
+        #if ($value_array.size() == 1)
+          #set($firstItem = $value_array[0].trim())
+          #if (!$firstItem)
+            #set($hasValue = false)
+          #end
         #end
 
+        #if($hasValue)
+          #if($label != false)
+              <strong>$label</strong>:
+          #end
+          
+          #set( $comma = "" )
+
+          #foreach ($value in $value_array)
+
+            <span>
+                  #set($display_value = $value)
+                  #if ($label == false)
+                      #set($display_value = "<strong>"+$value+"</strong>")
+                  #end
+
+
+                  $comma
+
+                  #if($access_point==false)
+                      $display_value
+                  #else
+                      #if($name == 'title')
+                          #set($access_point = '?q=id:%22'+$mltId+'%22&mlt=true')
+                      #else
+                          #set($access_point = '?q='+$name+':%22'+$value+'%22')
+                      #end
+                      <a href="$access_point">
+                          $display_value
+                      </a>
+                  #end
+              #set( $comma = "," )
+              </span>
+          #end
+        #end
     </div>
 #end
 

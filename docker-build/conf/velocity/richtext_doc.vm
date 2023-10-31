@@ -42,6 +42,8 @@
   #set($url = $doc.getFieldValue('url'))
 #elseif($doc.getFieldValue('resourcename'))
   #set($url = "file:///$doc.getFieldValue('resourcename')")
+#elseif($doc.getFieldValue('dc.identifier'))
+  #set($url = $doc.getFieldValue('url'))
 #else
   #set($url = "$doc.getFieldValue('id')")
 #end

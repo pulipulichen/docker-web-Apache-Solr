@@ -4,7 +4,12 @@
     {'name': 'title', 'label': false, 'access_point': "#lensNoQ&q=id:%22$docId%22&mlt=true"},
     {'name': 'author', 'label': 'Author', 'access_point': true},
     {'name': 'publish_year', 'label': 'Publish Year', 'access_point': true},
-    {'name': 'subject', 'label': 'Subject', 'access_point': true}
+    {'name': 'subject', 'label': 'Subject', 'access_point': true},
+
+    {'name': 'dc.title', 'label': false, 'access_point': "#lensNoQ&q=id:%22$docId%22&mlt=true"},
+    {'name': 'dc.creator', 'label': 'Author', 'access_point': true},
+    {'name': 'dc.date', 'label': 'Publish Year', 'access_point': true},
+    {'name': 'dc.subject', 'label': 'Subject', 'access_point': true}
 ])
 
 ## 詳細顯示欄位
@@ -17,7 +22,20 @@
     {'name': 'isbn', 'label': 'ISBN', 'access_point': false},
     {'name': 'e_book_isbn', 'label': 'E-book ISBN', 'access_point': false},
     {'name': 'ddc', 'label': 'DDC', 'access_point': true},
-    {'name': 'lcc', 'label': 'LCC', 'access_point': true}
+    {'name': 'lcc', 'label': 'LCC', 'access_point': true},
+
+    {'name': 'dc.title', 'label': false, 'access_point': false},
+    {'name': 'dc.creator', 'label': 'Author', 'access_point': true},
+    {'name': 'dc.date', 'label': 'Publish Year', 'access_point': false},
+    {'name': 'dc.subject', 'label': 'Subject', 'access_point': true},
+    {'name': 'dc.format', 'label': 'Format', 'access_point': false},
+    {'name': 'dc.identifier', 'label': 'Identifier', 'access_point': false},
+    {'name': 'dc.source', 'label': 'Source', 'access_point': false},
+    {'name': 'dc.publisher', 'label': 'Publisher', 'access_point': true},
+    {'name': 'dc.language', 'label': 'Language', 'access_point': true},
+    {'name': 'dc.relation', 'label': 'Relation', 'access_point': true},
+    {'name': 'dc.coverage', 'label': 'Coverage', 'access_point': true},
+    {'name': 'dc.rights', 'label': 'Rights', 'access_point': true}
 ])
 
 ## 類似資料顯示欄位
@@ -25,7 +43,12 @@
     {'name': 'title', 'label': false, 'access_point': true},
     {'name': 'author', 'label': 'Author', 'access_point': false},
     {'name': 'publish_year', 'label': 'Publish Year', 'access_point': false},
-    {'name': 'subject', 'label': 'Subject', 'access_point': true}
+    {'name': 'subject', 'label': 'Subject', 'access_point': true},
+
+    {'name': 'dc.title', 'label': false, 'access_point': "#lensNoQ&q=id:%22$docId%22&mlt=true"},
+    {'name': 'dc.creator', 'label': 'Author', 'access_point': true},
+    {'name': 'dc.date', 'label': 'Publish Year', 'access_point': true},
+    {'name': 'dc.subject', 'label': 'Subject', 'access_point': true}
 ])
 
 ## 詳細檢索可使用的欄位
@@ -38,5 +61,18 @@
     {'name': 'isbn', 'label': 'ISBN'},
     {'name': 'e_book_isbn', 'label': 'E-book ISBN'},
     {'name': 'ddc', 'label': 'DDC'},
-    {'name': 'lcc', 'label': 'LCC'}
+    {'name': 'lcc', 'label': 'LCC'},
+
+    {'name': 'dc.title', 'label': "Title"},
+    {'name': 'dc.creator', 'label': 'Author'},
+    {'name': 'dc.date', 'label': 'Publish Year'},
+    {'name': 'dc.subject', 'label': 'Subject'},
+    {'name': 'dc.format', 'label': 'Format'},
+    {'name': 'dc.identifier', 'label': 'Identifier'},
+    {'name': 'dc.source', 'label': 'Source'},
+    {'name': 'dc.publisher', 'label': 'Publisher'},
+    {'name': 'dc.language', 'label': 'Language'},
+    {'name': 'dc.relation', 'label': 'Relation'},
+    {'name': 'dc.coverage', 'label': 'Coverage'},
+    {'name': 'dc.rights', 'label': 'Rights'}
 ])

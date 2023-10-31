@@ -4,6 +4,7 @@
 
 INITED="true"
 if [ -z "$(ls -A $LOCAL_VOLUMN_PATH)" ]; then
+  rm -rf /var/solr/data/collection/data
   rsync --ignore-existing -r /docker-build/conf/ "${LOCAL_VOLUMN_PATH}"
   INITED="false"
 fi
@@ -20,6 +21,7 @@ docker-entrypoint.sh solr-foreground -force &
 
 sleep 10
 
+python3 "${LOCAL_VOLUMN_PATH}python/prepend_id.py"
 if [ ! -f "$file" ]; then
   post -c collection "${LOCAL_VOLUMN_PATH}data/data.csv"
   cp -f "${LOCAL_VOLUMN_PATH}data/data.csv" /tmp/data.csv
