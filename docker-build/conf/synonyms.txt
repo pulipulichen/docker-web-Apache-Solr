@@ -27,3 +27,4 @@ Television, Televisions, TV, TVs
 # Synonym mappings can be used for spelling correction too
 pixima => pixma
 
+Cambridge university press => Cambridge University Press Cambridge

@@ -6,10 +6,11 @@
     {'name': 'publish_year', 'label': 'Publish Year', 'access_point': true},
     {'name': 'subject', 'label': 'Subject', 'access_point': true},
 
-    {'name': 'dc.title', 'label': false, 'access_point': "#lensNoQ&q=id:%22$docId%22&mlt=true"},
+    {'name': 'dc.title', 'label': false, 'access_point': false},
     {'name': 'dc.creator', 'label': 'Author', 'access_point': true},
     {'name': 'dc.date', 'label': 'Publish Year', 'access_point': true},
-    {'name': 'dc.subject', 'label': 'Subject', 'access_point': true}
+    {'name': 'dc.subject', 'label': 'Subject', 'access_point': true},
+    {'name': 'dc.publisher', 'label': 'Publisher', 'access_point': true}
 ])
 
 ## 詳細顯示欄位

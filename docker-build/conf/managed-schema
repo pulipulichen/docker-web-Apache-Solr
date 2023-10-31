@@ -278,6 +278,7 @@
     <analyzer type="index">
       <tokenizer class="solr.StandardTokenizerFactory"/>
       <filter class="solr.StopFilterFactory" words="stopwords.txt" ignoreCase="true"/>
+      <filter class="solr.SynonymGraphFilterFactory" expand="true" ignoreCase="true" synonyms="synonyms.txt"/>
       <filter class="solr.LowerCaseFilterFactory"/>
     </analyzer>
     <analyzer type="query">
@@ -291,6 +292,7 @@
     <analyzer type="index">
       <tokenizer class="solr.KeywordTokenizerFactory"/>
       <filter class="solr.StopFilterFactory" words="stopwords.txt" ignoreCase="true"/>
+      <filter class="solr.SynonymGraphFilterFactory" expand="true" ignoreCase="true" synonyms="synonyms.txt"/>
       <filter class="solr.LowerCaseFilterFactory"/>
     </analyzer>
     <analyzer type="query">
@@ -590,7 +592,6 @@
   <dynamicField name="*_txt_th" type="text_th" indexed="true" stored="true"/>
   <dynamicField name="*_txt_tr" type="text_tr" indexed="true" stored="true"/>
   <dynamicField name="*_point" type="point" indexed="true" stored="true"/>
-  <dynamicField name="*_facet" type="strings" docValues="true" indexed="false" stored="false" useDocValuesAsStored="false"/>
   <dynamicField name="*_srpt" type="location_rpt" indexed="true" stored="true"/>
   <dynamicField name="attr_*" type="text_general" multiValued="true" indexed="true" stored="true"/>
   <dynamicField name="*_txt" type="text_general" indexed="true" stored="true"/>
@@ -616,6 +617,7 @@
   <dynamicField name="*_d" type="pdouble" indexed="true" stored="true"/>
   <dynamicField name="*_p" type="location" indexed="true" stored="true"/>
 
+  <dynamicField name="*_facet" type="text_general_keyword"  multiValued="true" />
 
   <!-- ========================================== -->
   <!-- For Dublin Core 20231031-2057 -->
