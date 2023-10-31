@@ -33,7 +33,7 @@ def calculate_md5(row):
     id_value = row['id']
     if pd.isnull(id_value):
         other_values = [str(val) for col, val in row.items() if col != 'id']
-        id_value = ''.join(other_values)
+        id_value = ','.join(other_values)
     md5 = hashlib.md5(id_value.encode()).hexdigest()
     return md5
 

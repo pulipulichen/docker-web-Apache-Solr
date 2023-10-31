@@ -36,6 +36,7 @@ RUN echo "name=collection" > /var/solr/data/collection/core.properties
 RUN mkdir -p /docker-build/conf
 COPY ./docker-build/jetty.xml /opt/solr-8.7.0/server/etc/jetty.xml
 COPY ./docker-build/conf /docker-build/conf
+COPY ./docker-build/python /docker-build/python
 RUN chmod -R 777 "/docker-build/conf/"
 COPY ./docker-build/console.sh /console.sh
 COPY ./docker-build/startup.sh /startup.sh

@@ -21,14 +21,14 @@ docker-entrypoint.sh solr-foreground -force &
 
 sleep 10
 
-python3 "${LOCAL_VOLUMN_PATH}python/prepend_id.py"
+python3 "/docker-build/python/prepend_id.py"
 if [ ! -f "$file" ]; then
   post -c collection "${LOCAL_VOLUMN_PATH}data/data.csv"
   cp -f "${LOCAL_VOLUMN_PATH}data/data.csv" /tmp/data.csv
 elif ! cmp -s "${LOCAL_VOLUMN_PATH}data/data.csv" /tmp/data.csv; then
   post -c collection "${LOCAL_VOLUMN_PATH}data/data.csv"
   cp -f "${LOCAL_VOLUMN_PATH}data/data.csv" /tmp/data.csv
-  python3 "${LOCAL_VOLUMN_PATH}python/remove_not_in_id.py"
+  python3 "/docker-build/python/remove_not_in_id.py"
 fi
 
 if [ "$INITED" != "true" ]; then
