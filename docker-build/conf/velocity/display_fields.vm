@@ -52,19 +52,9 @@
 
 ## 詳細檢索可使用的欄位
 #set($advance_search_fields = [
-    {'name': 'title', 'label': 'Title'},
-    {'name': 'author', 'label': 'Author'},
-    {'name': 'publish_year', 'label': 'Publish Year'},
-    {'name': 'subject', 'label': 'Subject'},
-    {'name': 'edition', 'label': 'Edition'},
-    {'name': 'isbn', 'label': 'ISBN'},
-    {'name': 'e_book_isbn', 'label': 'E-book ISBN'},
-    {'name': 'ddc', 'label': 'DDC'},
-    {'name': 'lcc', 'label': 'LCC'},
-
     {'name': 'dc.title', 'label': "Title"},
     {'name': 'dc.creator', 'label': 'Author'},
-    {'name': 'dc.date', 'label': 'Publish Year'},
+    {'name': 'dc.date', 'label': 'Publish Date'},
     {'name': 'dc.subject', 'label': 'Subject'},
     {'name': 'dc.format', 'label': 'Format'},
     {'name': 'dc.identifier', 'label': 'Identifier'},
