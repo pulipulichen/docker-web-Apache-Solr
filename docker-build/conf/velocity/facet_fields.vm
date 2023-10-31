@@ -16,7 +16,9 @@
       <span class="facet-field ui tag label">$field.name</span>
       <ul>
         #foreach($facet in $field.values)
-          <li><a href="#url_for_facet_filter($field.name, $facet.name)">#if($facet.name!=$null)$facet.name#else<em>missing</em>#end</a> ($facet.count)</li>
+          #if($facet.name!="")
+            <li><a href="#url_for_facet_filter($field.name, $facet.name)">#if($facet.name!=$null)$facet.name#else<em>missing</em>#end</a> ($facet.count)</li>
+          #end
         #end
       </ul>
     #end  ## end if > 0

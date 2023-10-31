@@ -1299,9 +1299,10 @@
          -->
        <str name="facet.field">dc.type_facet</str>
        <str name="facet.field">dc.language_facet</str>
-       <str name="facet.field">dc.create_facet</str>
        <str name="facet.field">dc.publisher_facet</str>
        <str name="facet.field">dc.publisher</str>
+       <str name="facet.field">dc.creator_facet</str>
+       <str name="facet.field">dc.creator</str>
        
 	   <!-- <str name="facet.field">cat</str>
        <str name="facet.field">manu_exact</str>
