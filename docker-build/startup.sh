@@ -2,6 +2,22 @@
 
 # ----------------------------------------------------------------
 
+waitForConntaction() {
+  port="$1"
+  sleep 3
+  while true; do
+    if curl -sSf "http://127.0.0.1:$port" >/dev/null 2>&1; then
+      echo "Connection successful."
+      break
+    else
+      #echo "Connection failed. Retrying in 5 seconds..."
+      sleep 5
+    fi
+  done
+}
+
+# ----------------------------------------------------------------
+
 INITED="true"
 if [ -z "$(ls -A $LOCAL_VOLUMN_PATH)" ]; then
   rm -rf /var/solr/data/collection/data
@@ -18,6 +34,8 @@ fi
 # fi
 
 docker-entrypoint.sh solr-foreground -force &
+
+waitForConntaction LOCAL_PORT
 
 sleep 10
 
