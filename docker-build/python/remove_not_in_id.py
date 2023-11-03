@@ -4,7 +4,8 @@ import json
 import os
 
 # Read the CSV file and extract 'id' values
-file_path = "../data/data.csv"
+local_volume_path = os.environ.get('LOCAL_VOLUMN_PATH')
+file_path = os.path.join(local_volume_path, 'data/data.csv')
 absolute_path = os.path.abspath(file_path)
 
 data = pd.read_csv(absolute_path)
