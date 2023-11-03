@@ -1,14 +1,14 @@
-/*
- * # Semantic - Site
+/*!
+ * # Semantic UI 2.5.0 - Site
  * http://github.com/semantic-org/semantic-ui/
  *
  *
- * Copyright 2014 Contributor
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
  */
-;(function ( $, window, document, undefined ) {
+
+;(function ($, window, document, undefined) {
 
 $.site = $.fn.site = function(parameters) {
   var
@@ -81,7 +81,7 @@ $.site = $.fn.site = function(parameters) {
       requestAnimationFrame: function() {
         module.debug('Normalizing requestAnimationFrame');
         if(window.requestAnimationFrame === undefined) {
-          module.debug('RequestAnimationFrame not available, normailizing event');
+          module.debug('RequestAnimationFrame not available, normalizing event');
           window.requestAnimationFrame = window.requestAnimationFrame
             || window.mozRequestAnimationFrame
             || window.webkitRequestAnimationFrame
@@ -150,7 +150,7 @@ $.site = $.fn.site = function(parameters) {
             $.fn[name].settings[setting] = value;
             if(modifyExisting && namespace) {
               $existingModules = $(':data(module-' + namespace + ')');
-              if($existingModules.size() > 0) {
+              if($existingModules.length > 0) {
                 module.verbose('Modifying existing settings', $existingModules);
                 $existingModules[name]('setting', setting, value);
               }
@@ -176,7 +176,7 @@ $.site = $.fn.site = function(parameters) {
             $.extend(true, $.fn[name].settings, newSettings);
             if(modifyExisting && namespace) {
               $existingModules = $(':data(module-' + namespace + ')');
-              if($existingModules.size() > 0) {
+              if($existingModules.length > 0) {
                 module.verbose('Modifying existing settings', $existingModules);
                 $existingModules[name]('setting', newSettings);
               }
@@ -320,7 +320,7 @@ $.site = $.fn.site = function(parameters) {
           });
         }
         clearTimeout(module.performance.timer);
-        module.performance.timer = setTimeout(module.performance.display, 100);
+        module.performance.timer = setTimeout(module.performance.display, 500);
       },
       display: function() {
         var
@@ -433,7 +433,7 @@ $.site.settings = {
   },
 
   debug       : false,
-  verbose     : true,
+  verbose     : false,
   performance : true,
 
   modules: [
@@ -442,6 +442,7 @@ $.site.settings = {
     'checkbox',
     'dimmer',
     'dropdown',
+    'embed',
     'form',
     'modal',
     'nag',
@@ -453,7 +454,6 @@ $.site.settings = {
     'sticky',
     'tab',
     'transition',
-    'video',
     'visit',
     'visibility'
   ],
@@ -484,4 +484,4 @@ $.extend($.expr[ ":" ], {
 });
 
 
-})( jQuery, window , document );
+})( jQuery, window, document );

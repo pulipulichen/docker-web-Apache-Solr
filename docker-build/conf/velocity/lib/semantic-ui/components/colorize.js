@@ -1,9 +1,9 @@
-/*
- * # Semantic - Colorize
+/*!
+ * # Semantic UI 2.0.0 - Colorize
  * http://github.com/semantic-org/semantic-ui/
  *
  *
- * Copyright 2014 Contributor
+ * Copyright 2015 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
@@ -15,7 +15,9 @@
 
   $.fn.colorize = function(parameters) {
     var
-      settings        = $.extend(true, {}, $.fn.colorize.settings, parameters),
+      settings          = ( $.isPlainObject(parameters) )
+        ? $.extend(true, {}, $.fn.colorize.settings, parameters)
+        : $.extend({}, $.fn.colorize.settings),
       // hoist arguments
       moduleArguments = arguments || false
     ;
@@ -42,7 +44,7 @@
           width,
           height,
 
-          // shortucts
+          // shortcuts
           colors    = settings.colors,
           paths     = settings.paths,
           namespace = settings.namespace,

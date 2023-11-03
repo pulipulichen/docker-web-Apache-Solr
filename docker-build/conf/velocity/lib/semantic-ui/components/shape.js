@@ -1,17 +1,23 @@
-/*
- * # Semantic - Shape
+/*!
+ * # Semantic UI 2.5.0 - Shape
  * http://github.com/semantic-org/semantic-ui/
  *
  *
- * Copyright 2014 Contributor
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
  */
 
-;(function ( $, window, document, undefined ) {
+;(function ($, window, document, undefined) {
 
-"use strict";
+'use strict';
+
+window = (typeof window != 'undefined' && window.Math == Math)
+  ? window
+  : (typeof self != 'undefined' && self.Math == Math)
+    ? self
+    : Function('return this')()
+;
 
 $.fn.shape = function(parameters) {
   var
@@ -37,8 +43,10 @@ $.fn.shape = function(parameters) {
   $allModules
     .each(function() {
       var
-        moduleSelector  = $allModules.selector || '',
-        settings        = $.extend(true, {}, $.fn.shape.settings, parameters),
+        moduleSelector = $allModules.selector || '',
+        settings       = ( $.isPlainObject(parameters) )
+          ? $.extend(true, {}, $.fn.shape.settings, parameters)
+          : $.extend({}, $.fn.shape.settings),
 
         // internal aliases
         namespace     = settings.namespace,
@@ -100,7 +108,7 @@ $.fn.shape = function(parameters) {
         repaint: function() {
           module.verbose('Forcing repaint event');
           var
-            shape          = $sides.get(0) || document.createElement('div'),
+            shape          = $sides[0] || document.createElement('div'),
             fakeAssignment = shape.offsetWidth
           ;
         },
@@ -115,7 +123,7 @@ $.fn.shape = function(parameters) {
             module.reset();
             module.set.active();
           };
-          $.proxy(settings.beforeChange, $nextSide[0])();
+          settings.beforeChange.call($nextSide[0]);
           if(module.get.transitionEvent()) {
             module.verbose('Starting CSS animation');
             $module
@@ -189,7 +197,7 @@ $.fn.shape = function(parameters) {
 
           defaultSide: function() {
             $activeSide = $module.find('.' + settings.className.active);
-            $nextSide   = ( $activeSide.next(selector.side).size() > 0 )
+            $nextSide   = ( $activeSide.next(selector.side).length > 0 )
               ? $activeSide.next(selector.side)
               : $module.find(selector.side).first()
             ;
@@ -205,13 +213,29 @@ $.fn.shape = function(parameters) {
               : duration
             ;
             module.verbose('Setting animation duration', duration);
-            $sides.add($side)
+            if(settings.duration || settings.duration === 0) {
+              $sides.add($side)
+                .css({
+                  '-webkit-transition-duration': duration,
+                  '-moz-transition-duration': duration,
+                  '-ms-transition-duration': duration,
+                  '-o-transition-duration': duration,
+                  'transition-duration': duration
+                })
+              ;
+            }
+          },
+
+          currentStageSize: function() {
+            var
+              $activeSide = $module.find('.' + settings.className.active),
+              width       = $activeSide.outerWidth(true),
+              height      = $activeSide.outerHeight(true)
+            ;
+            $module
               .css({
-                '-webkit-transition-duration': duration,
-                '-moz-transition-duration': duration,
-                '-ms-transition-duration': duration,
-                '-o-transition-duration': duration,
-                'transition-duration': duration
+                width: width,
+                height: height
               })
             ;
           },
@@ -222,30 +246,39 @@ $.fn.shape = function(parameters) {
               $activeSide = $clone.find('.' + settings.className.active),
               $nextSide   = (nextIndex)
                 ? $clone.find(selector.side).eq(nextIndex)
-                : ( $activeSide.next(selector.side).size() > 0 )
+                : ( $activeSide.next(selector.side).length > 0 )
                   ? $activeSide.next(selector.side)
                   : $clone.find(selector.side).first(),
-              newSize = {}
+              newWidth    = (settings.width == 'next')
+                ? $nextSide.outerWidth(true)
+                : (settings.width == 'initial')
+                  ? $module.width()
+                  : settings.width,
+              newHeight    = (settings.height == 'next')
+                ? $nextSide.outerHeight(true)
+                : (settings.height == 'initial')
+                  ? $module.height()
+                  : settings.height
             ;
             $activeSide.removeClass(className.active);
             $nextSide.addClass(className.active);
             $clone.insertAfter($module);
-            newSize = {
-              width  : $nextSide.outerWidth(),
-              height : $nextSide.outerHeight()
-            };
             $clone.remove();
-            $module
-              .css(newSize)
-            ;
-            module.verbose('Resizing stage to fit new content', newSize);
+            if(settings.width != 'auto') {
+              $module.css('width', newWidth + settings.jitter);
+              module.verbose('Specifying width during animation', newWidth);
+            }
+            if(settings.height != 'auto') {
+              $module.css('height', newHeight + settings.jitter);
+              module.verbose('Specifying height during animation', newHeight);
+            }
           },
 
           nextSide: function(selector) {
             nextIndex = selector;
             $nextSide = $side.filter(selector);
             nextIndex = $side.index($nextSide);
-            if($nextSide.size() === 0) {
+            if($nextSide.length === 0) {
               module.set.defaultSide();
               module.error(error.side);
             }
@@ -260,7 +293,7 @@ $.fn.shape = function(parameters) {
             $nextSide
               .addClass(className.active)
             ;
-            $.proxy(settings.onChange, $nextSide[0])();
+            settings.onChange.call($nextSide[0]);
             module.set.defaultSide();
           }
         },
@@ -274,9 +307,12 @@ $.fn.shape = function(parameters) {
             }
             if( !module.is.animating()) {
               module.debug('Flipping up', $nextSide);
+              var
+                transform = module.get.transform.up()
+              ;
               module.set.stageSize();
               module.stage.above();
-              module.animate( module.get.transform.up() );
+              module.animate(transform);
             }
             else {
               module.queue('flip up');
@@ -290,9 +326,12 @@ $.fn.shape = function(parameters) {
             }
             if( !module.is.animating()) {
               module.debug('Flipping down', $nextSide);
+              var
+                transform = module.get.transform.down()
+              ;
               module.set.stageSize();
               module.stage.below();
-              module.animate( module.get.transform.down() );
+              module.animate(transform);
             }
             else {
               module.queue('flip down');
@@ -306,9 +345,12 @@ $.fn.shape = function(parameters) {
             }
             if( !module.is.animating()) {
               module.debug('Flipping left', $nextSide);
+              var
+                transform = module.get.transform.left()
+              ;
               module.set.stageSize();
               module.stage.left();
-              module.animate(module.get.transform.left() );
+              module.animate(transform);
             }
             else {
               module.queue('flip left');
@@ -322,9 +364,12 @@ $.fn.shape = function(parameters) {
             }
             if( !module.is.animating()) {
               module.debug('Flipping right', $nextSide);
+              var
+                transform = module.get.transform.right()
+              ;
               module.set.stageSize();
               module.stage.right();
-              module.animate(module.get.transform.right() );
+              module.animate(transform);
             }
             else {
               module.queue('flip right');
@@ -371,8 +416,8 @@ $.fn.shape = function(parameters) {
             up: function() {
               var
                 translate = {
-                  y: -(($activeSide.outerHeight() - $nextSide.outerHeight()) / 2),
-                  z: -($activeSide.outerHeight() / 2)
+                  y: -(($activeSide.outerHeight(true) - $nextSide.outerHeight(true)) / 2),
+                  z: -($activeSide.outerHeight(true) / 2)
                 }
               ;
               return {
@@ -383,8 +428,8 @@ $.fn.shape = function(parameters) {
             down: function() {
               var
                 translate = {
-                  y: -(($activeSide.outerHeight() - $nextSide.outerHeight()) / 2),
-                  z: -($activeSide.outerHeight() / 2)
+                  y: -(($activeSide.outerHeight(true) - $nextSide.outerHeight(true)) / 2),
+                  z: -($activeSide.outerHeight(true) / 2)
                 }
               ;
               return {
@@ -395,8 +440,8 @@ $.fn.shape = function(parameters) {
             left: function() {
               var
                 translate = {
-                  x : -(($activeSide.outerWidth() - $nextSide.outerWidth()) / 2),
-                  z : -($activeSide.outerWidth() / 2)
+                  x : -(($activeSide.outerWidth(true) - $nextSide.outerWidth(true)) / 2),
+                  z : -($activeSide.outerWidth(true) / 2)
                 }
               ;
               return {
@@ -407,8 +452,8 @@ $.fn.shape = function(parameters) {
             right: function() {
               var
                 translate = {
-                  x : -(($activeSide.outerWidth() - $nextSide.outerWidth()) / 2),
-                  z : -($activeSide.outerWidth() / 2)
+                  x : -(($activeSide.outerWidth(true) - $nextSide.outerWidth(true)) / 2),
+                  z : -($activeSide.outerWidth(true) / 2)
                 }
               ;
               return {
@@ -419,7 +464,7 @@ $.fn.shape = function(parameters) {
             over: function() {
               var
                 translate = {
-                  x : -(($activeSide.outerWidth() - $nextSide.outerWidth()) / 2)
+                  x : -(($activeSide.outerWidth(true) - $nextSide.outerWidth(true)) / 2)
                 }
               ;
               return {
@@ -430,7 +475,7 @@ $.fn.shape = function(parameters) {
             back: function() {
               var
                 translate = {
-                  x : -(($activeSide.outerWidth() - $nextSide.outerWidth()) / 2)
+                  x : -(($activeSide.outerWidth(true) - $nextSide.outerWidth(true)) / 2)
                 }
               ;
               return {
@@ -458,7 +503,7 @@ $.fn.shape = function(parameters) {
           },
 
           nextSide: function() {
-            return ( $activeSide.next(selector.side).size() > 0 )
+            return ( $activeSide.next(selector.side).length > 0 )
               ? $activeSide.next(selector.side)
               : $module.find(selector.side).first()
             ;
@@ -471,14 +516,19 @@ $.fn.shape = function(parameters) {
           above: function() {
             var
               box = {
-                origin : (($activeSide.outerHeight() - $nextSide.outerHeight()) / 2),
+                origin : (($activeSide.outerHeight(true) - $nextSide.outerHeight(true)) / 2),
                 depth  : {
-                  active : ($nextSide.outerHeight() / 2),
-                  next   : ($activeSide.outerHeight() / 2)
+                  active : ($nextSide.outerHeight(true) / 2),
+                  next   : ($activeSide.outerHeight(true) / 2)
                 }
               }
             ;
             module.verbose('Setting the initial animation position as above', $nextSide, box);
+            $sides
+              .css({
+                'transform' : 'translateZ(-' + box.depth.active + 'px)'
+              })
+            ;
             $activeSide
               .css({
                 'transform' : 'rotateY(0deg) translateZ(' + box.depth.active + 'px)'
@@ -487,7 +537,6 @@ $.fn.shape = function(parameters) {
             $nextSide
               .addClass(className.animating)
               .css({
-                'display'   : 'block',
                 'top'       : box.origin + 'px',
                 'transform' : 'rotateX(90deg) translateZ(' + box.depth.next + 'px)'
               })
@@ -497,14 +546,19 @@ $.fn.shape = function(parameters) {
           below: function() {
             var
               box = {
-                origin : (($activeSide.outerHeight() - $nextSide.outerHeight()) / 2),
+                origin : (($activeSide.outerHeight(true) - $nextSide.outerHeight(true)) / 2),
                 depth  : {
-                  active : ($nextSide.outerHeight() / 2),
-                  next   : ($activeSide.outerHeight() / 2)
+                  active : ($nextSide.outerHeight(true) / 2),
+                  next   : ($activeSide.outerHeight(true) / 2)
                 }
               }
             ;
             module.verbose('Setting the initial animation position as below', $nextSide, box);
+            $sides
+              .css({
+                'transform' : 'translateZ(-' + box.depth.active + 'px)'
+              })
+            ;
             $activeSide
               .css({
                 'transform' : 'rotateY(0deg) translateZ(' + box.depth.active + 'px)'
@@ -513,7 +567,6 @@ $.fn.shape = function(parameters) {
             $nextSide
               .addClass(className.animating)
               .css({
-                'display'   : 'block',
                 'top'       : box.origin + 'px',
                 'transform' : 'rotateX(-90deg) translateZ(' + box.depth.next + 'px)'
               })
@@ -522,15 +575,24 @@ $.fn.shape = function(parameters) {
 
           left: function() {
             var
+              height = {
+                active : $activeSide.outerWidth(true),
+                next   : $nextSide.outerWidth(true)
+              },
               box = {
-                origin : ( ( $activeSide.outerWidth() - $nextSide.outerWidth() ) / 2),
+                origin : ( ( height.active - height.next ) / 2),
                 depth  : {
-                  active : ($nextSide.outerWidth() / 2),
-                  next   : ($activeSide.outerWidth() / 2)
+                  active : (height.next / 2),
+                  next   : (height.active / 2)
                 }
               }
             ;
             module.verbose('Setting the initial animation position as left', $nextSide, box);
+            $sides
+              .css({
+                'transform' : 'translateZ(-' + box.depth.active + 'px)'
+              })
+            ;
             $activeSide
               .css({
                 'transform' : 'rotateY(0deg) translateZ(' + box.depth.active + 'px)'
@@ -539,7 +601,6 @@ $.fn.shape = function(parameters) {
             $nextSide
               .addClass(className.animating)
               .css({
-                'display'   : 'block',
                 'left'      : box.origin + 'px',
                 'transform' : 'rotateY(-90deg) translateZ(' + box.depth.next + 'px)'
               })
@@ -548,15 +609,24 @@ $.fn.shape = function(parameters) {
 
           right: function() {
             var
+              height = {
+                active : $activeSide.outerWidth(true),
+                next   : $nextSide.outerWidth(true)
+              },
               box = {
-                origin : ( ( $activeSide.outerWidth() - $nextSide.outerWidth() ) / 2),
+                origin : ( ( height.active - height.next ) / 2),
                 depth  : {
-                  active : ($nextSide.outerWidth() / 2),
-                  next   : ($activeSide.outerWidth() / 2)
+                  active : (height.next / 2),
+                  next   : (height.active / 2)
                 }
               }
             ;
             module.verbose('Setting the initial animation position as left', $nextSide, box);
+            $sides
+              .css({
+                'transform' : 'translateZ(-' + box.depth.active + 'px)'
+              })
+            ;
             $activeSide
               .css({
                 'transform' : 'rotateY(0deg) translateZ(' + box.depth.active + 'px)'
@@ -565,7 +635,6 @@ $.fn.shape = function(parameters) {
             $nextSide
               .addClass(className.animating)
               .css({
-                'display'   : 'block',
                 'left'      : box.origin + 'px',
                 'transform' : 'rotateY(90deg) translateZ(' + box.depth.next + 'px)'
               })
@@ -574,11 +643,15 @@ $.fn.shape = function(parameters) {
 
           behind: function() {
             var
+              height = {
+                active : $activeSide.outerWidth(true),
+                next   : $nextSide.outerWidth(true)
+              },
               box = {
-                origin : ( ( $activeSide.outerWidth() - $nextSide.outerWidth() ) / 2),
+                origin : ( ( height.active - height.next ) / 2),
                 depth  : {
-                  active : ($nextSide.outerWidth() / 2),
-                  next   : ($activeSide.outerWidth() / 2)
+                  active : (height.next / 2),
+                  next   : (height.active / 2)
                 }
               }
             ;
@@ -591,7 +664,6 @@ $.fn.shape = function(parameters) {
             $nextSide
               .addClass(className.animating)
               .css({
-                'display'   : 'block',
                 'left'      : box.origin + 'px',
                 'transform' : 'rotateY(-180deg)'
               })
@@ -604,7 +676,12 @@ $.fn.shape = function(parameters) {
             $.extend(true, settings, name);
           }
           else if(value !== undefined) {
-            settings[name] = value;
+            if($.isPlainObject(settings[name])) {
+              $.extend(true, settings[name], value);
+            }
+            else {
+              settings[name] = value;
+            }
           }
           else {
             return settings[name];
@@ -622,7 +699,7 @@ $.fn.shape = function(parameters) {
           }
         },
         debug: function() {
-          if(settings.debug) {
+          if(!settings.silent && settings.debug) {
             if(settings.performance) {
               module.performance.log(arguments);
             }
@@ -633,7 +710,7 @@ $.fn.shape = function(parameters) {
           }
         },
         verbose: function() {
-          if(settings.verbose && settings.debug) {
+          if(!settings.silent && settings.verbose && settings.debug) {
             if(settings.performance) {
               module.performance.log(arguments);
             }
@@ -644,8 +721,10 @@ $.fn.shape = function(parameters) {
           }
         },
         error: function() {
-          module.error = Function.prototype.bind.call(console.error, console, settings.name + ':');
-          module.error.apply(console, arguments);
+          if(!settings.silent) {
+            module.error = Function.prototype.bind.call(console.error, console, settings.name + ':');
+            module.error.apply(console, arguments);
+          }
         },
         performance: {
           log: function(message) {
@@ -667,7 +746,7 @@ $.fn.shape = function(parameters) {
               });
             }
             clearTimeout(module.performance.timer);
-            module.performance.timer = setTimeout(module.performance.display, 100);
+            module.performance.timer = setTimeout(module.performance.display, 500);
           },
           display: function() {
             var
@@ -683,8 +762,8 @@ $.fn.shape = function(parameters) {
             if(moduleSelector) {
               title += ' \'' + moduleSelector + '\'';
             }
-            if($allModules.size() > 1) {
-              title += ' ' + '(' + $allModules.size() + ')';
+            if($allModules.length > 1) {
+              title += ' ' + '(' + $allModules.length + ')';
             }
             if( (console.group !== undefined || console.table !== undefined) && performance.length > 0) {
               console.groupCollapsed(title);
@@ -764,7 +843,7 @@ $.fn.shape = function(parameters) {
       }
       else {
         if(instance !== undefined) {
-          module.destroy();
+          instance.invoke('destroy');
         }
         module.initialize();
       }
@@ -782,17 +861,29 @@ $.fn.shape.settings = {
   // module info
   name : 'Shape',
 
+  // hide all debug content
+  silent     : false,
+
   // debug content outputted to console
   debug      : false,
 
   // verbose debug output
-  verbose    : true,
+  verbose    : false,
+
+  // fudge factor in pixels when swapping from 2d to 3d (can be useful to correct rounding errors)
+  jitter     : 0,
 
   // performance data output
   performance: true,
 
   // event namespace
   namespace  : 'shape',
+
+  // width during animation, can be set to 'auto', initial', 'next' or pixel amount
+  width: 'initial',
+
+  // height during animation, can be set to 'auto', 'initial', 'next' or pixel amount
+  height: 'initial',
 
   // callback occurs on side change
   beforeChange : function() {},
@@ -802,7 +893,7 @@ $.fn.shape.settings = {
   allowRepeats: false,
 
   // animation duration
-  duration   : 700,
+  duration   : false,
 
   // possible errors
   error: {
@@ -827,4 +918,4 @@ $.fn.shape.settings = {
 };
 
 
-})( jQuery, window , document );
+})( jQuery, window, document );

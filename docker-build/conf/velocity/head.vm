@@ -12,8 +12,8 @@
   <link rel="stylesheet" href="#{url_for_solr}/admin/file?file=/velocity/jquery.autocomplete.css&contentType=text/css" type="text/css" />
   <script type="text/javascript" src="#{url_for_solr}/admin/file?file=/velocity/jquery.autocomplete.js&contentType=text/javascript"></script>
 
-  <script type="text/javascript" src="https://pulipulichen.github.io/docker-web-Apache-Solr/public_html/semantic-ui/semantic.min.js"></script>
-  <link rel="stylesheet" type="text/css" href="https://pulipulichen.github.io/docker-web-Apache-Solr/public_html/semantic-ui/semantic.min.css"/>
+  <script type="text/javascript" src="#{url_for_solr}/admin/file?file=/velocity/lib/semantic-ui/semantic.js&contentType=text/javascript"></script>
+  <link rel="stylesheet" type="text/css" href="#{url_for_solr}/admin/file?file=/velocity/lib/semantic-ui/semantic.css&contentType=text/css"/>
 
   <link rel="stylesheet" type="text/css" href="#{url_for_solr}/admin/file?file=/velocity/main.css&contentType=text/css"/>
 

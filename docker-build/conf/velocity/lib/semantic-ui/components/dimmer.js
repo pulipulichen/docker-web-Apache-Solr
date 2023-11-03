@@ -1,15 +1,23 @@
-/*
- * # Semantic - Dimmer
+/*!
+ * # Semantic UI 2.5.0 - Dimmer
  * http://github.com/semantic-org/semantic-ui/
  *
  *
- * Copyright 2014 Contributor
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
  */
 
-;(function ( $, window, document, undefined ) {
+;(function ($, window, document, undefined) {
+
+'use strict';
+
+window = (typeof window != 'undefined' && window.Math == Math)
+  ? window
+  : (typeof self != 'undefined' && self.Math == Math)
+    ? self
+    : Function('return this')()
+;
 
 $.fn.dimmer = function(parameters) {
   var
@@ -58,6 +66,7 @@ $.fn.dimmer = function(parameters) {
 
         preinitialize: function() {
           if( module.is.dimmer() ) {
+
             $dimmable = $module.parent();
             $dimmer   = $module;
           }
@@ -65,10 +74,10 @@ $.fn.dimmer = function(parameters) {
             $dimmable = $module;
             if( module.has.dimmer() ) {
               if(settings.dimmerName) {
-                $dimmer = $dimmable.children(selector.dimmer).filter('.' + settings.dimmerName);
+                $dimmer = $dimmable.find(selector.dimmer).filter('.' + settings.dimmerName);
               }
               else {
-                $dimmer = $dimmable.children(selector.dimmer);
+                $dimmer = $dimmable.find(selector.dimmer);
               }
             }
             else {
@@ -79,28 +88,8 @@ $.fn.dimmer = function(parameters) {
 
         initialize: function() {
           module.debug('Initializing dimmer', settings);
-          if(settings.on == 'hover') {
-            $dimmable
-              .on('mouseenter' + eventNamespace, module.show)
-              .on('mouseleave' + eventNamespace, module.hide)
-            ;
-          }
-          else if(settings.on == 'click') {
-            $dimmable
-              .on(clickEvent + eventNamespace, module.toggle)
-            ;
-          }
-          if( module.is.page() ) {
-            module.debug('Setting as a page dimmer', $dimmable);
-            module.set.pageDimmer();
-          }
 
-          if( module.is.closable() ) {
-            module.verbose('Adding dimmer close event', $dimmer);
-            $dimmer
-              .on(clickEvent + eventNamespace, module.event.click)
-            ;
-          }
+          module.bind.events();
           module.set.dimmable();
           module.instantiate();
         },
@@ -115,25 +104,59 @@ $.fn.dimmer = function(parameters) {
 
         destroy: function() {
           module.verbose('Destroying previous module', $dimmer);
-          $module
-            .removeData(moduleNamespace)
-          ;
+          module.unbind.events();
+          module.remove.variation();
           $dimmable
-            .off(eventNamespace)
-          ;
-          $dimmer
             .off(eventNamespace)
           ;
         },
 
+        bind: {
+          events: function() {
+            if(settings.on == 'hover') {
+              $dimmable
+                .on('mouseenter' + eventNamespace, module.show)
+                .on('mouseleave' + eventNamespace, module.hide)
+              ;
+            }
+            else if(settings.on == 'click') {
+              $dimmable
+                .on(clickEvent + eventNamespace, module.toggle)
+              ;
+            }
+            if( module.is.page() ) {
+              module.debug('Setting as a page dimmer', $dimmable);
+              module.set.pageDimmer();
+            }
+
+            if( module.is.closable() ) {
+              module.verbose('Adding dimmer close event', $dimmer);
+              $dimmable
+                .on(clickEvent + eventNamespace, selector.dimmer, module.event.click)
+              ;
+            }
+          }
+        },
+
+        unbind: {
+          events: function() {
+            $module
+              .removeData(moduleNamespace)
+            ;
+            $dimmable
+              .off(eventNamespace)
+            ;
+          }
+        },
+
         event: {
           click: function(event) {
-            module.verbose('Determining if event occured on dimmer', event);
-            if( $dimmer.find(event.target).size() === 0 || $(event.target).is(selector.content) ) {
+            module.verbose('Determining if event occurred on dimmer', event);
+            if( $dimmer.find(event.target).length === 0 || $(event.target).is(selector.content) ) {
               module.hide();
               event.stopImmediatePropagation();
             }
-          }
+          },
         },
 
         addContent: function(element) {
@@ -150,10 +173,6 @@ $.fn.dimmer = function(parameters) {
           var
             $element = $( settings.template.dimmer() )
           ;
-          if(settings.variation) {
-            module.debug('Creating dimmer with variation', settings.variation);
-            $element.addClass(className.variation);
-          }
           if(settings.dimmerName) {
             module.debug('Creating named dimmer', settings.dimmerName);
             $element.addClass(settings.dimmerName);
@@ -170,10 +189,11 @@ $.fn.dimmer = function(parameters) {
             : function(){}
           ;
           module.debug('Showing dimmer', $dimmer, settings);
+          module.set.variation();
           if( (!module.is.dimmed() || module.is.animating()) && module.is.enabled() ) {
             module.animate.show(callback);
-            $.proxy(settings.onShow, element)();
-            $.proxy(settings.onChange, element)();
+            settings.onShow.call(element);
+            settings.onChange.call(element);
           }
           else {
             module.debug('Dimmer is already shown or disabled');
@@ -188,8 +208,8 @@ $.fn.dimmer = function(parameters) {
           if( module.is.dimmed() || module.is.animating() ) {
             module.debug('Hiding dimmer', $dimmer);
             module.animate.hide(callback);
-            $.proxy(settings.onHide, element)();
-            $.proxy(settings.onChange, element)();
+            settings.onHide.call(element);
+            settings.onChange.call(element);
           }
           else {
             module.debug('Dimmer is not visible');
@@ -213,15 +233,30 @@ $.fn.dimmer = function(parameters) {
               : function(){}
             ;
             if(settings.useCSS && $.fn.transition !== undefined && $dimmer.transition('is supported')) {
+              if(settings.useFlex) {
+                module.debug('Using flex dimmer');
+                module.remove.legacy();
+              }
+              else {
+                module.debug('Using legacy non-flex dimmer');
+                module.set.legacy();
+              }
+              if(settings.opacity !== 'auto') {
+                module.set.opacity();
+              }
               $dimmer
                 .transition({
-                  animation : settings.transition + ' in',
+                  displayType : settings.useFlex
+                    ? 'flex'
+                    : 'block',
+                  animation   : settings.transition + ' in',
                   queue       : false,
-                  duration  : module.get.duration(),
-                  onStart   : function() {
+                  duration    : module.get.duration(),
+                  useFailSafe : true,
+                  onStart     : function() {
                     module.set.dimmed();
                   },
-                  onComplete : function() {
+                  onComplete  : function() {
                     module.set.active();
                     callback();
                   }
@@ -231,6 +266,9 @@ $.fn.dimmer = function(parameters) {
             else {
               module.verbose('Showing dimmer animation with javascript');
               module.set.dimmed();
+              if(settings.opacity == 'auto') {
+                settings.opacity = 0.8;
+              }
               $dimmer
                 .stop()
                 .css({
@@ -238,7 +276,7 @@ $.fn.dimmer = function(parameters) {
                   width   : '100%',
                   height  : '100%'
                 })
-                .fadeTo(module.get.duration(), 1, function() {
+                .fadeTo(module.get.duration(), settings.opacity, function() {
                   $dimmer.removeAttr('style');
                   module.set.active();
                   callback();
@@ -255,13 +293,18 @@ $.fn.dimmer = function(parameters) {
               module.verbose('Hiding dimmer with css');
               $dimmer
                 .transition({
-                  animation  : settings.transition + ' out',
-                  queue      : false,
-                  duration   : module.get.duration(),
-                  onStart    : function() {
+                  displayType : settings.useFlex
+                    ? 'flex'
+                    : 'block',
+                  animation   : settings.transition + ' out',
+                  queue       : false,
+                  duration    : module.get.duration(),
+                  useFailSafe : true,
+                  onStart     : function() {
                     module.remove.dimmed();
                   },
-                  onComplete : function() {
+                  onComplete  : function() {
+                    module.remove.variation();
                     module.remove.active();
                     callback();
                   }
@@ -303,10 +346,10 @@ $.fn.dimmer = function(parameters) {
         has: {
           dimmer: function() {
             if(settings.dimmerName) {
-              return ($module.children(selector.dimmer).filter('.' + settings.dimmerName).size() > 0);
+              return ($module.find(selector.dimmer).filter('.' + settings.dimmerName).length > 0);
             }
             else {
-              return ( $module.children(selector.dimmer).size() > 0 );
+              return ( $module.find(selector.dimmer).length > 0 );
             }
           }
         },
@@ -328,10 +371,10 @@ $.fn.dimmer = function(parameters) {
             return settings.closable;
           },
           dimmer: function() {
-            return $module.is(selector.dimmer);
+            return $module.hasClass(className.dimmer);
           },
           dimmable: function() {
-            return $module.is(selector.dimmable);
+            return $module.hasClass(className.dimmable);
           },
           dimmed: function() {
             return $dimmable.hasClass(className.dimmed);
@@ -357,6 +400,27 @@ $.fn.dimmer = function(parameters) {
         },
 
         set: {
+          opacity: function(opacity) {
+            var
+              color      = $dimmer.css('background-color'),
+              colorArray = color.split(','),
+              isRGB      = (colorArray && colorArray.length == 3),
+              isRGBA     = (colorArray && colorArray.length == 4)
+            ;
+            opacity    = settings.opacity === 0 ? 0 : settings.opacity || opacity;
+            if(isRGB || isRGBA) {
+              colorArray[3] = opacity + ')';
+              color         = colorArray.join(',');
+            }
+            else {
+              color = 'rgba(0, 0, 0, ' + opacity + ')';
+            }
+            module.debug('Setting opacity to', opacity);
+            $dimmer.css('background-color', color);
+          },
+          legacy: function() {
+            $dimmer.addClass(className.legacy);
+          },
           active: function() {
             $dimmer.addClass(className.active);
           },
@@ -371,6 +435,12 @@ $.fn.dimmer = function(parameters) {
           },
           disabled: function() {
             $dimmer.addClass(className.disabled);
+          },
+          variation: function(variation) {
+            variation = variation || settings.variation;
+            if(variation) {
+              $dimmer.addClass(variation);
+            }
           }
         },
 
@@ -380,11 +450,20 @@ $.fn.dimmer = function(parameters) {
               .removeClass(className.active)
             ;
           },
+          legacy: function() {
+            $dimmer.removeClass(className.legacy);
+          },
           dimmed: function() {
             $dimmable.removeClass(className.dimmed);
           },
           disabled: function() {
             $dimmer.removeClass(className.disabled);
+          },
+          variation: function(variation) {
+            variation = variation || settings.variation;
+            if(variation) {
+              $dimmer.removeClass(variation);
+            }
           }
         },
 
@@ -394,7 +473,12 @@ $.fn.dimmer = function(parameters) {
             $.extend(true, settings, name);
           }
           else if(value !== undefined) {
-            settings[name] = value;
+            if($.isPlainObject(settings[name])) {
+              $.extend(true, settings[name], value);
+            }
+            else {
+              settings[name] = value;
+            }
           }
           else {
             return settings[name];
@@ -412,7 +496,7 @@ $.fn.dimmer = function(parameters) {
           }
         },
         debug: function() {
-          if(settings.debug) {
+          if(!settings.silent && settings.debug) {
             if(settings.performance) {
               module.performance.log(arguments);
             }
@@ -423,7 +507,7 @@ $.fn.dimmer = function(parameters) {
           }
         },
         verbose: function() {
-          if(settings.verbose && settings.debug) {
+          if(!settings.silent && settings.verbose && settings.debug) {
             if(settings.performance) {
               module.performance.log(arguments);
             }
@@ -434,8 +518,10 @@ $.fn.dimmer = function(parameters) {
           }
         },
         error: function() {
-          module.error = Function.prototype.bind.call(console.error, console, settings.name + ':');
-          module.error.apply(console, arguments);
+          if(!settings.silent) {
+            module.error = Function.prototype.bind.call(console.error, console, settings.name + ':');
+            module.error.apply(console, arguments);
+          }
         },
         performance: {
           log: function(message) {
@@ -457,7 +543,7 @@ $.fn.dimmer = function(parameters) {
               });
             }
             clearTimeout(module.performance.timer);
-            module.performance.timer = setTimeout(module.performance.display, 100);
+            module.performance.timer = setTimeout(module.performance.display, 500);
           },
           display: function() {
             var
@@ -473,8 +559,8 @@ $.fn.dimmer = function(parameters) {
             if(moduleSelector) {
               title += ' \'' + moduleSelector + '\'';
             }
-            if($allModules.size() > 1) {
-              title += ' ' + '(' + $allModules.size() + ')';
+            if($allModules.length > 1) {
+              title += ' ' + '(' + $allModules.length + ')';
             }
             if( (console.group !== undefined || console.table !== undefined) && performance.length > 0) {
               console.groupCollapsed(title);
@@ -523,6 +609,7 @@ $.fn.dimmer = function(parameters) {
                 return false;
               }
               else {
+                module.error(error.method, query);
                 return false;
               }
             });
@@ -556,7 +643,7 @@ $.fn.dimmer = function(parameters) {
       }
       else {
         if(instance !== undefined) {
-          module.destroy();
+          instance.invoke('destroy');
         }
         module.initialize();
       }
@@ -574,17 +661,36 @@ $.fn.dimmer.settings = {
   name        : 'Dimmer',
   namespace   : 'dimmer',
 
+  silent      : false,
   debug       : false,
-  verbose     : true,
+  verbose     : false,
   performance : true,
 
+  // whether should use flex layout
+  useFlex     : true,
+
+  // name to distinguish between multiple dimmers in context
   dimmerName  : false,
+
+  // whether to add a variation type
   variation   : false,
+
+  // whether to bind close events
   closable    : 'auto',
-  transition  : 'fade',
+
+  // whether to use css animations
   useCSS      : true,
+
+  // css animation to use
+  transition  : 'fade',
+
+  // event to bind to
   on          : false,
 
+  // overriding opacity value
+  opacity     : 'auto',
+
+  // transition durations
   duration    : {
     show : 500,
     hide : 500
@@ -598,9 +704,21 @@ $.fn.dimmer.settings = {
     method   : 'The method you called is not defined.'
   },
 
+  className : {
+    active     : 'active',
+    animating  : 'animating',
+    dimmable   : 'dimmable',
+    dimmed     : 'dimmed',
+    dimmer     : 'dimmer',
+    disabled   : 'disabled',
+    hide       : 'hide',
+    legacy     : 'legacy',
+    pageDimmer : 'page',
+    show       : 'show'
+  },
+
   selector: {
-    dimmable : '.dimmable',
-    dimmer   : '.ui.dimmer',
+    dimmer   : '> .ui.dimmer',
     content  : '.ui.dimmer > .content, .ui.dimmer > .content > .center'
   },
 
@@ -608,19 +726,8 @@ $.fn.dimmer.settings = {
     dimmer: function() {
      return $('<div />').attr('class', 'ui dimmer');
     }
-  },
-
-  className : {
-    active     : 'active',
-    animating  : 'animating',
-    dimmable   : 'dimmable',
-    dimmed     : 'dimmed',
-    disabled   : 'disabled',
-    hide       : 'hide',
-    pageDimmer : 'page',
-    show       : 'show'
   }
 
 };
 
-})( jQuery, window , document );
+})( jQuery, window, document );

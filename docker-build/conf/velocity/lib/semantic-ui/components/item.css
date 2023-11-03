@@ -1,14 +1,12 @@
- /*
- * # Semantic UI
- * https://github.com/Semantic-Org/Semantic-UI
- * http://www.semantic-ui.com/
+/*!
+ * # Semantic UI 2.5.0 - Item
+ * http://github.com/semantic-org/semantic-ui/
  *
- * Copyright 2014 Contributors
+ *
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
  */
-
 
 
 /*******************************
@@ -21,8 +19,7 @@
 ---------------*/
 
 .ui.items > .item {
-  table-layout: fixed;
-  display: table;
+  display: flex;
   margin: 1em 0em;
   width: 100%;
   min-height: 0px;
@@ -31,8 +28,7 @@
   border: none;
   border-radius: 0rem;
   box-shadow: none;
-  -webkit-transition: box-shadow 0.2s ease;
-          transition: box-shadow 0.2s ease;
+  transition: box-shadow 0.1s ease;
   z-index: '';
 }
 .ui.items > .item a {
@@ -57,9 +53,6 @@
       Item
 ---------------*/
 
-.ui.items > .item {
-  min-width: 100%;
-}
 .ui.items > .item:after {
   display: block;
   content: ' ';
@@ -81,12 +74,13 @@
 
 .ui.items > .item > .image {
   position: relative;
-  display: table-cell;
+  flex: 0 0 auto;
+  display: block;
   float: none;
   margin: 0em;
   padding: 0em;
   max-height: '';
-  vertical-align: top;
+  align-self: top;
 }
 .ui.items > .item > .image > img {
   display: block;
@@ -105,6 +99,7 @@
 
 .ui.items > .item > .content {
   display: block;
+  flex: 1 1 auto;
   background: none;
   margin: 0em;
   padding: 0em;
@@ -122,15 +117,16 @@
   visibility: hidden;
 }
 .ui.items > .item > .image + .content {
-  width: 100%;
-  display: table-cell;
+  min-width: 0;
+  width: auto;
+  display: block;
   margin-left: 0em;
-  vertical-align: top;
+  align-self: top;
   padding-left: 1.5em;
 }
 .ui.items > .item > .content > .header {
   display: inline-block;
-  margin: -0.165em 0em 0em;
+  margin: -0.21425em 0em 0em;
   font-family: 'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif;
   font-weight: bold;
   color: rgba(0, 0, 0, 0.85);
@@ -138,7 +134,7 @@
 
 /* Default Header Size */
 .ui.items > .item > .content > .header:not(.ui) {
-  font-size: 1.2em;
+  font-size: 1.28571429em;
 }
 
 /*--------------
@@ -157,14 +153,13 @@
 ---------------*/
 
 .ui.items > .item .content img {
-  display: inline-block;
-  vertical-align: middle;
-  width: 2em;
+  align-self: middle;
+  width: '';
 }
 .ui.items > .item img.avatar,
 .ui.items > .item .avatar img {
-  width: 2em;
-  height: 2em;
+  width: '';
+  height: '';
   border-radius: 500rem;
 }
 
@@ -174,10 +169,10 @@
 
 .ui.items > .item > .content > .description {
   margin-top: 0.6em;
-  max-width: 550px;
+  max-width: auto;
   font-size: 1em;
-  line-height: 1.33;
-  color: rgba(0, 0, 0, 0.8);
+  line-height: 1.4285em;
+  color: rgba(0, 0, 0, 0.87);
 }
 
 /*--------------
@@ -196,6 +191,7 @@
 ---------------*/
 
 .ui.items > .item .meta {
+  margin: 0.5em 0em 0.5em;
   font-size: 1em;
   line-height: 1em;
   color: rgba(0, 0, 0, 0.6);
@@ -219,8 +215,7 @@
 /* Generic */
 .ui.items > .item > .content a:not(.ui) {
   color: '';
-  -webkit-transition: color 0.2s ease;
-          transition: color 0.2s ease;
+  transition: color 0.1s ease;
 }
 .ui.items > .item > .content a:not(.ui):hover {
   color: '';
@@ -231,7 +226,7 @@
   color: rgba(0, 0, 0, 0.85);
 }
 .ui.items > .item > .content > a.header:hover {
-  color: #00b2f3;
+  color: #1e70bf;
 }
 
 /* Meta */
@@ -239,7 +234,7 @@
   color: rgba(0, 0, 0, 0.4);
 }
 .ui.items > .item .meta > a:not(.ui):hover {
-  color: rgba(0, 0, 0, 0.8);
+  color: rgba(0, 0, 0, 0.87);
 }
 
 /*--------------
@@ -254,15 +249,14 @@
 .ui.items > .item > .content .favorite.icon {
   cursor: pointer;
   opacity: 0.75;
-  -webkit-transition: color 0.2s ease;
-          transition: color 0.2s ease;
+  transition: color 0.1s ease;
 }
 .ui.items > .item > .content .favorite.icon:hover {
   opacity: 1;
-  color: #ffb70a;
+  color: #FFB70A;
 }
 .ui.items > .item > .content .active.favorite.icon {
-  color: #ffb70a;
+  color: #FFE623;
 }
 
 /*-----Like----- */
@@ -272,15 +266,14 @@
 .ui.items > .item > .content .like.icon {
   cursor: pointer;
   opacity: 0.75;
-  -webkit-transition: color 0.2s ease;
-          transition: color 0.2s ease;
+  transition: color 0.1s ease;
 }
 .ui.items > .item > .content .like.icon:hover {
   opacity: 1;
-  color: #ff2733;
+  color: #FF2733;
 }
 .ui.items > .item > .content .active.like.icon {
-  color: #ff2733;
+  color: #FF2733;
 }
 
 /*----------------
@@ -298,8 +291,7 @@
   left: 0em;
   color: rgba(0, 0, 0, 0.4);
   box-shadow: none;
-  -webkit-transition: color 0.2s ease;
-          transition: color 0.2s ease;
+  transition: color 0.1s ease;
   border-top: none;
 }
 .ui.items > .item .extra > * {
@@ -342,23 +334,24 @@
   }
 }
 
-/* Mobily Only */
+/* Mobile Only */
 @media only screen and (max-width: 767px) {
-  .ui.items > .item {
+  .ui.items:not(.unstackable) > .item {
+    flex-direction: column;
     margin: 2em 0em;
   }
-  .ui.items > .item > .image {
+  .ui.items:not(.unstackable) > .item > .image {
     display: block;
     margin-left: auto;
     margin-right: auto;
   }
-  .ui.items > .item > .image,
-  .ui.items > .item > .image > img {
+  .ui.items:not(.unstackable) > .item > .image,
+  .ui.items:not(.unstackable) > .item > .image > img {
     max-width: 100% !important;
     width: auto !important;
     max-height: 250px !important;
   }
-  .ui.items > .item > .image + .content {
+  .ui.items:not(.unstackable) > .item > .image + .content {
     display: block;
     padding: 1.5em 0em 0em;
   }
@@ -375,13 +368,13 @@
 --------------------*/
 
 .ui.items > .item > .image + [class*="top aligned"].content {
-  vertical-align: top;
+  align-self: flex-start;
 }
 .ui.items > .item > .image + [class*="middle aligned"].content {
-  vertical-align: middle;
+  align-self: center;
 }
 .ui.items > .item > .image + [class*="bottom aligned"].content {
-  vertical-align: bottom;
+  align-self: flex-end;
 }
 
 /*--------------
@@ -400,7 +393,7 @@
 --------------------*/
 
 .ui.divided.items > .item {
-  border-top: 1px solid rgba(39, 41, 43, 0.15);
+  border-top: 1px solid rgba(34, 36, 38, 0.15);
   margin: 0em;
   padding: 1em 0em;
 }
@@ -434,7 +427,7 @@
 }
 .ui.items a.item:hover .content .header,
 .ui.link.items > .item:hover .content .header {
-  color: #00b2f3;
+  color: #1e70bf;
 }
 
 /*--------------
@@ -443,6 +436,17 @@
 
 .ui.items > .item {
   font-size: 1em;
+}
+
+/*---------------
+   Unstackable
+----------------*/
+
+@media only screen and (max-width: 767px) {
+  .ui.unstackable.items > .item > .image,
+  .ui.unstackable.items > .item > .image > img {
+    width: 125px !important;
+  }
 }
 
 

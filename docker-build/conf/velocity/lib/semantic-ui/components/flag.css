@@ -1,13 +1,17 @@
- /*
- * # Semantic UI
- * https://github.com/Semantic-Org/Semantic-UI
- * http://www.semantic-ui.com/
+/*!
+ * # Semantic UI 2.5.0 - Flag
+ * http://github.com/semantic-org/semantic-ui/
  *
- * Copyright 2014 Contributors
+ *
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
  */
+
+
+/*******************************
+             Flag
+*******************************/
 
 i.flag:not(.icon) {
   display: inline-block;
@@ -22,10 +26,12 @@ i.flag:not(.icon) {
   -webkit-backface-visibility: hidden;
           backface-visibility: hidden;
 }
+
+/* Sprite */
 i.flag:not(.icon):before {
   display: inline-block;
   content: '';
-  background: url("../themes/default/assets/images/flags.png") no-repeat 0px 0px;
+  background: url("./../themes/default/assets/images/flags.png") no-repeat -108px -1976px;
   width: 16px;
   height: 11px;
 }
@@ -294,6 +300,10 @@ i.flag.eh:before,
 i.flag.western.sahara:before {
   background-position: 0px -1664px;
 }
+i.flag.gb.eng:before,
+i.flag.england:before {
+  background-position: 0px -1690px;
+}
 i.flag.er:before,
 i.flag.eritrea:before {
   background-position: 0px -1716px;
@@ -339,7 +349,7 @@ i.flag.gabon:before {
   background-position: -36px 0px;
 }
 i.flag.gb:before,
-i.flag.england:before,
+i.flag.uk:before,
 i.flag.united.kingdom:before {
   background-position: -36px -26px;
 }
@@ -602,7 +612,7 @@ i.flag.mali:before {
 i.flag.mm:before,
 i.flag.myanmar:before,
 i.flag.burma:before {
-  background-position: -36px -1717px;
+  background-position: -73px -1821px;
 }
 i.flag.mn:before,
 i.flag.mongolia:before {
@@ -800,6 +810,10 @@ i.flag.sc:before,
 i.flag.seychelles:before {
   background-position: -72px -988px;
 }
+i.flag.gb.sct:before,
+i.flag.scotland:before {
+  background-position: -72px -1014px;
+}
 i.flag.sd:before,
 i.flag.sudan:before {
   background-position: -72px -1040px;
@@ -981,6 +995,10 @@ i.flag.vietnam:before {
 i.flag.vu:before,
 i.flag.vanuatu:before {
   background-position: -108px -182px;
+}
+i.flag.gb.wls:before,
+i.flag.wales:before {
+  background-position: -108px -208px;
 }
 i.flag.wf:before,
 i.flag.wallis.and.futuna:before {

@@ -1,15 +1,23 @@
-/*
- * # Semantic - State
+/*!
+ * # Semantic UI 2.3.0 - State
  * http://github.com/semantic-org/semantic-ui/
  *
  *
- * Copyright 2014 Contributor
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
  */
 
-;(function ( $, window, document, undefined ) {
+;(function ($, window, document, undefined) {
+
+"use strict";
+
+window = (typeof window != 'undefined' && window.Math == Math)
+  ? window
+  : (typeof self != 'undefined' && self.Math == Math)
+    ? self
+    : Function('return this')()
+;
 
 $.fn.state = function(parameters) {
   var
@@ -192,13 +200,20 @@ $.fn.state = function(parameters) {
         toggle: {
           state: function() {
             var
-              apiRequest
+              apiRequest,
+              requestCancelled
             ;
             if( module.allows('active') && module.is.enabled() ) {
               module.refresh();
               if($.fn.api !== undefined) {
-                apiRequest = $module.api('get request');
-                if(apiRequest) {
+                apiRequest       = $module.api('get request');
+                requestCancelled = $module.api('was cancelled');
+                if( requestCancelled ) {
+                  module.debug('API Request cancelled by beforesend');
+                  settings.activateTest   = function(){ return false; };
+                  settings.deactivateTest = function(){ return false; };
+                }
+                else if(apiRequest) {
                   module.listenTo(apiRequest);
                   return;
                 }
@@ -230,11 +245,6 @@ $.fn.state = function(parameters) {
               })
             ;
           }
-          // xhr exists but set to false, beforeSend killed the xhr
-          else {
-            settings.activateTest   = function(){ return false; };
-            settings.deactivateTest = function(){ return false; };
-          }
         },
 
         // checks whether active/inactive state can be given
@@ -252,7 +262,7 @@ $.fn.state = function(parameters) {
             if(settings.sync) {
               module.sync();
             }
-            $.proxy(settings.onChange, element)();
+            settings.onChange.call(element);
           },
 
           text: function() {
@@ -287,24 +297,24 @@ $.fn.state = function(parameters) {
         },
 
         activate: function() {
-          if( $.proxy(settings.activateTest, element)() ) {
+          if( settings.activateTest.call(element) ) {
             module.debug('Setting state to active');
             $module
               .addClass(className.active)
             ;
             module.update.text(text.active);
-            $.proxy(settings.onActivate, element)();
+            settings.onActivate.call(element);
           }
         },
 
         deactivate: function() {
-          if($.proxy(settings.deactivateTest, element)() ) {
+          if( settings.deactivateTest.call(element) ) {
             module.debug('Setting state to inactive');
             $module
               .removeClass(className.active)
             ;
             module.update.text(text.inactive);
-            $.proxy(settings.onDeactivate, element)();
+            settings.onDeactivate.call(element);
           }
         },
 
@@ -347,7 +357,7 @@ $.fn.state = function(parameters) {
             module.update.text(text);
             setTimeout(function(){
               module.update.text(previousText);
-              $.proxy(callback, element)();
+              callback.call(element);
             }, duration);
           }
         },
@@ -394,7 +404,7 @@ $.fn.state = function(parameters) {
               }
             }
             else {
-              module.debug('Text is already sane, ignoring update', text);
+              module.debug('Text is already set, ignoring update', text);
             }
           }
         },
@@ -405,7 +415,12 @@ $.fn.state = function(parameters) {
             $.extend(true, settings, name);
           }
           else if(value !== undefined) {
-            settings[name] = value;
+            if($.isPlainObject(settings[name])) {
+              $.extend(true, settings[name], value);
+            }
+            else {
+              settings[name] = value;
+            }
           }
           else {
             return settings[name];
@@ -423,7 +438,7 @@ $.fn.state = function(parameters) {
           }
         },
         debug: function() {
-          if(settings.debug) {
+          if(!settings.silent && settings.debug) {
             if(settings.performance) {
               module.performance.log(arguments);
             }
@@ -434,7 +449,7 @@ $.fn.state = function(parameters) {
           }
         },
         verbose: function() {
-          if(settings.verbose && settings.debug) {
+          if(!settings.silent && settings.verbose && settings.debug) {
             if(settings.performance) {
               module.performance.log(arguments);
             }
@@ -445,8 +460,10 @@ $.fn.state = function(parameters) {
           }
         },
         error: function() {
-          module.error = Function.prototype.bind.call(console.error, console, settings.name + ':');
-          module.error.apply(console, arguments);
+          if(!settings.silent) {
+            module.error = Function.prototype.bind.call(console.error, console, settings.name + ':');
+            module.error.apply(console, arguments);
+          }
         },
         performance: {
           log: function(message) {
@@ -468,7 +485,7 @@ $.fn.state = function(parameters) {
               });
             }
             clearTimeout(module.performance.timer);
-            module.performance.timer = setTimeout(module.performance.display, 100);
+            module.performance.timer = setTimeout(module.performance.display, 500);
           },
           display: function() {
             var
@@ -563,7 +580,7 @@ $.fn.state = function(parameters) {
       }
       else {
         if(instance !== undefined) {
-          module.destroy();
+          instance.invoke('destroy');
         }
         module.initialize();
       }
@@ -579,37 +596,37 @@ $.fn.state = function(parameters) {
 $.fn.state.settings = {
 
   // module info
-  name : 'State',
+  name           : 'State',
 
   // debug output
-  debug      : false,
+  debug          : false,
 
   // verbose debug output
-  verbose    : true,
+  verbose        : false,
 
   // namespace for events
-  namespace  : 'state',
+  namespace      : 'state',
 
   // debug data includes performance
-  performance: true,
+  performance    : true,
 
   // callback occurs on state change
-  onActivate   : function() {},
-  onDeactivate : function() {},
-  onChange     : function() {},
+  onActivate     : function() {},
+  onDeactivate   : function() {},
+  onChange       : function() {},
 
   // state test functions
   activateTest   : function() { return true; },
   deactivateTest : function() { return true; },
 
   // whether to automatically map default states
-  automatic     : true,
+  automatic      : true,
 
   // activate / deactivate changes all elements instantiated at same time
-  sync          : false,
+  sync           : false,
 
   // default flash text duration, used for temporarily changing text of an element
-  flashDuration : 1000,
+  flashDuration  : 1000,
 
   // selector filter
   filter     : {
@@ -621,7 +638,8 @@ $.fn.state.settings = {
 
   // error
   error: {
-    method : 'The method you called is not defined.'
+    beforeSend : 'The before send function has cancelled state change',
+    method     : 'The method you called is not defined.'
   },
 
   // metadata
@@ -687,4 +705,4 @@ $.fn.state.settings = {
 
 
 
-})( jQuery, window , document );
+})( jQuery, window, document );

@@ -1,14 +1,12 @@
- /*
- * # Semantic UI
- * https://github.com/Semantic-Org/Semantic-UI
- * http://www.semantic-ui.com/
+/*!
+ * # Semantic UI 2.5.0 - Rail
+ * http://github.com/semantic-org/semantic-ui/
  *
- * Copyright 2014 Contributors
+ *
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
  */
-
 
 
 /*******************************
@@ -16,11 +14,10 @@
 *******************************/
 
 .ui.rail {
-  font-size: 1em;
   position: absolute;
   top: 0%;
   width: 300px;
-  box-sizing: content-box;
+  height: 100%;
 }
 .ui.left.rail {
   left: auto;
@@ -59,16 +56,19 @@
 }
 
 /*--------------
-     Divided
+    Dividing
 ---------------*/
 
+.ui.dividing.rail {
+  width: 302.5px;
+}
 .ui.left.dividing.rail {
   padding: 0em 2.5rem 0em 0em;
   margin: 0em 2.5rem 0em 0em;
-  border-right: 1px solid rgba(39, 41, 43, 0.15);
+  border-right: 1px solid rgba(34, 36, 38, 0.15);
 }
 .ui.right.dividing.rail {
-  border-left: 1px solid rgba(39, 41, 43, 0.15);
+  border-left: 1px solid rgba(34, 36, 38, 0.15);
   padding: 0em 0em 0em 2.5rem;
   margin: 0em 0em 0em 2.5rem;
 }
@@ -77,6 +77,9 @@
     Distance
 ---------------*/
 
+.ui.close.rail {
+  width: calc( 300px  +  1em );
+}
 .ui.close.left.rail {
   padding: 0em 1em 0em 0em;
   margin: 0em 1em 0em 0em;
@@ -84,6 +87,9 @@
 .ui.close.right.rail {
   padding: 0em 0em 0em 1em;
   margin: 0em 0em 0em 1em;
+}
+.ui.very.close.rail {
+  width: calc( 300px  +  0.5em );
 }
 .ui.very.close.left.rail {
   padding: 0em 0.5em 0em 0em;
@@ -108,8 +114,29 @@
      Sizing
 ---------------*/
 
+.ui.mini.rail {
+  font-size: 0.78571429rem;
+}
+.ui.tiny.rail {
+  font-size: 0.85714286rem;
+}
+.ui.small.rail {
+  font-size: 0.92857143rem;
+}
 .ui.rail {
-  font-size: 1em;
+  font-size: 1rem;
+}
+.ui.large.rail {
+  font-size: 1.14285714rem;
+}
+.ui.big.rail {
+  font-size: 1.28571429rem;
+}
+.ui.huge.rail {
+  font-size: 1.42857143rem;
+}
+.ui.massive.rail {
+  font-size: 1.71428571rem;
 }
 
 

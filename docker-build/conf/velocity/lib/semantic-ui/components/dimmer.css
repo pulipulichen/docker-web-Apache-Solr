@@ -1,21 +1,19 @@
- /*
- * # Semantic UI
- * https://github.com/Semantic-Org/Semantic-UI
- * http://www.semantic-ui.com/
+/*!
+ * # Semantic UI 2.5.0 - Dimmer
+ * http://github.com/semantic-org/semantic-ui/
  *
- * Copyright 2014 Contributors
+ *
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
  */
 
 
-
 /*******************************
             Dimmer
 *******************************/
 
-.dimmable {
+.dimmable:not(body) {
   position: relative;
 }
 .ui.dimmer {
@@ -27,15 +25,18 @@
   height: 100%;
   text-align: center;
   vertical-align: middle;
-  background: rgba(0, 0, 0, 0.85);
+  padding: 1em;
+  background-color: rgba(0, 0, 0, 0.85);
   opacity: 0;
   line-height: 1;
   -webkit-animation-fill-mode: both;
           animation-fill-mode: both;
   -webkit-animation-duration: 0.5s;
           animation-duration: 0.5s;
-  -webkit-transition: background-color 0.5s linear;
-          transition: background-color 0.5s linear;
+  transition: background-color 0.5s linear;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   -webkit-user-select: none;
      -moz-user-select: none;
       -ms-user-select: none;
@@ -46,18 +47,11 @@
 
 /* Dimmer Content */
 .ui.dimmer > .content {
-  width: 100%;
-  height: 100%;
-  display: table;
   -webkit-user-select: text;
      -moz-user-select: text;
       -ms-user-select: text;
           user-select: text;
-}
-.ui.dimmer > .content > div {
-  display: table-cell;
-  vertical-align: middle;
-  color: #ffffff;
+  color: #FFFFFF;
 }
 
 /* Loose Coupling */
@@ -65,21 +59,41 @@
   border-radius: inherit !important;
 }
 
+/* Scrollbars */
+.ui.dimmer:not(.inverted)::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+}
+.ui.dimmer:not(.inverted)::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.25);
+}
+.ui.dimmer:not(.inverted)::-webkit-scrollbar-thumb:window-inactive {
+  background: rgba(255, 255, 255, 0.15);
+}
+.ui.dimmer:not(.inverted)::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.35);
+}
+
 
 /*******************************
             States
 *******************************/
 
+
+/* Animating */
 .animating.dimmable:not(body),
 .dimmed.dimmable:not(body) {
   overflow: hidden;
 }
+
+/* Animating / Active / Visible */
 .dimmed.dimmable > .ui.animating.dimmer,
 .dimmed.dimmable > .ui.visible.dimmer,
 .ui.active.dimmer {
-  display: block;
+  display: flex;
   opacity: 1;
 }
+
+/* Disabled */
 .ui.disabled.dimmer {
   width: 0 !important;
   height: 0 !important;
@@ -92,18 +106,37 @@
 
 
 /*--------------
+    Legacy
+---------------*/
+
+
+/* Animating / Active / Visible */
+.dimmed.dimmable > .ui.animating.legacy.dimmer,
+.dimmed.dimmable > .ui.visible.legacy.dimmer,
+.ui.active.legacy.dimmer {
+  display: block;
+}
+
+/*--------------
+    Alignment
+---------------*/
+
+.ui[class*="top aligned"].dimmer {
+  justify-content: flex-start;
+}
+.ui[class*="bottom aligned"].dimmer {
+  justify-content: flex-end;
+}
+
+/*--------------
       Page
 ---------------*/
 
 .ui.page.dimmer {
   position: fixed;
-  -webkit-transform-style: preserve-3d;
-          transform-style: preserve-3d;
-  -webkit-perspective: 2000px;
-          perspective: 2000px;
-  -webkit-transform-origin: center center;
-      -ms-transform-origin: center center;
-          transform-origin: center center;
+  transform-style: '';
+  perspective: 2000px;
+  transform-origin: center center;
 }
 body.animating.in.dimmable,
 body.dimmed.dimmable {
@@ -112,15 +145,30 @@ body.dimmed.dimmable {
 body.dimmable > .dimmer {
   position: fixed;
 }
-/*
-body.dimmable > :not(.dimmer) {
-  filter: @elementStartFilter;
+
+/*--------------
+    Blurring
+---------------*/
+
+.blurring.dimmable > :not(.dimmer) {
+  -webkit-filter: blur(0px) grayscale(0);
+          filter: blur(0px) grayscale(0);
+  transition: 800ms -webkit-filter ease;
+  transition: 800ms filter ease;
+  transition: 800ms filter ease, 800ms -webkit-filter ease;
 }
-body.dimmed.dimmable > :not(.dimmer) {
-  filter: @elementEndFilter;
-  transition: @elementTransition;
+.blurring.dimmed.dimmable > :not(.dimmer) {
+  -webkit-filter: blur(5px) grayscale(0.7);
+          filter: blur(5px) grayscale(0.7);
 }
-*/
+
+/* Dimmer Color */
+.blurring.dimmable > .dimmer {
+  background-color: rgba(0, 0, 0, 0.6);
+}
+.blurring.dimmable > .inverted.dimmer {
+  background-color: rgba(255, 255, 255, 0.6);
+}
 
 /*--------------
     Aligned
@@ -138,10 +186,10 @@ body.dimmed.dimmable > :not(.dimmer) {
 ---------------*/
 
 .ui.inverted.dimmer {
-  background: rgba(255, 255, 255, 0.85);
+  background-color: rgba(255, 255, 255, 0.85);
 }
 .ui.inverted.dimmer > .content > * {
-  color: #ffffff;
+  color: #FFFFFF;
 }
 
 /*--------------
@@ -164,14 +212,14 @@ body.dimmed.dimmable > :not(.dimmer) {
   opacity: 1;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.85);
+  background-color: rgba(0, 0, 0, 0.85);
   z-index: 1;
 }
 .ui.simple.inverted.dimmer {
-  background: rgba(255, 255, 255, 0);
+  background-color: rgba(255, 255, 255, 0);
 }
 .dimmed.dimmable > .ui.simple.inverted.dimmer {
-  background: rgba(255, 255, 255, 0.85);
+  background-color: rgba(255, 255, 255, 0.85);
 }
 
 

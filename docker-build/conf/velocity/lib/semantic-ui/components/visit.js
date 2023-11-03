@@ -1,15 +1,17 @@
-/*
- * # Semantic - Visit
+/*!
+ * # Semantic UI 2.0.0 - Visit
  * http://github.com/semantic-org/semantic-ui/
  *
  *
- * Copyright 2014 Contributor
+ * Copyright 2015 Contributors
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
  */
 
 ;(function ($, window, document, undefined) {
+
+"use strict";
 
 $.visit = $.fn.visit = function(parameters) {
   var
@@ -29,7 +31,9 @@ $.visit = $.fn.visit = function(parameters) {
   $allModules
     .each(function() {
       var
-        settings        = $.extend(true, {}, $.fn.visit.settings, parameters),
+        settings          = ( $.isPlainObject(parameters) )
+          ? $.extend(true, {}, $.fn.visit.settings, parameters)
+          : $.extend({}, $.fn.visit.settings),
 
         error           = settings.error,
         namespace       = settings.namespace,
@@ -197,9 +201,9 @@ $.visit = $.fn.visit = function(parameters) {
             var
               $element = $(selector)
             ;
-            if($element.size() > 0 && !$.isWindow($element[0])) {
+            if($element.length > 0 && !$.isWindow($element[0])) {
               module.debug('Updating visit count for element', $element);
-              $displays = ($displays.size() > 0)
+              $displays = ($displays.length > 0)
                 ? $displays.add($element)
                 : $element
               ;
@@ -233,10 +237,10 @@ $.visit = $.fn.visit = function(parameters) {
             if(settings.limit) {
               if(value >= settings.limit) {
                 module.debug('Pages viewed exceeded limit, firing callback', value, settings.limit);
-                $.proxy(settings.onLimit, this)(value);
+                settings.onLimit.call(element, value);
               }
               module.debug('Limit not reached', value, settings.limit);
-              $.proxy(settings.onChange, this)(value);
+              settings.onChange.call(element, value);
             }
             module.update.display(value);
           }
@@ -245,7 +249,7 @@ $.visit = $.fn.visit = function(parameters) {
         update: {
           display: function(value) {
             value = value || module.get.count();
-            if($displays.size() > 0) {
+            if($displays.length > 0) {
               module.debug('Updating displayed view count', $displays);
               $displays.html(value);
             }
@@ -363,7 +367,7 @@ $.visit = $.fn.visit = function(parameters) {
               });
             }
             clearTimeout(module.performance.timer);
-            module.performance.timer = setTimeout(module.performance.display, 100);
+            module.performance.timer = setTimeout(module.performance.display, 500);
           },
           display: function() {
             var
@@ -379,8 +383,8 @@ $.visit = $.fn.visit = function(parameters) {
             if(moduleSelector) {
               title += ' \'' + moduleSelector + '\'';
             }
-            if($allModules.size() > 1) {
-              title += ' ' + '(' + $allModules.size() + ')';
+            if($allModules.length > 1) {
+              title += ' ' + '(' + $allModules.length + ')';
             }
             if( (console.group !== undefined || console.table !== undefined) && performance.length > 0) {
               console.groupCollapsed(title);
@@ -459,7 +463,7 @@ $.visit = $.fn.visit = function(parameters) {
       }
       else {
         if(instance !== undefined) {
-          module.destroy();
+          instance.invoke('destroy');
         }
         module.initialize();
       }
@@ -477,7 +481,7 @@ $.fn.visit.settings = {
   name          : 'Visit',
 
   debug         : false,
-  verbose       : true,
+  verbose       : false,
   performance   : true,
 
   namespace     : 'visit',
