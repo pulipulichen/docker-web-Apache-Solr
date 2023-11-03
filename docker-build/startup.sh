@@ -6,6 +6,7 @@ waitForConntaction() {
   port="$1"
   sleep 3
   while true; do
+    echo "http://127.0.0.1:$port"
     if curl -sSf "http://127.0.0.1:$port" >/dev/null 2>&1; then
       echo "Connection successful."
       break
@@ -34,20 +35,26 @@ fi
 # fi
 
 docker-entrypoint.sh solr-foreground -force &
-
-waitForConntaction LOCAL_PORT
+echo "BEFORE ================================================================="
+waitForConntaction "${LOCAL_PORT}"
+echo "AFTER ================================================================="
 
 sleep 10
 
 python3 "/docker-build/python/prepend_id.py"
 if [ ! -f "$file" ]; then
   post -c collection "${LOCAL_VOLUMN_PATH}data/data.csv"
-  cp -f "${LOCAL_VOLUMN_PATH}data/data.csv" /tmp/data.csv
-elif ! cmp -s "${LOCAL_VOLUMN_PATH}data/data.csv" /tmp/data.csv; then
-  post -c collection "${LOCAL_VOLUMN_PATH}data/data.csv"
-  cp -f "${LOCAL_VOLUMN_PATH}data/data.csv" /tmp/data.csv
-  python3 "/docker-build/python/remove_not_in_id.py"
+  cp -rf "${LOCAL_VOLUMN_PATH}" /tmp/
+else
+  if diff -r "${LOCAL_VOLUMN_PATH}" "/tmp/conf" &> /dev/null; then
+    echo "Folders are identical"
+  else
+    post -c collection "${LOCAL_VOLUMN_PATH}data/data.csv"
+    cp -rf "${LOCAL_VOLUMN_PATH}" /tmp/
+  fi
 fi
+python3 "/docker-build/python/remove_not_in_id.py"
+
 
 if [ "$INITED" != "true" ]; then
   sleep 30
