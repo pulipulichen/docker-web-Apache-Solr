@@ -6,9 +6,9 @@
 
 - 修改commit-docker-image.sh
 - 修改udocker.sh
-IMAGE_NAME=pudding/docker-web:docker-web-apache-solr-app-20231101-0050
+IMAGE_NAME=pudding/docker-web:docker-web-apache-solr-app-20231101-0051
 
 - 修改docker-compose-template.yaml
-image: pudding/docker-web:docker-web-apache-solr-app-20231101-0050
+image: pudding/docker-web:docker-web-apache-solr-app-20231101-0051
 
 - 加入到監控清單 https://github.com/democwise2016/dockerhub-image-refresher/edit/main/docker-image-list.txt
