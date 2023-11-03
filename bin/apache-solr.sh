@@ -219,11 +219,14 @@ runDockerCompose() {
 
   if [ "$PUBLIC_PORT" == "false" ]; then
     if [ "$must_sudo" == "false" ]; then
+      docker-compose down
       if ! docker-compose up --build; then
         echo "Error occurred. Trying with sudo..."
+        sudo docker-compose down
         sudo docker-compose up --build
       fi
     else
+      sudo docker-compose down
       sudo docker-compose up --build
     fi
     exit 0
@@ -232,11 +235,14 @@ runDockerCompose() {
     trap 'cleanup' INT
 
     if [ "$must_sudo" == "false" ]; then
+      docker-compose down
       if ! docker-compose up --build -d; then
         echo "Error occurred. Trying with sudo..."
+        sudo docker-compose down
         sudo docker-compose up --build -d
       fi
     else
+      sudo docker-compose down
       sudo docker-compose up --build -d
     fi
 
