@@ -41,6 +41,7 @@ EndIf
 ;Local $sProjectFolder = @TempDir & "\" & $sPROJECT_NAME
 Local $sProjectFolder = @HomeDrive & @HomePath & "\docker-app\" & $sPROJECT_NAME
 ;~ MsgBox($MB_SYSTEMMODAL, FileExists($sProjectFolder), $sProjectFolder)
+ShellExecuteWait("git", "config --global core.autocrlf false", "", "open", @SW_HIDE)
 If Not FileExists($sProjectFolder) Then
 	FileChangeDir(@HomeDrive & @HomePath & "\docker-app\")
 	ShellExecuteWait("git", "clone https://github.com/pulipulichen/" & $sPROJECT_NAME & ".git")

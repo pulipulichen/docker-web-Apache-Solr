@@ -565,6 +565,22 @@
   <field name="dc.rights" type="text_general"/>
 
   <!-- ========================================== -->
+  <!-- For Stock 168 20231106-0031 -->
+
+  <field name="DividendRecentAvg" type="pfloat"/>
+  <field name="DividendRecentSlope" type="pfloat"/>
+  <field name="Category" type="text_general"/>
+  <field name="CurrentClosingPrice" type="pfloat"/>
+  <field name="CurrentTrend" type="pfloat"/>
+  <field name="CurrentTrendPercent" type="pfloat"/>
+  <field name="CurrentTurnover" type="pfloat"/>
+  <field name="CurrentPE" type="pfloat"/>
+  <field name="CurrentPEAvg" type="pfloat"/>
+  <field name="CurrentRecentTrendPercent" type="pfloat"/>
+  <field name="CurrentRecentTrendComment" type="text_general"/>
+  <field name="URL" type="text_general_keyword"/>
+
+  <!-- ========================================== -->
 
   <dynamicField name="*_txt_en_split_tight" type="text_en_splitting_tight" indexed="true" stored="true"/>
   <dynamicField name="*_descendent_path" type="descendent_path" indexed="true" stored="true"/>
@@ -717,6 +733,24 @@
   <copyField source="dc.relation" dest="text"/>
   <copyField source="dc.coverage" dest="text"/>
   <copyField source="dc.rights" dest="text"/>
+
+  <!-- ========================================== -->
+  <!-- For Stock 168 20231106-0031 -->
+
+  <copyField source="name" dest="dc.title"/>
+  <copyField source="DividendRecentAvg" dest="dc.format"/>
+  <copyField source="DividendRecentSlope" dest="dc.coverage"/>
+  <copyField source="Category" dest="dc.type"/>
+  <copyField source="CurrentClosingPrice" dest="dc.coverage"/>
+  <copyField source="CurrentTrend" dest="dc.coverage"/>
+  <copyField source="CurrentTrendPercent" dest="dc.coverage"/>
+  <copyField source="CurrentTurnover" dest="dc.coverage"/>
+  <copyField source="CurrentPE" dest="dc.coverage"/>
+  <copyField source="CurrentPEAvg" dest="dc.coverage"/>
+  <copyField source="CurrentRecentTrendPercent" dest="dc.coverage"/>
+  <copyField source="CurrentRecentTrendPercent" dest="dc.coverage"/>
+  <copyField source="CurrentRecentTrendComment" dest="dc.description"/>
+  <copyField source="URL" dest="dc.identifier"/>
 
   <!-- ========================================== -->
 

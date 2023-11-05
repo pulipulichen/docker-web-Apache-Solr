@@ -41,19 +41,29 @@ waitForConntaction "${LOCAL_PORT}"
 
 sleep 10
 
-python3 "/docker-build/python/prepend_id.py"
+DATA_PATH="${LOCAL_VOLUMN_PATH}data/data.csv"
+DATA_TEMP_PATH="${LOCAL_VOLUMN_PATH}data/data-temp.csv"
+rm -f "${DATA_TEMP_PATH}"
+
+python3 "/docker-build/python/init_data.py"
+
+if [ -f "$DATA_TEMP_PATH" ]; then
+  DATA_PATH="${DATA_TEMP_PATH}"
+fi
+
+python3 "/docker-build/python/prepend_id.py" "${DATA_PATH}"
 if [ ! -f "$file" ]; then
-  post -c collection "${LOCAL_VOLUMN_PATH}data/data.csv"
+  post -c collection "${DATA_PATH}"
   cp -rf "${LOCAL_VOLUMN_PATH}" /tmp/
 else
   if diff -r "${LOCAL_VOLUMN_PATH}" "/tmp/conf" &> /dev/null; then
     echo "Folders are identical"
   else
-    post -c collection "${LOCAL_VOLUMN_PATH}data/data.csv"
+    post -c collection "${DATA_PATH}"
     cp -rf "${LOCAL_VOLUMN_PATH}" /tmp/
   fi
 fi
-python3 "/docker-build/python/remove_not_in_id.py"
+python3 "/docker-build/python/remove_not_in_id.py" "${DATA_PATH}"
 
 
 if [ "$INITED" != "true" ]; then

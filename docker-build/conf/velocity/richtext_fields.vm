@@ -32,7 +32,7 @@
     #if ($value_array != "")
     <tr>
         #if($label != false)
-            <th class="right aligned"><strong>$label</strong>:</th>
+            <th class="right aligned result"><strong>$label</strong>:</th>
         #end
         
         #if (!$value_array.size())
@@ -63,6 +63,8 @@
 
         #foreach ($value in $value_array)
             #set($ori_value = $ori_array[$i])
+
+
                 #set($display_value = $value)
                 #if ($label == false)
                     #set($display_value = "<strong>"+$value+"</strong>")
@@ -71,7 +73,13 @@
                 $comma
 
                 #if($access_point==false)
-                    $display_value
+                    #if($display_value.matches('^(http|https)://.*$'))
+                        <a href="$display_value" target="_blank">
+                            $display_value
+                        </a>
+                    #else
+                        $display_value
+                    #end
                 #else
                     #if($name == 'title')
                         $display_value

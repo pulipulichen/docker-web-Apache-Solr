@@ -82,7 +82,8 @@
 
 #macro(display_facet_query $field, $display, $fieldName)
   #if($field.size() > 0)
-  <span class="facet-field">$display</span>
+  <div class="ui basic segment">
+  <span class="facet-field facet-field ui tag label">$display</span>
     <ul>
     #foreach ($facet in $field)
       #if ($facet.value > 0)
@@ -93,12 +94,14 @@
       #end
     #end
     </ul>
-  #end      
+  </div>
+  #end
 #end
 
 
 #macro(display_facet_range $field, $display, $fieldName, $start, $end, $gap, $before, $after)
-  <span class="facet-field">$display</span>
+  <div class="ui basic segment">
+  <span class="facet-field facet-field ui tag label">$display</span>
     <ul>
     #if($before && $before != "")
       #set($value = "[* TO " + "#format_value($start)" + "}")
@@ -119,12 +122,14 @@
       <li><a href="$facetURL">More than #format_value($end)</a> ($after)</li>
     #end
     </ul>
+  </div>
 #end
 
 ## $pivots is a list of facet_pivot
 #macro(display_facet_pivot $pivots, $display)
   #if($pivots.size() > 0)
-  <span class="facet-field">$display</span>
+  <div class="ui basic segment">
+  <span class="facet-field facet-field ui tag label">$display</span>
     <ul>
       #foreach ($pivot in $pivots)
         #foreach ($entry in $pivot.value)
@@ -144,6 +149,7 @@
         #end
       #end
     </ul>
+    </div>
   #end
 #end
 

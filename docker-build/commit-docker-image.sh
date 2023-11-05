@@ -1,6 +1,6 @@
 #!/bin/bash
 
-IMAGE_NAME=pudding/docker-web:docker-web-apache-solr-app-20231101-0051
+IMAGE_NAME=pudding/docker-web:docker-web-apache-solr-app-20231101-0052
 
 docker tag docker-web-apache-solr-app ${IMAGE_NAME}
 docker push "${IMAGE_NAME}"

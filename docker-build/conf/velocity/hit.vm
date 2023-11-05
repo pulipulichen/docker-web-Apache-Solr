@@ -7,18 +7,21 @@
 #set($docId = $doc.getFieldValue('id'))
 
 <div class="result-document ui vertical segment">
+
   ## Has a "name" field ?
-  #if($doc.getFieldValue('name'))
-    #parse("product_doc.vm")
+  ##if($doc.getFieldValue('name'))
+    ##parse("product_doc.vm")
 
   ## Has a "compName_s" field ?
-  #elseif($doc.getFieldValue('compName_s'))
-    #parse("join_doc.vm")
+  ##elseif($doc.getFieldValue('compName_s'))
+    ##parse("join_doc.vm")
 
   ## Fallback to richtext_doc
-  #else
-    #parse("richtext_doc.vm")
+  ##else
+    ##parse("richtext_doc.vm")
 
-  #end
+  ##end
+
+  #parse("richtext_doc.vm")
 
 </div>

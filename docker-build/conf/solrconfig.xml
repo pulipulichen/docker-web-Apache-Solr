@@ -1324,6 +1324,11 @@
        <int name="f.popularity.facet.range.start">0</int>
        <int name="f.popularity.facet.range.end">10</int>
        <int name="f.popularity.facet.range.gap">3</int>
+
+       <str name="facet.range">CurrentClosingPrice</str>
+       <int name="f.CurrentClosingPrice.facet.range.start">0</int>
+       <int name="f.CurrentClosingPrice.facet.range.end">100</int>
+       <int name="f.CurrentClosingPrice.facet.range.gap">1</int>
        
        <str name="facet.range">manufacturedate_dt</str>
        <str name="f.manufacturedate_dt.facet.range.start">NOW/YEAR-10YEARS</str>

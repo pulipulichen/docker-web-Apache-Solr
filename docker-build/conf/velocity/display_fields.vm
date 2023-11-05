@@ -10,7 +10,8 @@
     {'name': 'dc.creator', 'label': 'Author', 'access_point': true},
     {'name': 'dc.date', 'label': 'Publish Year', 'access_point': true},
     {'name': 'dc.subject', 'label': 'Subject', 'access_point': true},
-    {'name': 'dc.publisher', 'label': 'Publisher', 'access_point': true}
+    {'name': 'dc.publisher', 'label': 'Publisher', 'access_point': true},
+    {'name': 'dc.description', 'label': 'Description', 'access_point': false}
 ])
 
 ## 詳細顯示欄位
@@ -65,3 +66,5 @@
     {'name': 'dc.coverage', 'label': 'Coverage'},
     {'name': 'dc.rights', 'label': 'Rights'}
 ])
+
+#set($cluster_enabled = false)

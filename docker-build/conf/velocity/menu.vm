@@ -5,7 +5,7 @@ z-index: 999;
 width: 100%;">
   <a class="header item" 
     href="#url_for_home#if($request.params.get('debugQuery'))?debugQuery=true#end"
-    style="background-image:url(#{url_root}/img/library-logo-small.png); padding-left: 50px;background-repeat:no-repeat;" href="#url_for_home#if($request.params.get('debugQuery'))?debugQuery=true#end">
+    style="background-image:url(#{url_for_solr}/admin/file?file=/velocity/img/library-logo-small.png); padding-left: 50px;background-repeat:no-repeat;" href="#url_for_home#if($request.params.get('debugQuery'))?debugQuery=true#end">
     #param('title')
   </a>
 
