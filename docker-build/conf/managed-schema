@@ -581,6 +581,35 @@
   <field name="URL" type="text_general_keyword"/>
 
   <!-- ========================================== -->
+  <!-- For Stock 168 20231106-0031 -->
+
+  <copyField source="name" dest="dc.title"/>
+  <copyField source="DividendRecentAvg" dest="dc.format"/>
+  <copyField source="DividendRecentSlope" dest="dc.coverage"/>
+  <copyField source="Category" dest="dc.type"/>
+  <copyField source="CurrentClosingPrice" dest="dc.coverage"/>
+  <copyField source="CurrentTrend" dest="dc.coverage"/>
+  <copyField source="CurrentTrendPercent" dest="dc.coverage"/>
+  <copyField source="CurrentTurnover" dest="dc.coverage"/>
+  <copyField source="CurrentPE" dest="dc.coverage"/>
+  <copyField source="CurrentPEAvg" dest="dc.coverage"/>
+  <copyField source="CurrentRecentTrendPercent" dest="dc.coverage"/>
+  <copyField source="CurrentRecentTrendPercent" dest="dc.coverage"/>
+  <copyField source="CurrentRecentTrendComment" dest="dc.description"/>
+  <copyField source="URL" dest="dc.identifier"/>
+
+  <!-- ========================================== -->
+  <!-- For Google Sheet 20231106-1444 -->
+
+  <field name="country" type="text_general"/>
+  <field name="review" type="text_general"/>
+  <field name="class" type="text_general"/>
+  <copyField source="country" dest="dc.source"/>
+  <copyField source="description" dest="dc.description"/>
+  <copyField source="review" dest="dc.description"/>
+  <copyField source="class" dest="dc.type"/>
+
+  <!-- ========================================== -->
 
   <dynamicField name="*_txt_en_split_tight" type="text_en_splitting_tight" indexed="true" stored="true"/>
   <dynamicField name="*_descendent_path" type="descendent_path" indexed="true" stored="true"/>
@@ -733,24 +762,6 @@
   <copyField source="dc.relation" dest="text"/>
   <copyField source="dc.coverage" dest="text"/>
   <copyField source="dc.rights" dest="text"/>
-
-  <!-- ========================================== -->
-  <!-- For Stock 168 20231106-0031 -->
-
-  <copyField source="name" dest="dc.title"/>
-  <copyField source="DividendRecentAvg" dest="dc.format"/>
-  <copyField source="DividendRecentSlope" dest="dc.coverage"/>
-  <copyField source="Category" dest="dc.type"/>
-  <copyField source="CurrentClosingPrice" dest="dc.coverage"/>
-  <copyField source="CurrentTrend" dest="dc.coverage"/>
-  <copyField source="CurrentTrendPercent" dest="dc.coverage"/>
-  <copyField source="CurrentTurnover" dest="dc.coverage"/>
-  <copyField source="CurrentPE" dest="dc.coverage"/>
-  <copyField source="CurrentPEAvg" dest="dc.coverage"/>
-  <copyField source="CurrentRecentTrendPercent" dest="dc.coverage"/>
-  <copyField source="CurrentRecentTrendPercent" dest="dc.coverage"/>
-  <copyField source="CurrentRecentTrendComment" dest="dc.description"/>
-  <copyField source="URL" dest="dc.identifier"/>
 
   <!-- ========================================== -->
 

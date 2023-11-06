@@ -6,7 +6,7 @@
 # - 目錄路徑必須是完整路徑
 
 PROJECT_NAME=docker-web-Apache-Solr
-IMAGE_NAME=pudding/docker-web:docker-web-apache-solr-app-20231101-0055
+IMAGE_NAME=pudding/docker-web:docker-web-apache-solr-app-20231101-0056
 LOCAL_VOLUMN_PATH=/var/solr/data/collection/conf
 LOCAL_PORT=8983
 RUN_IN_BACKGROUND=true

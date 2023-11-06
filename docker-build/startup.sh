@@ -52,6 +52,7 @@ if [ -f "$DATA_TEMP_PATH" ]; then
 fi
 
 python3 "/docker-build/python/prepend_id.py" "${DATA_PATH}"
+python3 "/docker-build/python/remove_not_in_id.py" "${DATA_PATH}"
 if [ ! -f "$file" ]; then
   post -c collection "${DATA_PATH}"
   cp -rf "${LOCAL_VOLUMN_PATH}" /tmp/
@@ -63,8 +64,6 @@ else
     cp -rf "${LOCAL_VOLUMN_PATH}" /tmp/
   fi
 fi
-python3 "/docker-build/python/remove_not_in_id.py" "${DATA_PATH}"
-
 
 if [ "$INITED" != "true" ]; then
   sleep 30

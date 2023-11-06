@@ -12,6 +12,14 @@ def main(file_path):
 
     data = pd.read_csv(absolute_path)
     id_values = data['id'].tolist()
+
+    if len(id_values) > 200:
+        delete_url = f'http://localhost:8983/solr/collection/update?commit=true'
+        delete_data = json.dumps({"delete": {"query": "*:*"}})
+        requests.post(delete_url, headers={"Content-Type": "application/json"}, data=delete_data)
+        print("Reset all index.")
+        return
+
     # print(id_values)
     id_values_str = ' '.join(map(str, id_values))
 

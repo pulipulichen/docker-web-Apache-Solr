@@ -39,6 +39,8 @@
     {'name': 'dc.relation', 'label': 'Relation', 'access_point': true},
     {'name': 'dc.coverage', 'label': 'Coverage', 'access_point': true},
     {'name': 'dc.rights', 'label': 'Rights', 'access_point': true},
+    {'name': 'dc.type', 'label': 'Types', 'access_point': true},
+    {'name': 'dc.description', 'label': 'Description', 'access_point': false},
 
     {'name': 'id', 'label': 'ID', 'access_point': false},
     {'name': 'text', 'label': 'Text', 'access_point': false}
