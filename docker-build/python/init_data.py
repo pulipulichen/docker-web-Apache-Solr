@@ -4,8 +4,8 @@ import json
 import os
 
 local_volume_path = os.environ.get('LOCAL_VOLUMN_PATH')
-input_file = os.path.join(local_volume_path, 'data/data.csv')
-temp_file = os.path.join(local_volume_path, 'data/data-temp.csv')
+input_file = os.path.join(local_volume_path, 'data.csv')
+temp_file = os.path.join(local_volume_path, 'data-temp.csv')
 
 def is_url(url):
     return url.startswith("http://") or url.startswith("https://")

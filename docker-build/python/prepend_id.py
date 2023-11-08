@@ -31,7 +31,7 @@ def process_csv(file_path):
 # =================================================================
 def main(file_path):
     # local_volume_path = os.environ.get('LOCAL_VOLUMN_PATH')
-    # file_path = os.path.join(local_volume_path, 'data/data.csv')
+    # file_path = os.path.join(local_volume_path, 'data.csv')
 
     # Check if the file exists
     if not os.path.isfile(file_path):

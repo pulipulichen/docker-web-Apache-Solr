@@ -2,7 +2,7 @@
  *  Renders the main query form
  *#
 #set($queryOpts = $request.params.get("queryOpts"))
-#parse("display_fields.vm")
+#parse("../velocity_display_fields.vm")
 
 <div class="query-box ui segment basic center aligned">
   <form id="query-form" action="#{url_for_home}" method="GET">

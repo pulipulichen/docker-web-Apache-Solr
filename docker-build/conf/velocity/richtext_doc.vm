@@ -21,7 +21,7 @@
 
 #############################
 
-#parse("display_fields.vm")
+#parse("../velocity_display_fields.vm")
 
 #############################
 

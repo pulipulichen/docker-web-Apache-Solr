@@ -34,15 +34,15 @@ fi
 #   ln -s "${LOCAL_VOLUMN_PATH}"solrconfig.xml.txt "${LOCAL_VOLUMN_PATH}"solrconfig.xml
 # fi
 
-docker-entrypoint.sh solr-foreground -force &
+docker-entrypoint.sh solr-foreground -force -Dsolr.clustering.enabled=true &
 #echo "BEFORE ================================================================="
 waitForConntaction "${LOCAL_PORT}"
 #echo "AFTER ================================================================="
 
 sleep 10
 
-DATA_PATH="${LOCAL_VOLUMN_PATH}data/data.csv"
-DATA_TEMP_PATH="${LOCAL_VOLUMN_PATH}data/data-temp.csv"
+DATA_PATH="${LOCAL_VOLUMN_PATH}data.csv"
+DATA_TEMP_PATH="${LOCAL_VOLUMN_PATH}data-temp.csv"
 rm -f "${DATA_TEMP_PATH}"
 
 python3 "/docker-build/python/init_data.py"

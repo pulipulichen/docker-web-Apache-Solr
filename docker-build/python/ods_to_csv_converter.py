@@ -9,7 +9,7 @@ def convert_ods_to_csv(input_ods_file, output_csv_file):
         print("Conversion failed: " + str(e))
 
 if __name__ == "__main__":
-    input_file = "/var/solr/data/collection/conf/data/data.ods"  # Replace with your ODS file
+    input_file = "/var/solr/data/collection/conf/data.ods"  # Replace with your ODS file
     output_file = "/tmp/data.csv"  # Replace with the desired output CSV file
 
     convert_ods_to_csv(input_file, output_file)
