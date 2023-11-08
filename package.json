@@ -9,7 +9,7 @@
     "d0.build": "docker-compose build",
     "d1.bash": "docker-compose run --service-ports app bash /console.sh",
     "save-conf": "bash ./docker-build/save-conf.sh",
-    "commit-docker-image": "docker-compose build; bash ./docker-build/commit-docker-image.sh"
+    "commit-docker-image": "docker-compose build; bash ./docker-build/image/commit-docker-image.sh"
   },
   "repository": {
     "type": "git",

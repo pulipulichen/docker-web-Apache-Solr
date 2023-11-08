@@ -86,8 +86,8 @@ cp "/tmp/${PROJECT_NAME}/package.json" "/tmp/${PROJECT_NAME}.cache/"
 # 從docker-compose-template.yml來判斷參數
 
 INPUT_FILE="false"
-if [ -f "/tmp/${PROJECT_NAME}/docker-build/docker-compose-template.yml" ]; then
-  if grep -q "\[INPUT\]" "/tmp/${PROJECT_NAME}/docker-build/docker-compose-template.yml"; then
+if [ -f "/tmp/${PROJECT_NAME}/docker-build/image/docker-compose-template.yml" ]; then
+  if grep -q "\[INPUT\]" "/tmp/${PROJECT_NAME}/docker-build/image/docker-compose-template.yml"; then
     INPUT_FILE="true"
   fi
 fi
@@ -102,7 +102,7 @@ DOCKER_COMPOSE_FILE="/tmp/${PROJECT_NAME}/docker-compose.yml"
 # Check if the default Docker Compose file exists
 if [ ! -f "$DOCKER_COMPOSE_FILE" ]; then
   # If the file doesn't exist, set an alternative file path
-  DOCKER_COMPOSE_FILE="/tmp/${PROJECT_NAME}/docker-build/docker-compose-template.yml"
+  DOCKER_COMPOSE_FILE="/tmp/${PROJECT_NAME}/docker-build/image/docker-compose-template.yml"
 fi
 
 if [ -f "$DOCKER_COMPOSE_FILE" ]; then
@@ -180,7 +180,7 @@ setDockerComposeYML() {
   dirname=$(dirname "$file")
 
 
-  template=$(<"/tmp/${PROJECT_NAME}/docker-build/docker-compose-template.yml")
+  template=$(<"/tmp/${PROJECT_NAME}/docker-build/image/docker-compose-template.yml")
   #echo "$template"
 
   template="${template/\[SOURCE\]/$dirname}"
