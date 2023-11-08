@@ -116,7 +116,7 @@ fi
 # Linux跟Mac需要
 
 if [ -z "$DOCKER_HOST" ]; then
-    
+
     if [[ "$(uname)" == "Darwin" ]]; then
       echo "Running on macOS"
     else
@@ -139,7 +139,7 @@ if [ "$INPUT_FILE" != "false" ]; then
     # exit
     if command -v kdialog &> /dev/null; then
       var=$(kdialog --getopenfilename --multiple ~/ 'Files')
-      
+
     elif command -v osascript &> /dev/null; then
       selected_file="$(osascript -l JavaScript -e 'a=Application.currentApplication();a.includeStandardAdditions=true;a.chooseFile({withPrompt:"Please select a file to process:"}).toString()')"
 
@@ -159,14 +159,19 @@ dirname=$(dirname "$SCRIPT_PATH")
 cloudflare_file="${dirname}/${PROJECT_NAME}/.cloudflare.url"
 
 getCloudflarePublicURL() {
-  
+
 
   # echo "c ${cloudflare_file}"
 
   # Wait until the file exists
-  while [ ! -f "$cloudflare_file" ]; do
-    # echo "not exists ${cloudflare_file}"
-    sleep 1  # Check every 1 second
+#   while [ ! -f "$cloudflare_file" ]; do
+#     # echo "not exists ${cloudflare_file}"
+#     sleep 1  # Check every 1 second
+#   done
+
+  while [ ! -s "$cloudflare_file" ] || [ ! -f "$cloudflare_file" ]; do
+      #echo "cloudflare not found or empty. Waiting..."
+      sleep 5  # Adjust the sleep duration as needed
   done
 
   echo $(<"$cloudflare_file")
@@ -254,7 +259,7 @@ runDockerCompose() {
     # cloudflare_url=$(<"${SCRIPT_PATH}/${PROJECT_NAME}/.cloudflare.url")
 
     sleep 10
-    #/tmp/.cloudflared --url "http://127.0.0.1:$PUBLIC_PORT" > /tmp/.cloudflared.out 
+    #/tmp/.cloudflared --url "http://127.0.0.1:$PUBLIC_PORT" > /tmp/.cloudflared.out
 
     echo "================================================================"
     echo "You can link the website via following URL:"
@@ -264,7 +269,7 @@ runDockerCompose() {
     # echo "${cloudflare_url}"
     openURL "${cloudflare_url}"
     echo "http://127.0.0.1:$PUBLIC_PORT"
-    
+
     echo ""
     # Keep the script running to keep the container running
     # until the user decides to stop it
@@ -296,7 +301,7 @@ if [ "$INPUT_FILE" != "false" ]; then
     for var in "$@"
     do
       cd "${WORK_DIR}"
-      
+
 
       var=getRealpath "${var}"
       cd "/tmp/${PROJECT_NAME}"

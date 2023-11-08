@@ -147,9 +147,9 @@ Func getCloudflarePublicURL()
     WEnd
 
     Local $fileContent = FileRead($cloudflareFile)
-	While StringStripWS($fileContent, 1 + 2) = ""
-        Sleep(3000) ; Check every 1 second
-		$fileContent = FileRead($cloudflareFile)
+		While StringStripWS($fileContent, 1 + 2) = ""
+      Sleep(3000) ; Check every 1 second
+			$fileContent = FileRead($cloudflareFile)
     WEnd
 	;ConsoleWrite($fileContent  & @CRLF)
     Return $fileContent
