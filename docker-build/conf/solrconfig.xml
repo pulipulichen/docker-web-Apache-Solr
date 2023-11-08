@@ -1108,6 +1108,50 @@
     </highlighting>
   </searchComponent>
 
+  <!-- ============================= -->
+  <!-- clustering -->
+  <!-- ============================= -->
+
+  <lib dir="/opt/solr-8.7.0/dist/" regex="solr-clustering-\d.*\.jar" />
+  <lib dir="/opt/solr-8.7.0/contrib/clustering/lib/" regex=".*\.jar" />ustering-\d.*\.jar" />
+
+  <searchComponent name="clustering" class="solr.clustering.ClusteringComponent">
+  <!-- Lingo clustering algorithm -->
+    <lst name="engine">
+      <str name="name">lingo</str>
+      <str name="carrot.algorithm">org.carrot2.clustering.lingo.LingoClusteringAlgorithm</str>
+    </lst>
+
+    <!-- An example definition for the STC clustering algorithm. -->
+    <lst name="engine">
+      <str name="name">stc</str>
+      <str name="carrot.algorithm">org.carrot2.clustering.stc.STCClusteringAlgorithm</str>
+    </lst>
+  </searchComponent>
+
+  <requestHandler name="/clustering"
+                class="solr.SearchHandler">
+    <lst name="defaults">
+      <bool name="clustering">true</bool>
+      <bool name="clustering.results">true</bool>
+
+      <!-- Logical field to physical field mapping. -->
+      <str name="carrot.url">id</str>
+      <str name="carrot.title">doctitle</str>
+      <str name="carrot.snippet">content</str>
+
+      <!-- Configure any other request handler parameters. We will cluster the
+           top 100 search results so bump up the 'rows' parameter. -->
+      <str name="rows">100</str>
+      <str name="fl">*,score</str>
+    </lst>
+
+    <!-- Append clustering at the end of the list of search components. -->
+    <arr name="last-components">
+      <str>clustering</str>
+    </arr>
+  </requestHandler>
+
   <!-- Update Processors
 
        Chains of Update Processor Factories for dealing with Update

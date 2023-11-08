@@ -34,7 +34,9 @@ fi
 #   ln -s "${LOCAL_VOLUMN_PATH}"solrconfig.xml.txt "${LOCAL_VOLUMN_PATH}"solrconfig.xml
 # fi
 
-docker-entrypoint.sh solr-foreground -force -Dsolr.clustering.enabled=true &
+#docker-entrypoint.sh solr-foreground -force -Dsolr.clustering.enabled=true &
+solr start -force -f -Dsolr.clustering.enabled=true &
+
 #echo "BEFORE ================================================================="
 waitForConntaction "${LOCAL_PORT}"
 #echo "AFTER ================================================================="
