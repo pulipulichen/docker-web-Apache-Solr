@@ -538,12 +538,14 @@
 
   <field name="Authors" type="text_general" multiValued="true"/>
   <field name="Title" type="text_general"/>
-  <field name="Publication" type="text_general"/>
   <field name="Volume" type="text_general"/>
   <field name="Number" type="text_general"/>
   <field name="Pages" type="text_general"/>
   <field name="Year" type="pint"/>
   <field name="Publisher" type="text_general"/>
+
+  <field name="Publication" type="text_general"/>
+  <copyField source="Publication" dest="dc.source" />
 
   <!-- ========================================== -->
   <!-- For Dublin Core 20231031-2057 -->
@@ -697,7 +699,7 @@
 
   <copyField source="Authors" dest="text" />
   <copyField source="Title" dest="text" />
-  <copyField source="Publication" dest="text" />
+  <!-- <copyField source="Publication" dest="text" /> -->
   <copyField source="Volume" dest="text" />
   <copyField source="Number" dest="text" />
   <copyField source="Pages" dest="text" />
@@ -708,6 +710,7 @@
   <copyField source="Year" dest="dc.date_facet"/>
   <copyField source="dc.language" dest="dc.language_facet"/>
   <copyField source="Publisher" dest="dc.publisher_facet"/>
+  <copyField source="dc.publisher" dest="dc.publisher_facet"/>
 
   <!-- ========================================== -->
 
@@ -719,7 +722,7 @@
   <copyField source="language" dest="language_facet" maxChars="256"/>
   <copyField source="title" dest="title_str" maxChars="256"/>
   <copyField source="database" dest="database_str" maxChars="256"/>
-  <copyField source="publication" dest="publication_str" maxChars="256"/>
+  <!-- <copyField source="publication" dest="publication_str" maxChars="256"/> -->
   <copyField source="notes" dest="notes_str" maxChars="256"/>
   <copyField source="author" dest="author_facet" maxChars="256"/>
 

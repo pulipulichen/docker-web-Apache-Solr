@@ -12,6 +12,12 @@
 
 如果你沒有設定id，程式會根據資料的內容，臨時計算一筆id。
 
+## 欄位名稱
+
+建議用Dubline Core的名稱來設定欄位
+
+
+
 ## 二進制檔案
 
 二進制檔案 (binary file)是指非純文字的檔案類型。包括了記錄文件的Open Office檔案格式、Microsoft Office檔案格式。
@@ -27,6 +33,7 @@ Apache Solr結合Apache Tika後可以從二進制檔案取得純文字的內容�
 ## CSV模式
 
 - data-google-scholar.csv ： 從Google Scholar匯出的資料。
+- data-google-scholar-dc.csv ： 從Google Scholar匯出的資料，欄位名稱對應成Dublin Core。
 - data-tku.csv ： 從淡江覺生圖書館OPAC匯出的資料。
 - data-worldcat.csv ： 從WorldCat匯出的資料。
 
