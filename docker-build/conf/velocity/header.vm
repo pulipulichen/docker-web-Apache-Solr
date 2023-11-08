@@ -3,7 +3,7 @@
  *#
 <h1 class="ui header center aligned" style="margin-top: 50px;">
     <a href="#url_for_home#if($request.params.get('debugQuery'))?debugQuery=true#end">
-  <img src="#{url_for_solr}/admin/file?file=/velocity/img/logo-medium.png"/>
+  <img src="#{url_for_solr}/admin/file?file=/velocity/img/logo-medium.png" class="header image" />
   <div class="content">
     $display_title
     <div class="sub header">

@@ -6,4 +6,4 @@
 
 該文件的說明請看GitHub的記錄
 
-https://github.com/pulipulichen/docker-web-Apache-Solr/example/
+https://github.com/pulipulichen/docker-web-Apache-Solr/tree/main/example/

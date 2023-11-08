@@ -11,13 +11,19 @@
 
 https://docs.google.com/presentation/d/1Nkzh8yCV4uaQcwX3VaEjtSBPSf2v7SdrRkFhWicNYbc/edit?usp=sharing
 
-## Icon
-
-- Flaticon: https://www.flaticon.com/search?word=search&color=gradient&shape=lineal-color&order_by=4
-
 ## Tool
 
 - Visual Studio Code: https://code.visualstudio.com/download
+
+## Icon
+
+- Flaticon: https://www.flaticon.com/search?word=search&color=gradient&shape=lineal-color&order_by=4
+- Resize: https://www.iloveimg.com/resize-image
+
+## Style Framework
+
+- Semantic UI: https://semantic-ui.com/
+- Semantic UI Button: https://semantic-ui.com/elements/button.html
 
 ----
 

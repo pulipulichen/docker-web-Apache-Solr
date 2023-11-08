@@ -12,7 +12,7 @@
 
 關於data.csv的設定，請看以下網址。
 
-https://github.com/pulipulichen/docker-web-Apache-Solr/example/data/
+https://github.com/pulipulichen/docker-web-Apache-Solr/tree/main/example/data/
 
 ----
 
@@ -33,7 +33,7 @@ https://blog.csdn.net/yerenyuan_pku/article/details/105679097
 
 中英文停用字的範例可以參考以下檔案：
 
-https://github.com/pulipulichen/docker-web-Apache-Solr/example/stopwords/
+https://github.com/pulipulichen/docker-web-Apache-Solr/tree/main/example/stopwords/
 
 ### synonyms.txt
 

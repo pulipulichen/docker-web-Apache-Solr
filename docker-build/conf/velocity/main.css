@@ -6,6 +6,12 @@
 #head{
   width: 100%;
 }
+
+#head .header.image {
+  max-height: 75px;
+  width: auto;
+}
+
 .array-field {
   border: 2px solid #474747;
   background: #FFE9D8;

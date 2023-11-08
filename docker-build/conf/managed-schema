@@ -517,7 +517,7 @@
   <field name="toc" type="text_general" multiValued="true" indexed="true" stored="true"/>
 
   <field name="thickness" type="pfloat" indexed="true" stored="true"/>
-   <field name="year" type="pint" indexed="true" stored="true" />
+   <field name="year" type="text_general" indexed="true" stored="true" />
    <field name="edition" type="text_general" indexed="true" stored="true" />
    <field name="page" type="pint" indexed="true" stored="true" />
    <field name="width" type="pint" indexed="true" stored="true" />

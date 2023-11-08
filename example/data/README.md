@@ -24,7 +24,7 @@ Apache Solr結合Apache Tika後可以從二進制檔案取得純文字的內容�
 
 此資料夾的csv檔案是可用的範例。
 
-## csv模式
+## CSV模式
 
 - data-google-scholar.csv ： 從Google Scholar匯出的資料。
 - data-tku.csv ： 從淡江覺生圖書館OPAC匯出的資料。
