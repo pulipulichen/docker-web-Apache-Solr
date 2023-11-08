@@ -1301,8 +1301,8 @@
        <str name="wt">velocity</str>
        <str name="v.template">browse</str>
        <str name="v.layout">layout</str>
-       <str name="title">Apache Solr IR Practice</str>
-       <str name="sub.title">Information Retrieval Practice</str>
+       <str name="title">Solr</str>
+       <str name="sub.title">velocity</str>
 
        <!-- Query settings -->
        <str name="defType">edismax</str>
