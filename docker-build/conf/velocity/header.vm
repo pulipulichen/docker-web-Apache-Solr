@@ -5,9 +5,9 @@
     <a href="#url_for_home#if($request.params.get('debugQuery'))?debugQuery=true#end">
   <img src="#{url_for_solr}/admin/file?file=/velocity/img/library-logo-medium.png"/>
   <div class="content">
-    #param('title')
+    $display_title
     <div class="sub header">
-        #param('sub.title')
+        $display_subtitle
     </div>
   </div>
     </a>

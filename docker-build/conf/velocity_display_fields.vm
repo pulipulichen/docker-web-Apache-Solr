@@ -1,3 +1,7 @@
+## 標題與副標題
+#set($display_title="Apache Solr IR Practice")
+#set($display_subtitle="Information Retrieval Practice")
+
 
 ## 簡易顯示欄位
 #set($result_fields = [
