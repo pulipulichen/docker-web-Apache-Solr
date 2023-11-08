@@ -155,9 +155,11 @@ fi
 # =================================================================
 # 宣告函數
 
+dirname=$(dirname "$SCRIPT_PATH")
+cloudflare_file="${dirname}/${PROJECT_NAME}/.cloudflare.url"
+
 getCloudflarePublicURL() {
-  dirname=$(dirname "$SCRIPT_PATH")
-  cloudflare_file="${dirname}/${PROJECT_NAME}/.cloudflare.url"
+  
 
   # echo "c ${cloudflare_file}"
 
@@ -319,5 +321,6 @@ else
 
   # cat "/tmp/${PROJECT_NAME}/docker-compose.yml"
   # exit 0
+  rm -f "${cloudflare_file}"
   runDockerCompose
 fi
