@@ -35,6 +35,8 @@
 
 #macro(lensNoQ)?#if($request.params.getParams('fq') and $list.size($request.params.getParams('fq')) > 0)&#fqs($request.params.getParams('fq'))#end#sort($request.params.getParams('sort'))#debug#boostPrice#annotate#spatial#qOpts#group#end
 #macro(lens)#lensNoQ#q#end
+
+#macro(lensCluster)#lensNoQ#set($filterQuery = $!{esc.url($params.get('q'))})#if(!$filterQuery || $filterQuery.isEmpty())#set($filterQuery = $!{esc.url($params.get('fq'))})#end#if(!$filterQuery || $filterQuery.isEmpty())#set($filterQuery = "*")#end&q=$filterQuery&fl=id#end
         
 
 #macro(url_for_lens)#{url_for_home}#lens#end

@@ -12,7 +12,7 @@
 
 關於data.csv的設定，請看以下網址。
 
-
+https://github.com/pulipulichen/docker-web-Apache-Solr/example/data/
 
 ----
 

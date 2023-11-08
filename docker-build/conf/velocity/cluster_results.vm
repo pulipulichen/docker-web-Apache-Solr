@@ -2,6 +2,7 @@
  *  Actual rendering of Clusters
  *#
 
+#**
 ## For each cluster
 #foreach ($clusters in $response.response.clusters)
 
@@ -29,3 +30,35 @@
   </ol>
 
 #end   ## end for each Cluster
+*#
+
+<ol>
+#foreach ($clusters in $response.response.clusters)
+  <li>
+    #set($labels = $clusters.get('labels'))
+    #set($joinedLabels = "")  ## Initialize an empty string to hold the joined values
+
+    #foreach($item in $labels)
+        #if($joinedLabels != "")
+            #set($joinedLabels = "${joinedLabels}, $item")  ## Append a comma before adding the item
+        #else
+            #set($joinedLabels = $item)  ## Add the first item without a comma
+        #end
+    #end
+
+
+    #set($docs = $clusters.get('docs'))
+    
+    #set($joinedIDList = "")  ## Initialize an empty string to hold the joined values
+    #foreach($item in $docs)
+        #if($joinedIDList != "")
+            #set($joinedIDList = "${joinedIDList}+id:$item")  ## Append a comma before adding the item
+        #else
+            #set($joinedIDList = "id:$item")  ## Add the first item without a comma
+        #end
+    #end
+
+    <a href="#url_for_home?fq=$joinedIDList">$joinedLabels ($docs.size())</a>
+  </li>
+#end   ## end for each Cluster
+</ol>

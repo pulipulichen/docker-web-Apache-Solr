@@ -15,7 +15,7 @@
 
 ## Replace the div content *if* Carrot^2 is available
 <script type="text/javascript">
-  $('#clusters').load("#url_for_solr/clustering#lens",
+  $('#clusters').load("#url_for_solr/clustering#lensCluster",
     {'wt':'velocity', 'v.template':"cluster_results"});
 </script>
 #end

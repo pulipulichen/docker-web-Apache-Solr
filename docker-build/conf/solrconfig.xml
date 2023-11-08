@@ -1137,8 +1137,11 @@
 
       <!-- Logical field to physical field mapping. -->
       <str name="carrot.url">id</str>
-      <str name="carrot.title">doctitle</str>
-      <str name="carrot.snippet">content</str>
+      <str name="carrot.title">dc.title</str>
+      <str name="carrot.snippet">text</str>
+
+      <str name="df">text</str>
+      <str name="df">dc.title</str>
 
       <!-- Configure any other request handler parameters. We will cluster the
            top 100 search results so bump up the 'rows' parameter. -->

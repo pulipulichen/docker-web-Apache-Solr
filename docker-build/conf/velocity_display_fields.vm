@@ -71,4 +71,4 @@
     {'name': 'dc.rights', 'label': 'Rights'}
 ])
 
-#set($cluster_enabled = false)
+#set($cluster_enabled = true)
