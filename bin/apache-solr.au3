@@ -163,18 +163,19 @@ Func setDockerComposeYML($file)
 	MsgBox($MB_SYSTEMMODAL, "Title", $file, 10)
 
 
-  Local $dirname = StringLeft($file, StringInStr($file, "\\", 0, -1) - 1)
+  Local $dirname = StringLeft($file, StringInStr($file, "\", 0, -1) - 1)
 	If StringLeft($dirname, 1) = '"' Then
 		$dirname = StringTrimLeft($dirname, 1)
 	EndIf
+  
+	Local $filename = StringMid($file, StringInStr($file, "\", 0, -1) + 1)
 
-	$dirname = StringReplace($dirname, "\\", "/")
+
+	$dirname = StringReplace($dirname, '\', "/")
 		
-	MsgBox($MB_SYSTEMMODAL, "Title", $dirname, 10)
+	;MsgBox($MB_SYSTEMMODAL, "Title", $dirname, 10)
 
 	
-    Local $filename = StringMid($file, StringInStr($file, "/", 0, -1) + 1)
-
     Local $template = FileRead($sProjectFolder & "\docker-build\image\docker-compose-template.yml")
 	;ConsoleWrite($template)
 	
@@ -281,6 +282,6 @@ If $INPUT_FILE = 1 Then
 	EndIf
 Else
 	FileChangeDir($sProjectFolder)
-	setDockerComposeYML('"' & @ScriptDir & '"')
+	setDockerComposeYML('"' & @ScriptFullPath & '"')
 	runDockerCompose()
 EndIf
