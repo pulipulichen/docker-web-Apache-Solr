@@ -160,7 +160,7 @@ EndFunc
 Func setDockerComposeYML($file)
 	;ConsoleWrite($file)
 	;$file = StringReplace($file, "\\", "/")
-	MsgBox($MB_SYSTEMMODAL, "Title", $file, 10)
+	;MsgBox($MB_SYSTEMMODAL, "Title", $file, 10)
 
 
   Local $dirname = StringLeft($file, StringInStr($file, "\", 0, -1) - 1)
