@@ -69,8 +69,10 @@
                 #if ($label == false)
                     #set($display_value = "<strong>"+$value+"</strong>")
                 #end
-
-                $comma
+                
+                #if($display_value && $display_value.trim() != '')
+                    $comma
+                #end
 
                 #if($access_point==false)
                     #if($display_value.matches('^(http|https)://.*$'))
@@ -91,7 +93,9 @@
                     #end
                 #end
             
-            #set( $comma = ";" )
+            #if($display_value && $display_value.trim() != '')
+               #set( $comma = ";" )
+            #end
             #set($i = $i+1)
         #end
 
