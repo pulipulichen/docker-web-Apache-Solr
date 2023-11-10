@@ -140,10 +140,15 @@ EndIf
 Func getCloudflarePublicURL()
 	;ConsoleWrite("getCloudflarePublicURL"  & @CRLF)
     Local $dirname = @ScriptDir
+    
+    Local $cloudflareFailed = $dirname & "" & $sPROJECT_NAME & "\.cloudflare.failed"
+    If FileExists($cloudflareFailed) Then
+	    Return false
+    EndIf
 
     Local $cloudflareFile = $dirname & "" & $sPROJECT_NAME & "\.cloudflare.url"
 	;ConsoleWrite($cloudflareFile  & @CRLF)
-		Local $timeout = 120 ; 60 seconds timeout
+		Local $timeout = 60 ; 60 seconds timeout
 		Local $interval = 5 ; 5 seconds interval
 		Local $elapsedTime = 0
 
@@ -161,7 +166,34 @@ Func getCloudflarePublicURL()
 		    $elapsedTime += $interval
 		WEnd
 
+		setCloudflareFailed()
 		Return false
+EndFunc
+
+Func setCloudflareFailed()
+	Local $dirname = @ScriptDir
+	; Specify the file path
+	Local $filePath = $dirname & "" & $sPROJECT_NAME & "\.cloudflare.failed"
+
+	; Open the file for writing (creates the file if it doesn't exist)
+	Local $fileHandle = FileOpen($filePath, 2) ; 2 for write mode
+
+	; Check if the file was opened successfully
+	If $fileHandle = -1 Then
+	    MsgBox(16, "Error", "Unable to open file for writing.")
+	    Exit
+	EndIf
+
+	; Write the content to the file
+	FileWrite($fileHandle, "ok")
+
+	; Close the file handle
+	FileClose($fileHandle)
+
+	;MsgBox(64, "Success", "File written successfully.")
+
+	; Exit the script
+	;Exit
 EndFunc
 
 ;~ ----------------------------------------------------------------
@@ -279,6 +311,7 @@ EndFunc
 
 ;~ ---------------------
 
+ToolTip($sPROJECT_NAME & " is running", 0, 0)
 If $INPUT_FILE = 1 Then 
 	If $sUseParams = true Then
 		For $i = 1 To $CmdLine[0]
@@ -312,3 +345,4 @@ Else
 	setDockerComposeYML(@ScriptFullPath)
 	runDockerCompose()
 EndIf
+ToolTip("") ; Clear the tooltip
