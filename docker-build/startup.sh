@@ -19,6 +19,8 @@ waitForConntaction() {
 
 # ----------------------------------------------------------------
 
+rm -f "${LOCAL_VOLUMN_PATH}/.docker-web.ready*"
+
 INITED="true"
 if [ -z "$(ls -A $LOCAL_VOLUMN_PATH)" ]; then
   rm -rf /var/solr/data/collection/data
@@ -115,6 +117,8 @@ getCloudflarePublicURL "${LOCAL_PORT}" > "${LOCAL_VOLUMN_PATH}/.cloudflare.url"
 echo "================================================================"
 echo "Apache Solr is ready to serve."
 echo "================================================================"
+
+echo `date` > "${LOCAL_VOLUMN_PATH}/.docker-web.ready"
 
 # ----------------------------------------------------------------
 
