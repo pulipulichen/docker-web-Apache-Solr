@@ -118,6 +118,27 @@ echo "================================================================"
 echo "Apache Solr is ready to serve."
 echo "================================================================"
 
+# ----------------------------------------------------------------
+
+
+url="http://127.0.0.1:8983"
+
+while true; do
+    response=$(curl -s "$url")
+
+    if [[ $(echo "$response" | jq -e . 2>/dev/null) ]]; then
+        echo "Received JSON, sleeping for 5 seconds..."
+        sleep 5
+    elif [[ $response == *"<html>"* ]]; then
+        echo "Received HTML, it's okay!"
+        sleep 10
+        break
+    else
+        echo "Unexpected response. Exiting."
+        exit 1
+    fi
+done
+
 echo `date` > "${LOCAL_VOLUMN_PATH}/.docker-web.ready"
 
 # ----------------------------------------------------------------
