@@ -173,6 +173,16 @@ Func getCloudflarePublicURL()
 		Return false
 EndFunc
 
+Func waitForDockerAppReady()
+	;ConsoleWrite("getCloudflarePublicURL"  & @CRLF)
+    Local $dirname = @ScriptDir
+    
+    Local $readyFile = $dirname & "" & $sPROJECT_NAME & "\.docker-web.ready"
+    While Not FileExists($readyFile)
+	    Sleep(3000)
+    WEnd
+EndFunc
+
 Func setCloudflareFailed()
 	Local $dirname = @ScriptDir
 	; Specify the file path
@@ -277,7 +287,7 @@ Func runDockerCompose()
 	
 	Local $cloudflare_url=getCloudflarePublicURL()
 
-	Sleep(1000)
+	waitForDockerAppReady()
 
 	ConsoleWrite("================================================================" & @CRLF)
 	ConsoleWrite("You can link the website via following URL:" & @CRLF)
@@ -293,10 +303,10 @@ Func runDockerCompose()
 	ConsoleWrite("Press Ctrl+C to stop the Docker container and exit." & @CRLF)
 	ConsoleWrite("================================================================" & @CRLF)
 	
-	Sleep(3000)
+	;Sleep(3000)
 	;ShellExecute($cloudflare_url, "", "open", @SW_HIDE)
 	
-
+	
 	If $cloudflare_url <> false Then
 		ShellExecute($cloudflare_url)
 		Sleep(3000)
