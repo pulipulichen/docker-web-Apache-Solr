@@ -19,8 +19,9 @@ waitForConntaction() {
 
 # ----------------------------------------------------------------
 
-rm -f "${LOCAL_VOLUMN_PATH}/.docker-web.ready*"
-rm -f "${LOCAL_VOLUMN_PATH}/.cloudflare.url*"
+rm -f "${LOCAL_VOLUMN_PATH}/.docker-web.ready" || true
+rm -f "${LOCAL_VOLUMN_PATH}/.cloudflare.url" || true
+ls -la "${LOCAL_VOLUMN_PATH}/"
 
 INITED="true"
 if [ -z "$(ls -A $LOCAL_VOLUMN_PATH)" ]; then
@@ -115,10 +116,6 @@ getCloudflarePublicURL() {
 
 getCloudflarePublicURL "${LOCAL_PORT}" > "${LOCAL_VOLUMN_PATH}/.cloudflare.url"
 
-echo "================================================================"
-echo "Apache Solr is ready to serve."
-echo "================================================================"
-
 # ----------------------------------------------------------------
 
 
@@ -131,8 +128,8 @@ while true; do
         echo "Received JSON, sleeping for 5 seconds..."
         sleep 5
     elif [[ $response == *"<html>"* ]]; then
-        echo "Received HTML, it's okay!"
         sleep 10
+        echo "Received HTML, it's okay!"
         break
     else
         echo "Unexpected response. Exiting."
@@ -142,6 +139,10 @@ while true; do
 done
 
 echo `date` > "${LOCAL_VOLUMN_PATH}/.docker-web.ready"
+
+echo "================================================================"
+echo "Apache Solr is ready to serve."
+echo "================================================================"
 
 # ----------------------------------------------------------------
 

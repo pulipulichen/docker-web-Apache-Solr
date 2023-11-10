@@ -59,6 +59,7 @@ fi
 # ---------------
 # 安裝或更新專案
 
+project_inited = false
 if [ -d "/tmp/${PROJECT_NAME}" ];
 then
   cd "/tmp/${PROJECT_NAME}"
@@ -66,6 +67,7 @@ then
   git reset --hard
   git pull --force
 else
+  project_inited = true
 	# echo "$DIR directory does not exist."
   cd /tmp
   git clone "https://github.com/pulipulichen/${PROJECT_NAME}.git"
@@ -277,7 +279,7 @@ runDockerCompose() {
 
     # openURL "http://127.0.0.1:$PUBLIC_PORT"
     # echo "${cloudflare_url}"
-    if [ "$cloudflare_url" == "false" ]; then
+    if [ "$cloudflare_url" == "false" && project_inited == true ]; then
       openURL "http://127.0.0.1:$PUBLIC_PORT"
     else
       openURL "${cloudflare_url}"
