@@ -134,7 +134,7 @@ var="$1"
 useParams="true"
 WORK_DIR=`pwd`
 if [ "$INPUT_FILE" != "false" ]; then
-  if [ ! -f "$var" ]; then
+  if [ ! -e "$var" ]; then
     # echo "$1 does not exist."
     # exit
     if command -v kdialog &> /dev/null; then
@@ -168,13 +168,22 @@ getCloudflarePublicURL() {
 #     # echo "not exists ${cloudflare_file}"
 #     sleep 1  # Check every 1 second
 #   done
+  timeout=60
+  interval=5
+  elapsed_time=0
 
-  while [ ! -s "$cloudflare_file" ] || [ ! -f "$cloudflare_file" ]; do
-      #echo "cloudflare not found or empty. Waiting..."
-      sleep 5  # Adjust the sleep duration as needed
+  while [ $elapsed_time -lt $timeout ]; do
+    if [ -s "$cloudflare_file" ] && [ -f "$cloudflare_file" ]; then
+        echo $(<"$cloudflare_file")
+        exit 0
+    fi
+
+    sleep $interval
+    elapsed_time=$((elapsed_time + interval))
   done
 
-  echo $(<"$cloudflare_file")
+  echo "false"
+  exit 1
 }
 
 # ----------------------------------------------------------------
@@ -265,10 +274,15 @@ runDockerCompose() {
     echo "You can link the website via following URL:"
     echo ""
 
+
     # openURL "http://127.0.0.1:$PUBLIC_PORT"
     # echo "${cloudflare_url}"
-    openURL "${cloudflare_url}"
-    echo "http://127.0.0.1:$PUBLIC_PORT"
+    if [ "$cloudflare_url" == "false" ]; then
+      openURL "http://127.0.0.1:$PUBLIC_PORT"
+    else
+      openURL "${cloudflare_url}"
+      echo "http://127.0.0.1:$PUBLIC_PORT"
+    fi
 
     echo ""
     # Keep the script running to keep the container running
@@ -302,8 +316,9 @@ if [ "$INPUT_FILE" != "false" ]; then
     do
       cd "${WORK_DIR}"
 
-
-      var=getRealpath "${var}"
+      if [ -f "${var}" ]; then
+        var=getRealpath "${var}"
+      fi
       cd "/tmp/${PROJECT_NAME}"
       setDockerComposeYML "${var}"
 

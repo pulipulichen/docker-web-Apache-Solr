@@ -39,6 +39,7 @@ https://docs.google.com/presentation/d/1Nkzh8yCV4uaQcwX3VaEjtSBPSf2v7SdrRkFhWicN
 For Windows 
 - Download: https://pulipulichen.github.io/docker-web-Apache-Solr/bin/apache-solr.exe
 - Please disable the anti-virus software or add it to white list.
+- Problems when handing exe files: https://ppt.cc/f7SzLx
 
 
 For Linux and Mac OS
