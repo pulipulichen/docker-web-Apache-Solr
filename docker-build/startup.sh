@@ -20,6 +20,7 @@ waitForConntaction() {
 # ----------------------------------------------------------------
 
 rm -f "${LOCAL_VOLUMN_PATH}/.docker-web.ready*"
+rm -f "${LOCAL_VOLUMN_PATH}/.cloudflare.url*"
 
 INITED="true"
 if [ -z "$(ls -A $LOCAL_VOLUMN_PATH)" ]; then
@@ -121,11 +122,11 @@ echo "================================================================"
 # ----------------------------------------------------------------
 
 
-url="http://127.0.0.1:${LOCAL_PORT}"
+url="http://127.0.0.1:${LOCAL_PORT}/solr/collection/browse"
 
 while true; do
     response=$(curl -s "$url")
-
+    #echo "$response"
     if [[ $(echo "$response" | jq -e . 2>/dev/null) ]]; then
         echo "Received JSON, sleeping for 5 seconds..."
         sleep 5
@@ -135,7 +136,8 @@ while true; do
         break
     else
         echo "Unexpected response. Exiting."
-        exit 1
+        #exit 1
+        sleep 5
     fi
 done
 
