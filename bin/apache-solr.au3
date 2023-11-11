@@ -228,6 +228,9 @@ Func setDockerComposeYML($file)
 
 
 		$dirname = StringReplace($dirname, '\', "/")
+		If StringRight($dirname, 1) = ':' Then
+			$dirname = $dirname & "/"
+		EndIf
 			
 		;MsgBox($MB_SYSTEMMODAL, "Title", $dirname, 10)
 
