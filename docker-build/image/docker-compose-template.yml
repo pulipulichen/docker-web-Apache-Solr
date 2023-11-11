@@ -5,5 +5,7 @@ services:
     tty: true
     ports:
       - "8983:8983"
+    environment:
+      - LOCAL_VOLUMN_PATH=/var/solr/data/collection/conf
     volumes: 
-      - "[SOURCE]/docker-web-Apache-Solr:/var/solr/data/collection/conf"
+      - "__SOURCE__/docker-web-Apache-Solr:/var/solr/data/collection/conf"

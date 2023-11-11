@@ -238,8 +238,8 @@ Func setDockerComposeYML($file)
 		;Local $template = FileRead($sProjectFolder & "\docker-build\image\docker-compose-template.yml")
 		;ConsoleWrite($template)
 		
-		$template = StringReplace($template, "[SOURCE]", $dirname)
-		$template = StringReplace($template, "[INPUT]", $filename)
+		$template = StringReplace($template, "__SOURCE__", $dirname)
+		$template = StringReplace($template, "__INPUT__", $filename)
 	EndIf
 	FileDelete($sProjectFolder & "\docker-compose.yml")
     FileWrite($sProjectFolder & "\docker-compose.yml", $template)
