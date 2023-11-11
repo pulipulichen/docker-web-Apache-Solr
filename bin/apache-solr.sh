@@ -326,11 +326,8 @@ if [ "$INPUT_FILE" != "false" ]; then
       fi
       cd "/tmp/${PROJECT_NAME}"
 
-      echo "foreground mode 1"
       setDockerComposeYML "${var}"
-      echo "foreground mode 2"
       runDockerCompose
-      echo "foreground mode 3"
     done
   else
     if [ ! -f "${var}" ]; then
