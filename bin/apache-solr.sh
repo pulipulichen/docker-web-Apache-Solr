@@ -59,7 +59,7 @@ fi
 # ---------------
 # 安裝或更新專案
 
-project_inited = false
+project_inited=false
 if [ -d "/tmp/${PROJECT_NAME}" ];
 then
   cd "/tmp/${PROJECT_NAME}"
@@ -89,7 +89,7 @@ cp "/tmp/${PROJECT_NAME}/package.json" "/tmp/${PROJECT_NAME}.cache/"
 
 INPUT_FILE="false"
 if [ -f "/tmp/${PROJECT_NAME}/docker-build/image/docker-compose-template.yml" ]; then
-  if grep -q "\[INPUT\]" "/tmp/${PROJECT_NAME}/docker-build/image/docker-compose-template.yml"; then
+  if grep -q "__INPUT__" "/tmp/${PROJECT_NAME}/docker-build/image/docker-compose-template.yml"; then
     INPUT_FILE="true"
   fi
 fi
@@ -110,8 +110,9 @@ fi
 if [ -f "$DOCKER_COMPOSE_FILE" ]; then
   PUBLIC_PORT=$(awk '/ports:/{flag=1} flag && /- "[0-9]+:[0-9]+"/{split($2, port, ":"); gsub(/"/, "", port[1]); print port[1]; flag=0}' "$DOCKER_COMPOSE_FILE")
 fi
-
-#echo "P: ${PUBLIC_PORT}"
+if [ "${PUBLIC_PORT}" == "" ]; then
+  PUBLIC_PORT="false"
+fi
 
 # =================
 # 讓Docker能順利運作的設定
@@ -201,8 +202,10 @@ setDockerComposeYML() {
   template=$(<"/tmp/${PROJECT_NAME}/docker-build/image/docker-compose-template.yml")
   #echo "$template"
 
-  template="${template/__SOURCE__/$dirname}"
-  template="${template/__INPUT__/$filename}"
+  # template=$(echo "$template" | sed "s/__SOURCE__/$dirname/g")
+  # template=$(echo "$template" | sed "s/__INPUT__/$filename/g")
+  template=$(echo "$template" | sed "s|__SOURCE__|$dirname|g")
+  template=$(echo "$template" | sed "s|__INPUT__|$filename|g")
 
   echo "$template" > "/tmp/${PROJECT_NAME}/docker-compose.yml"
 }
@@ -234,7 +237,7 @@ runDockerCompose() {
   fi
 
   #echo "m ${must_sudo}"
-
+  
   if [ "$PUBLIC_PORT" == "false" ]; then
     if [ "$must_sudo" == "false" ]; then
       docker-compose down
@@ -319,12 +322,15 @@ if [ "$INPUT_FILE" != "false" ]; then
       cd "${WORK_DIR}"
 
       if [ -f "${var}" ]; then
-        var=getRealpath "${var}"
+        var=$(getRealpath "${var}")
       fi
       cd "/tmp/${PROJECT_NAME}"
-      setDockerComposeYML "${var}"
 
+      echo "foreground mode 1"
+      setDockerComposeYML "${var}"
+      echo "foreground mode 2"
       runDockerCompose
+      echo "foreground mode 3"
     done
   else
     if [ ! -f "${var}" ]; then
