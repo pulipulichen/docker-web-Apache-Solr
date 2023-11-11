@@ -23,3 +23,9 @@ CONTAINER_NAME=$(awk -F= '/^ *- CONTAINER_NAME=/ {gsub(/ /,"",$2); print $2}' "$
 
 docker tag ${CONTAINER_NAME} ${IMAGE_NAME}
 docker push "${IMAGE_NAME}"
+
+# =========
+
+git add .
+git commit -m "${new_version}"
+git push --force-with-lease
