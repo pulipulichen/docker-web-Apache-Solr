@@ -1,7 +1,7 @@
 version: "3"
 services:
   app:
-    image: pudding/docker-web:docker-web-apache-solr-app-20231111.142724
+    image: pudding/docker-web:docker-web-apache-solr-app-20231111.143703
     tty: true
     ports:
       - "8983:8983"
