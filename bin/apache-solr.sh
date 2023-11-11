@@ -3,6 +3,26 @@
 PROJECT_NAME=docker-web-Apache-Solr
 
 # =================================================================
+# 鎖定
+
+lock_file_path="/tmp/${PROJECT_NAME}.lock"
+timeout_seconds=300
+interval_seconds=3
+while [ -e "${lock_file_path}" ]; do
+  file_creation_time=$(find "$lock_file_path" -printf "%T@")
+  current_time=$(date +%s)
+  if [ $((current_time - file_creation_time)) -le $timeout_seconds ]; then
+    sleep $interval_seconds
+  else
+    break
+  fi
+done
+
+# =================================================================
+
+touch "${lock_file_path}"
+
+# =================================================================
 # 宣告函數
 
 openURL() {
@@ -349,3 +369,8 @@ else
   rm -f "${cloudflare_file}"
   runDockerCompose
 fi
+
+# =================================================================
+# 解除鎖定
+
+![ -e "${lock_file_path}" ] && rm "${lock_file_path}"
