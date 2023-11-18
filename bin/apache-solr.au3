@@ -27,9 +27,9 @@ EndIf
 Local $sScriptFullPath = @ScriptFullPath
 
 ; Step 5: Get all parameters from this script as the third, fourth, ... parameters
-Local $aParameters[$CmdLine[0]]
-For $i = 1 To $CmdLine[0]
-    $aParameters[$i] = $CmdLine[$i]
+Local $aParameters[UBound($CmdLine)]
+For $i = 1 To UBound($CmdLine) - 1
+	$aParameters[$i] = '"' & $CmdLine[$i] & '"'
 Next
 
 ; Step 6: Pass parameters to "~/docker-app/docker-app-launcher.exe" using RunWait
