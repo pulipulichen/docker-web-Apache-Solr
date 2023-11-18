@@ -14,6 +14,7 @@ getRealpath() {
   echo "${path}"
 }
 
+
 # =================================================================
 
 # Step 1: Create the directory if it doesn't exist
@@ -31,6 +32,10 @@ SCRIPT_PATH=$(getRealpath "$0")
 # Step 6: Get all parameters from this script as the third, fourth, ... parameters
 shift 2  # Shift to remove the first two parameters (PROJECT_NAME and SCRIPT_PATH)
 PARAMETERS=("$@")
+for ((i = 0; i < ${#PARAMETERS[@]}; i++)); do
+    PARAMETERS[$i]=$(getRealpath "${PARAMETERS[$i]}")
+done
 
 # Step 7: Pass parameters to "~/docker-app/docker-app-launcher.sh"
+# /tmp/docker-app/docker-app-launcher.sh "$PROJECT_NAME" "$SCRIPT_PATH" "${PARAMETERS[@]}"
 /tmp/docker-app/docker-app-launcher.sh "$PROJECT_NAME" "$SCRIPT_PATH" "${PARAMETERS[@]}"
